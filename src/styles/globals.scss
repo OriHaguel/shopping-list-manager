@@ -1,0 +1,37 @@
+// globals.scss
+@use "setup/variables";
+@use "setup/functions";
+@use "setup/mixins";
+
+@use "basics/helpers";
+@use "basics/layout";
+@use "basics/base";
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Roboto:wght@400;700&display=swap');
+
+
+
+
+$main-color: #fffefb;
+$primary-color: #141414;
+$action-color: #57aee7;
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  // max-width: 1360px;
+  // margin: auto;
+  background-color: var(--background);
+}
+
+h1 {
+  color: var(--primary);
+}
