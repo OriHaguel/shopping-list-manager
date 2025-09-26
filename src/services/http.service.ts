@@ -1,56 +1,119 @@
-import axios, { AxiosResponse, AxiosRequestConfig, AxiosError } from 'axios';
-const BASE_URL = process.env.NODE_ENV === 'production'
-    ? '/api/'
-    : '//localhost:3000/api/';
+import axios, {
+    AxiosError,
+    AxiosInstance,
+    AxiosRequestConfig,
+} from 'axios';
 
-
+const BASE_URL =
+    process.env.NODE_ENV === 'production'
+        ? '/api/'
+        : 'http://localhost:3030/api/';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
-// Create axios instance with default config
-const axiosInstance = axios.create({
-    withCredentials: true
+export interface RequestOptions {
+    params?: Record<string, any>;
+    signal?: AbortSignal;
+    config?: AxiosRequestConfig;
+}
+
+/** Normalized error type */
+export interface NormalizedHttpError extends Error {
+    isAxiosError: boolean;
+    status?: number;
+    payload?: any;
+}
+
+/** axios instance with sane defaults */
+const axiosInstance: AxiosInstance = axios.create({
+    baseURL: BASE_URL,
+    withCredentials: true,
+    timeout: 15_000,
+    headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+    },
 });
 
-// Define service methods
-export const httpService = {
-    get<T = any>(endpoint: string, data?: any): Promise<T> {
-        return ajax<T>(endpoint, 'GET', data);
-    },
-    post<T = any>(endpoint: string, data: any): Promise<T> {
-        return ajax<T>(endpoint, 'POST', data);
-    },
-    put<T = any>(endpoint: string, data: any): Promise<T> {
-        return ajax<T>(endpoint, 'PUT', data);
-    },
-    delete<T = any>(endpoint: string, data: any): Promise<T> {
-        return ajax<T>(endpoint, 'DELETE', data);
+/** centralized error normalizer (throws) */
+function handleAxiosError(err: unknown): never {
+    if (axios.isAxiosError(err)) {
+        const axiosErr = err as AxiosError;
+        const status = axiosErr.response?.status;
+        const payload = axiosErr.response?.data;
+
+        // unauthorized handling
+        if (status === 401) {
+            try {
+                sessionStorage.clear();
+            } finally {
+                window.location.assign('/');
+            }
+        }
+
+        const normalized: NormalizedHttpError = {
+            name: 'HttpError',
+            message:
+                (payload &&
+                    (payload as any).message) ||
+                (payload as any)?.error ||
+                axiosErr.message ||
+                'Network or server error',
+            isAxiosError: true,
+            status,
+            payload,
+        };
+
+        throw normalized;
     }
-};
 
-async function ajax<T>(endpoint: string, method: HttpMethod = 'GET', data: any = null): Promise<T> {
-    const url = `${BASE_URL}${endpoint}`;
-    const params = (method === 'GET') ? data : null;
+    throw {
+        name: 'UnknownError',
+        message: String(err) || 'Unknown error',
+        isAxiosError: false,
+    } as NormalizedHttpError;
+}
 
-    const config: AxiosRequestConfig = {
-        url,
-        method,
-        data,
-        params
-    };
+/** single request wrapper */
+async function request<T = any>(
+    method: HttpMethod,
+    endpoint: string,
+    data?: any,
+    opts: RequestOptions = {}
+): Promise<T> {
+    const { params, signal, config } = opts;
 
     try {
-        const res: AxiosResponse<T> = await axiosInstance(config);
+        const res = await axiosInstance.request<T>({
+            url: endpoint,
+            method,
+            data: method === 'GET' ? undefined : data,
+            params: method === 'GET' ? params || data : params,
+            signal,
+            ...config,
+        });
         return res.data;
-    } catch (error) {
-        const err = error as AxiosError;
-        console.log(`Had Issues ${method}ing to the backend, endpoint: ${endpoint}, with data: `, data);
-        console.dir(err);
-
-        if (err.response?.status === 401) {
-            sessionStorage.clear();
-            window.location.assign('/');
-        }
-        throw err;
+    } catch (err) {
+        handleAxiosError(err);
     }
 }
+
+/** exported service */
+export const httpService = {
+    get<T = any>(
+        endpoint: string,
+        params?: any,
+        opts?: Omit<RequestOptions, 'params'>
+    ) {
+        return request<T>('GET', endpoint, undefined, { params, ...opts });
+    },
+    post<T = any>(endpoint: string, data?: any, opts?: RequestOptions) {
+        return request<T>('POST', endpoint, data, opts);
+    },
+    put<T = any>(endpoint: string, data?: any, opts?: RequestOptions) {
+        return request<T>('PUT', endpoint, data, opts);
+    },
+    delete<T = any>(endpoint: string, data?: any, opts?: RequestOptions) {
+        return request<T>('DELETE', endpoint, data, opts);
+    },
+};
