@@ -8,7 +8,7 @@ export function ListCard({ list }: { list: List }) {
     const router = useRouter();
 
     const handleClick = () => {
-        router.push(`/${list.id}`);
+        router.push(`/${list._id}`);
     };
 
     return (

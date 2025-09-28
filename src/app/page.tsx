@@ -5,15 +5,20 @@ import { CreateListButton } from '@/components/CreateListButton';
 import { ListCard } from '@/components/ListCard';
 import { CreateListModal } from '@/components/CreateListModal';
 import { List } from '@/types';
+import { signup } from '@/services/user/user.service';
+import { Button } from '@/components/ui/button';
 
 
 export default function HomePage() {
   const [lists, setLists] = useState<List[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const userToTest = {
+    email: 'what@gmail.com',
+    password: 'gdf8g7dfg7df8'
+  }
   const handleCreateList = (name: string) => {
     const newList: List = {
-      id: crypto.randomUUID(),
+      _id: crypto.randomUUID(),
       name,
       userId: ''
     };
@@ -38,6 +43,10 @@ export default function HomePage() {
             <CreateListButton onClick={() => setIsModalOpen(true)} />
           </div>
 
+          <div className="mb-8">
+            <Button onClick={() => signup(userToTest)}>CLICK ME BITCH</Button>
+          </div>
+
           {lists.length === 0 ? (
             <div className="text-center py-16">
               <div className="text-slate-400 mb-4">
@@ -52,7 +61,7 @@ export default function HomePage() {
           ) : (
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {lists.map((list) => (
-                <ListCard key={list.id} list={list} />
+                <ListCard key={list._id} list={list} />
               ))}
             </div>
           )}
