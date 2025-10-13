@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CreateListButton } from '@/components/CreateListButton';
 import { ListCard } from '@/components/ListCard';
 import { CreateListModal } from '@/components/CreateListModal';
 import { List } from '@/types';
-import { signup } from '@/services/user/user.service';
+import { login, logout, signup, test } from '@/services/user/user.service';
 import { Button } from '@/components/ui/button';
 
 
@@ -13,9 +13,15 @@ export default function HomePage() {
   const [lists, setLists] = useState<List[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const userToTest = {
-    email: 'what@gmail.com',
+    email: 'testest@gmail.com',
     password: 'gdf8g7dfg7df8'
   }
+
+  useEffect(() => {
+
+
+    console.log('HomePage mounted');
+  }, []);
   const handleCreateList = (name: string) => {
     const newList: List = {
       _id: crypto.randomUUID(),
@@ -44,7 +50,10 @@ export default function HomePage() {
           </div>
 
           <div className="mb-8">
-            <Button onClick={() => signup(userToTest)}>CLICK ME BITCH</Button>
+            <Button onClick={() => signup(userToTest)}>Sign up</Button>
+            <Button onClick={() => login(userToTest)}>Log in</Button>
+            <Button onClick={() => logout()}>Log out</Button>
+            <Button onClick={() => test()}>test</Button>
           </div>
 
           {lists.length === 0 ? (

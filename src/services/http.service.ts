@@ -117,3 +117,4 @@ export const httpService = {
         return request<T>('DELETE', endpoint, data, opts);
     },
 };
+export { axiosInstance };
