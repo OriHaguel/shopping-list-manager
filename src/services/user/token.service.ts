@@ -6,20 +6,33 @@ export interface TokenResponse {
     expiresIn?: number; // in seconds
 }
 
+function parseJwt(token: string) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+        atob(base64)
+            .split('')
+            .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+            .join('')
+    );
+    return JSON.parse(jsonPayload);
+}
 class TokenService {
     private accessToken: string | null = null;
-    private tokenExpiry: number | null = null;
+    private tokenExpiry: Date | null = null;
     private refreshPromise: Promise<string> | null = null;
 
     /**
      * Store access token with optional expiry
-     */
-    setAccessToken(token: string, expiresIn?: number): void {
+    */
+    setAccessToken(token: string): void {
         this.accessToken = token;
-
-        if (expiresIn) {
-            const expiryTime = Date.now() + expiresIn * 1000;
+        // payload.exp doesnt work rn fix later no manuallt expired
+        const payload = parseJwt(token);
+        if (payload.exp) {
+            const expiryTime = new Date(payload.exp * 1000);
             this.tokenExpiry = expiryTime;
+            console.log("🚀 ~ TokenService ~ accessToken:", this.tokenExpiry)
         } else {
             this.tokenExpiry = null;
         }
@@ -39,9 +52,10 @@ class TokenService {
         if (!this.tokenExpiry) return false;
 
         const now = Date.now();
-
+        const expiry = this.tokenExpiry.getTime(); // number
         // Consider token expired if it expires within 60 seconds
-        return now >= this.tokenExpiry - 60000;
+        return now >= expiry;
+        // return now >= this.tokenExpiry - 60000;
     }
 
     /**

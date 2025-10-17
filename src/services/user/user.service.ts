@@ -11,7 +11,7 @@ export async function signup(userCred: UserSignupLogin): Promise<SavedUser> {
 
         // Store access token if provided
         if (response.accessToken) {
-            tokenService.setAccessToken(response.accessToken, response.expiresIn);
+            tokenService.setAccessToken(response.accessToken);
         }
 
         return saveLoggedinUser(response.user);
@@ -26,10 +26,9 @@ export async function login(userCred: UserSignupLogin): Promise<SavedUser> {
     try {
         const response = await httpService.post('users/login', userCred);
         console.log('user loggedin!!!!');
-
         // Store access token if provided
         if (response.accessToken) {
-            tokenService.setAccessToken(response.accessToken, response.expiresIn);
+            tokenService.setAccessToken(response.accessToken);
         }
 
         return saveLoggedinUser(response.user);

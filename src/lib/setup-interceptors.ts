@@ -12,15 +12,14 @@ async function refreshAccessToken(): Promise<string> {
     try {
         // Make refresh request without interceptors to avoid infinite loop
         const response = await axiosInstance.post(
-            'auth/refresh',
+            'users/refresh',
             {},
             {
                 headers: { 'X-Skip-Interceptor': 'true' }
             }
         );
-
-        const { accessToken, expiresIn } = response.data;
-        tokenService.setAccessToken(accessToken, expiresIn);
+        const { accessToken } = response.data;
+        tokenService.setAccessToken(accessToken);
 
         return accessToken;
     } catch (error) {
@@ -34,7 +33,6 @@ async function refreshAccessToken(): Promise<string> {
 export function setupAxiosInterceptors() {
     if (isSetup) return;
     isSetup = true;
-
     // ============ REQUEST INTERCEPTOR ============
     axiosInstance.interceptors.request.use(
         async (config) => {
@@ -57,7 +55,6 @@ export function setupAxiosInterceptors() {
             // 2. Check if access token needs refresh
             if (tokenService.isTokenExpired()) {
                 let refreshPromise = tokenService.getRefreshPromise();
-
                 if (!refreshPromise) {
                     refreshPromise = refreshAccessToken();
                     tokenService.setRefreshPromise(refreshPromise);
@@ -96,22 +93,31 @@ export function setupAxiosInterceptors() {
             const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
             // Handle 403 CSRF token errors
-            if (error.response?.status === 403 &&
-                error.response?.data?.message?.toLowerCase().includes('csrf')) {
+            if (error.response?.status === 403) {
+                const errorData = error.response.data;
+                let errorMessage = '';
 
-                if (!originalRequest._retry) {
-                    originalRequest._retry = true;
+                if (typeof errorData === 'string') {
+                    errorMessage = errorData;
+                } else if (errorData && typeof (errorData as any).message === 'string') {
+                    errorMessage = (errorData as any).message;
+                }
 
-                    try {
-                        // Fetch new CSRF token
-                        const response = await axiosInstance.get('/users/csrf-token');
-                        updateCsrfToken(response.data.csrfToken);
+                if (errorMessage.toLowerCase().includes('csrf')) {
+                    if (!originalRequest._retry) {
+                        originalRequest._retry = true;
 
-                        // Retry original request with new token
-                        originalRequest.headers['x-csrf-token'] = response.data.csrfToken;
-                        return axiosInstance(originalRequest);
-                    } catch (retryError) {
-                        return Promise.reject(retryError);
+                        try {
+                            // Fetch new CSRF token
+                            const response = await axiosInstance.get('/users/csrf-token');
+                            updateCsrfToken(response.data.csrfToken);
+
+                            // Retry original request with new token
+                            originalRequest.headers['x-csrf-token'] = response.data.csrfToken;
+                            return axiosInstance(originalRequest);
+                        } catch (retryError) {
+                            return Promise.reject(retryError);
+                        }
                     }
                 }
             }
