@@ -1,0 +1,62 @@
+// components/ListsPage/ListsPage.module.scss
+.container {
+    min-height: 100vh;
+    margin: auto;
+    padding-top: 32px;
+    padding-bottom: 100px;
+    max-width: 625px;
+}
+
+.header {
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0 0 8px 0;
+}
+
+.listsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(625px, 1fr));
+    gap: 24px;
+}
+
+.emptyState {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 80px 24px;
+}
+
+.emptyIcon {
+    font-size: 80px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.emptyText {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 8px 0;
+}
+
+.emptySubtext {
+    font-size: 14px;
+    color: #6B7280;
+    margin: 0;
+}
+
+@media (max-width: 640px) {
+    .container {
+        padding: 24px 16px;
+    }
+
+    .listsGrid {
+        grid-template-columns: 1fr;
+    }
+}

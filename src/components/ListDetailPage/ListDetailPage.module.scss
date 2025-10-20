@@ -1,0 +1,84 @@
+// components/ListDetailPage/ListDetailPage.module.scss
+.container {
+    min-height: 100vh;
+    background: #E8F1F5;
+    padding: 32px 24px;
+
+}
+
+.header {
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    max-width: 625px;
+
+}
+
+.backButton {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    color: #6B7280;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: #F5F7FA;
+        color: #5B8CA8;
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0;
+}
+
+.content {
+    margin: auto;
+    max-width: 625px;
+}
+
+.card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 2px 16px rgba(91, 140, 168, 0.15);
+}
+
+.listId {
+    font-size: 14px;
+    font-weight: 600;
+    color: #5B8CA8;
+    margin: 0 0 16px 0;
+}
+
+.description {
+    font-size: 14px;
+    color: #6B7280;
+    line-height: 1.6;
+    margin: 0;
+}
+
+@media (max-width: 640px) {
+    .container {
+        padding: 24px 16px;
+    }
+
+    .card {
+        padding: 24px;
+    }
+}

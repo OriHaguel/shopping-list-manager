@@ -1,0 +1,124 @@
+// components/CreateListModal/CreateListModal.module.scss
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 16px;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal {
+    background: white;
+    border-radius: 20px;
+    padding: 32px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #1F2937;
+    margin: 0 0 24px 0;
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #E0E5EB;
+    background: white;
+    font-size: 14px;
+    color: #1F2937;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    font-family: inherit;
+
+    &::placeholder {
+        color: #6B7280;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: #5B8CA8;
+        box-shadow: 0 0 0 3px rgba(91, 140, 168, 0.1);
+    }
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.button {
+    flex: 1;
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    font-family: inherit;
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.cancelButton {
+    background: #F5F7FA;
+    color: #6B7280;
+
+    &:hover {
+        background: #E0E5EB;
+    }
+}
+
+.createButton {
+    background: #FF8B6B;
+    color: white;
+
+    &:hover {
+        background: #FFA07A;
+    }
+
+    &:disabled {
+        background: #E0E5EB;
+        color: #6B7280;
+        cursor: not-allowed;
+
+        &:hover {
+            background: #E0E5EB;
+        }
+    }
+}
