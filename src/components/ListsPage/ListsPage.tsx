@@ -9,7 +9,8 @@ import FAB from '../FAB/FAB';
 import styles from './ListsPage.module.scss';
 import { List } from '@/types';
 import { Button } from '../ui/button';
-import { login, getLoggedinUser } from '@/services/user/user.service';
+import { login } from '@/services/user/user.service';
+import { createList, getLists } from '@/services/list/list.service';
 
 export default function ListsPage() {
     const [lists, setLists] = useState<List[]>([]);
@@ -19,13 +20,15 @@ export default function ListsPage() {
         email: 'testest@gmail.com',
         password: 'gdf8g7dfg7df8'
     }
+    const listToTest = {
+        name: 'New List'
+    }
+
+
     const handleCreateList = (name: string) => {
-        const user = getLoggedinUser();
-        if (!user) throw new Error('User not logged in');
         const newList: List = {
             _id: `list-${Date.now()}`,
             name,
-            userId: user._id
         };
         setLists([...lists, newList]);
         setIsModalOpen(false);
@@ -44,7 +47,7 @@ export default function ListsPage() {
             <div className={styles.header}>
                 <h1 className={styles.title}>Your shopping lists</h1>
                 <Button onClick={() => login(userToTest)}>Log in</Button>
-                {/* <Button onClick={() => console.log(getLoggedinUser())}>Log in</Button> */}
+                <Button onClick={() => createList(listToTest)}>create list!</Button>
                 <FAB onClick={() => setIsModalOpen(true)} />
             </div>
 

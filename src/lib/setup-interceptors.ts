@@ -10,12 +10,16 @@ let isSetup = false;
  */
 async function refreshAccessToken(): Promise<string> {
     try {
+        const csrfToken = getCsrfToken();
         // Make refresh request without interceptors to avoid infinite loop
         const response = await axiosInstance.post(
             'users/refresh',
             {},
             {
-                headers: { 'X-Skip-Interceptor': 'true' }
+                headers: {
+                    'X-Skip-Interceptor': 'true',
+                    'x-csrf-token': csrfToken
+                }
             }
         );
         const { accessToken } = response.data;
@@ -48,6 +52,7 @@ export function setupAxiosInterceptors() {
             if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '')) {
                 const csrfToken = getCsrfToken();
                 if (csrfToken) {
+                    console.log("🚀 ~ setupAxiosInterceptors ~ csrfToken:", csrfToken)
                     config.headers['x-csrf-token'] = csrfToken;
                 }
             }

@@ -20,10 +20,13 @@ export interface UserSignupLogin extends UserBase {
     password: string;
 }
 
-export interface List {
-    _id: string;
+
+export interface ListBase {
     name: string;
-    userId: string
+}
+export interface List extends ListBase {
+    _id: string;
+
 }
 
 export interface Item {
