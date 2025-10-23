@@ -2,6 +2,9 @@
 'use client';
 
 import styles from './ListDetailPage.module.scss';
+import { ItemBase } from '@/types';
+import { createEmptyItem, createItem, getItems } from '@/services/item/item.service';
+import { Button } from '../ui/button';
 
 interface ListDetailPageProps {
     listId: string;
@@ -9,6 +12,8 @@ interface ListDetailPageProps {
 }
 
 export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) {
+    const item = { ...createEmptyItem(), listId };
+    console.log("🚀 ~ ListDetailPage ~ item:", item)
     return (
         <div className={styles.container}>
             <div className={styles.header}>
@@ -18,6 +23,9 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
                     </svg>
                 </button>
                 <h1 className={styles.title}>List Detail</h1>
+                <Button onClick={() => createItem(item)}>create item</Button>
+                <Button onClick={() => (getItems(listId).then(items => console.log(items)))}>get item</Button>
+
             </div>
 
             <div className={styles.content}>
