@@ -1,7 +1,7 @@
 // components/ListsPage/ListsPage.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import CreateListModal from '../CreateListModal/CreateListModal';
@@ -10,7 +10,7 @@ import FAB from '../FAB/FAB';
 import styles from './ListsPage.module.scss';
 import { List } from '@/types';
 import { Button } from '../ui/button';
-import { getLoggedinUser, login } from '@/services/user/user.service';
+import { login } from '@/services/user/user.service';
 import { createList, getLists, deleteList } from '@/services/list/list.service';
 
 export default function ListsPage() {
@@ -130,7 +130,6 @@ export default function ListsPage() {
                             key={list._id}
                             list={list}
                             onClick={() => handleListClick(list._id)}
-                            // onDelete={() => console.log('delete')}
                             onDelete={() => handleDeleteList(list._id)}
                         />
                     ))

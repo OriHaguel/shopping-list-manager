@@ -1,0 +1,40 @@
+import { httpService } from "../http.service";
+import { Item, ItemBase } from "@/types";
+
+export async function createItem(item: ItemBase): Promise<ItemBase | void> {
+    try {
+        const newList = await httpService.post('items', item);
+        return newList
+    } catch (err) {
+        console.error('Error fetching lists:', err);
+    }
+}
+function createEmptyItem(): ItemBase {
+    return {
+        listId: '',
+        name: '',
+        category: '',
+        checked: false,
+        price: 0,
+    };
+}
+
+// export async function getLists(): Promise<List[]> {
+//     try {
+//         const response = await httpService.get('lists');
+//         console.log('yo')
+//         return response
+//     } catch (err) {
+//         // console.error('Error fetching lists:', err);
+//         return [];
+//     }
+// }
+
+// export async function deleteList(id: string) {
+//     try {
+//         const newList = await httpService.delete('lists' + `/${id}`);
+//         return newList
+//     } catch (err) {
+//         console.error('Error fetching lists:', err);
+//     }
+// }

@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { httpService } from "../http.service";
 import { List, ListBase } from "@/types";
 

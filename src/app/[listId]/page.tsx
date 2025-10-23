@@ -1,7 +1,6 @@
 // app/[listId]/page.tsx
 'use client';
 
-import React from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import ListDetailPage from '@/components/ListDetailPage/ListDetailPage';
 

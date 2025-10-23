@@ -29,16 +29,19 @@ export interface List extends ListBase {
 
 }
 
-export interface Item {
-    _id: string;
+export interface ItemBase {
     listId: string;
     name: string;
     category: string;
     checked: boolean;
+    price: number;
     unit?: string;
-    price?: number;
     quantity?: number;
-    notes?: string;
+    description?: string;
+}
+export interface Item extends ItemBase {
+    _id: string;
+
 }
 
 
