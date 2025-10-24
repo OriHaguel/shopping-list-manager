@@ -1,5 +1,5 @@
 import { httpService } from "../http.service";
-import { Item, ItemBase } from "@/types";
+import { Item, ItemBase, UpdateItemDto } from "@/types";
 
 export async function createItem(item: ItemBase): Promise<Item | void> {
     try {
@@ -17,6 +17,30 @@ export async function getItems(listId: string): Promise<Item[] | void> {
         console.error('Error fetching lists:', err);
     }
 }
+export async function changeItem(changedItem: UpdateItemDto): Promise<Item | void> {
+    try {
+        const item = await httpService.put('items' + `/${changedItem._id}`, changedItem);
+        return item
+    } catch (err) {
+        console.error('Error fetching lists:', err);
+    }
+}
+export async function deleteItem(itemId: string) {
+    try {
+        await httpService.delete('items' + `/${itemId}`);
+    } catch (err) {
+        console.error('Error fetching lists:', err);
+    }
+}
+
+// changeItem({
+//     _id: '68fab5dce932f233b2518a40',
+//     name: 'blyat',
+//     category: 'wot',
+//     checked: true,
+//     price: 100,
+// })
+
 export function createEmptyItem(): ItemBase {
     return {
         listId: '',

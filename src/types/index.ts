@@ -43,6 +43,16 @@ export interface Item extends ItemBase {
     _id: string;
 
 }
+export interface UpdateItemDto {
+    _id: string; // required to know which item to update
+    name?: string;
+    category?: string;
+    checked?: boolean;
+    price?: number;
+    unit?: string;
+    quantity?: number;
+    description?: string;
+}
 
 
 export class AuthenticationError extends Error {
