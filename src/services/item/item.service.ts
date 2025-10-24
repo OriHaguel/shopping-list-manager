@@ -17,9 +17,9 @@ export async function getItems(listId: string): Promise<Item[] | void> {
         console.error('Error fetching lists:', err);
     }
 }
-export async function changeItem(changedItem: UpdateItemDto): Promise<Item | void> {
+export async function updateItem(id: string, changedItem: UpdateItemDto): Promise<Item | void> {
     try {
-        const item = await httpService.put('items' + `/${changedItem._id}`, changedItem);
+        const item = await httpService.put('items' + `/${id}`, changedItem);
         return item
     } catch (err) {
         console.error('Error fetching lists:', err);
@@ -33,7 +33,7 @@ export async function deleteItem(itemId: string) {
     }
 }
 
-// changeItem({
+// updateItem({
 //     _id: '68fab5dce932f233b2518a40',
 //     name: 'blyat',
 //     category: 'wot',

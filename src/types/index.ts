@@ -44,7 +44,7 @@ export interface Item extends ItemBase {
 
 }
 export interface UpdateItemDto {
-    _id: string; // required to know which item to update
+    _id?: string;
     name?: string;
     category?: string;
     checked?: boolean;

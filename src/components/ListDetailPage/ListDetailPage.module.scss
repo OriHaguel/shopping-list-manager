@@ -1,38 +1,36 @@
 // components/ListDetailPage/ListDetailPage.module.scss
+
 .container {
     min-height: 100vh;
     background: #E8F1F5;
     padding: 32px 24px;
-
 }
 
 .header {
-    margin: auto;
     display: flex;
     align-items: center;
     gap: 16px;
     margin-bottom: 32px;
-    max-width: 625px;
-
 }
 
 .backButton {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 9999px;
+    background: #FFFFFF;
     border: none;
-    background: white;
-    color: #6B7280;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    color: #6B7280;
+    cursor: pointer;
     transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
     &:hover {
         background: #F5F7FA;
-        color: #5B8CA8;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     &:active {
@@ -41,44 +39,133 @@
 }
 
 .title {
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 24px;
+    font-weight: 600;
     color: #1F2937;
     margin: 0;
 }
 
 .content {
-    margin: auto;
-    max-width: 625px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.card {
-    background: white;
+.loading,
+.empty {
+    text-align: center;
+    padding: 48px 24px;
+    color: #6B7280;
+    font-size: 14px;
+}
+
+.itemsList {
+    background: #FFFFFF;
     border-radius: 16px;
-    padding: 32px;
+    padding: 8px;
     box-shadow: 0 2px 16px rgba(91, 140, 168, 0.15);
 }
 
-.listId {
-    font-size: 14px;
-    font-weight: 600;
-    color: #5B8CA8;
-    margin: 0 0 16px 0;
+.itemRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+        background: #F5F7FA;
+    }
 }
 
-.description {
-    font-size: 14px;
-    color: #6B7280;
-    line-height: 1.6;
-    margin: 0;
+.checkboxWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
+.checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+
+    &:checked~.checkmark {
+        background: #FF8B6B;
+        border-color: #FF8B6B;
+
+        &::after {
+            display: block;
+        }
+    }
+
+    &:focus~.checkmark {
+        box-shadow: 0 0 0 3px rgba(91, 140, 168, 0.1);
+    }
+}
+
+.checkmark {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #E0E5EB;
+    border-radius: 8px;
+    background: #FFFFFF;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::after {
+        content: '';
+        display: none;
+        width: 6px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+        margin-bottom: 2px;
+    }
+
+    &:hover {
+        border-color: #5B8CA8;
+    }
+}
+
+.itemName {
+    font-size: 14px;
+    color: #1F2937;
+    font-weight: 400;
+    line-height: 1.5;
+    flex: 1;
+    transition: all 0.2s ease;
+
+    &.completed {
+        color: #6B7280;
+        text-decoration: line-through;
+        opacity: 0.6;
+    }
+}
+
+// Responsive adjustments
 @media (max-width: 640px) {
     .container {
         padding: 24px 16px;
     }
 
-    .card {
-        padding: 24px;
+    .header {
+        margin-bottom: 24px;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .itemRow {
+        padding: 16px 12px;
     }
 }
