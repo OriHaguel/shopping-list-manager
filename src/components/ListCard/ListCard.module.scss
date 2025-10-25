@@ -9,7 +9,6 @@
     position: relative;
 
     &:hover {
-        transform: translateY(-2px);
         box-shadow: 0 4px 20px rgba(91, 140, 168, 0.2);
     }
 
@@ -36,10 +35,13 @@
     margin: 0;
 }
 
-.deleteButton {
+.menuContainer {
     position: absolute;
-    top: 20px;
+    top: 25px;
     right: 20px;
+}
+
+.menuButton {
     width: 32px;
     height: 32px;
     border-radius: 50%;
@@ -54,10 +56,81 @@
 
     &:hover {
         background: #F5F7FA;
-        color: #FF8B6B;
+        color: #5B8CA8;
     }
 
     &:active {
         transform: scale(0.95);
+    }
+}
+
+.menu {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    min-width: 160px;
+    z-index: 10;
+    animation: menuFadeIn 0.2s ease;
+}
+
+@keyframes menuFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.menuItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border: none;
+    background: transparent;
+    color: #1F2937;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+
+    svg {
+        flex-shrink: 0;
+        color: #6B7280;
+        transition: color 0.2s ease;
+    }
+
+    &:hover {
+        background: #F5F7FA;
+
+        svg {
+            color: #5B8CA8;
+        }
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+
+    &.deleteItem {
+        &:hover {
+            background: #FEF2F2;
+            color: #FF8B6B;
+
+            svg {
+                color: #FF8B6B;
+            }
+        }
     }
 }
