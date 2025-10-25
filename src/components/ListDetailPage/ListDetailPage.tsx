@@ -5,7 +5,6 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './ListDetailPage.module.scss';
 import { Item } from '@/types';
 import { getItems, updateItem } from '@/services/item/item.service';
-import { Button } from '../ui/button';
 
 interface ListDetailPageProps {
     listId: string;
@@ -15,42 +14,36 @@ interface ListDetailPageProps {
 export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) {
     const queryClient = useQueryClient();
 
-    // Fetch items with React Query
-    const { data: items = [], isLoading } = useQuery({
+    const { data: items = [], isLoading, isError, error } = useQuery({
         queryKey: ['items', listId],
         queryFn: () => getItems(listId),
-        staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
+        staleTime: 5 * 60 * 1000,
     });
 
-    // Generic mutation for updating any item property
     const updateItemMutation = useMutation({
         mutationFn: ({ _id, updates }: { _id: string; updates: Partial<Item> }) =>
             updateItem(_id, updates),
         onMutate: async ({ _id, updates }) => {
-            // Cancel outgoing refetches
             await queryClient.cancelQueries({ queryKey: ['items', listId] });
-
-            // Snapshot the previous value
             const previousItems = queryClient.getQueryData<Item[]>(['items', listId]);
 
-            // Optimistically update
             queryClient.setQueryData<Item[]>(['items', listId], (old = []) =>
-                old.map(item =>
-                    item._id === _id ? { ...item, ...updates } : item
-                )
+                old.map(item => item._id === _id ? { ...item, ...updates } : item)
             );
 
             return { previousItems };
         },
-        onError: (err, variables, context) => {
-            // Rollback on error
+        onError: (err, _variables, context) => {
             if (context?.previousItems) {
                 queryClient.setQueryData(['items', listId], context.previousItems);
             }
+            console.error('Failed to update item:', err);
         },
-        onSettled: () => {
-            // Refetch after error or success
-            queryClient.invalidateQueries({ queryKey: ['items', listId] });
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['items', listId],
+                refetchType: 'none'
+            });
         },
     });
 
@@ -63,18 +56,39 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
 
     return (
         <div className={styles.container}>
-            <div className={styles.header}>
-                <button className={styles.backButton} onClick={onBack} aria-label="Go back">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M19 12H5M12 19L5 12L12 5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <header className={styles.header}>
+                <button
+                    className={styles.backButton}
+                    onClick={onBack}
+                    aria-label="Go back to lists"
+                    type="button"
+                >
+                    <svg
+                        width="24"
+                        height="24"
+                        fill="none"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M19 12H5M12 19L5 12L12 5"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
                     </svg>
                 </button>
                 <h1 className={styles.title}>List Detail</h1>
-            </div>
+            </header>
 
-            <div className={styles.content}>
+            <main className={styles.content}>
                 {isLoading ? (
                     <div className={styles.loading}>Loading items...</div>
+                ) : isError ? (
+                    <div className={styles.error}>
+                        <p>Failed to load items. Please try again.</p>
+                        {error instanceof Error && <p className={styles.errorDetail}>{error.message}</p>}
+                    </div>
                 ) : items.length === 0 ? (
                     <div className={styles.empty}>
                         <p>No items yet. Start adding tasks to your list!</p>
@@ -89,9 +103,8 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
                                         checked={item.checked || false}
                                         onChange={() => handleToggleItem(item._id, item.checked || false)}
                                         className={styles.checkbox}
-                                        disabled={updateItemMutation.isPending}
                                     />
-                                    <span className={styles.checkmark}></span>
+                                    <span className={styles.checkmark} />
                                 </label>
                                 <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
                                     {item.name}
@@ -100,7 +113,7 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
                         ))}
                     </div>
                 )}
-            </div>
+            </main>
         </div>
     );
 }
