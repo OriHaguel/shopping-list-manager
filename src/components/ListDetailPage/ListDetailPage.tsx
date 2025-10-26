@@ -6,6 +6,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './ListDetailPage.module.scss';
 import { Item, ItemBase } from '@/types';
 import { getItems, updateItem, createItem } from '@/services/item/item.service';
+import { getList } from '@/services/list/list.service';
 
 interface ListDetailPageProps {
     listId: string;
@@ -19,6 +20,11 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
     const { data: items = [], isLoading, isError, error } = useQuery({
         queryKey: ['items', listId],
         queryFn: () => getItems(listId),
+        staleTime: 5 * 60 * 1000,
+    });
+    const { data: list } = useQuery({
+        queryKey: ['list', listId],
+        queryFn: () => getList(listId),
         staleTime: 5 * 60 * 1000,
     });
 
@@ -125,26 +131,35 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
                             <p>No items yet. Start adding tasks to your list!</p>
                         </div>
                     ) : (
-                        <div className={styles.itemsList}>
-                            {items.map((item) => (
-                                <div key={item._id} className={styles.itemRow}>
-                                    <label className={styles.checkboxWrapper}>
-                                        <input
-                                            type="checkbox"
-                                            checked={item.checked || false}
-                                            onChange={() => handleToggleItem(item._id, item.checked || false)}
-                                            className={styles.checkbox}
-                                        />
-                                        <span className={styles.checkmark} />
-                                    </label>
-                                    <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
-                                        {item.name}
-                                    </span>
-                                    <span className={styles.itemPrice}>
-                                        {item.price + '$'}
-                                    </span>
+                        <div className='flex flex-col'>
+                            <div className={styles.itemInputscontainer}>
+                                <div className='p-4 pt-6'>
+                                    <div className={styles.itemInputs}>
+                                        <span className='pl-4'>{list?.name}</span>
+                                    </div>
                                 </div>
-                            ))}
+                            </div>
+                            <div className={styles.itemsList}>
+                                {items.map((item) => (
+                                    <div key={item._id} className={styles.itemRow}>
+                                        <label className={styles.checkboxWrapper}>
+                                            <input
+                                                type="checkbox"
+                                                checked={item.checked || false}
+                                                onChange={() => handleToggleItem(item._id, item.checked || false)}
+                                                className={styles.checkbox}
+                                            />
+                                            <span className={styles.checkmark} />
+                                        </label>
+                                        <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
+                                            {item.name}
+                                        </span>
+                                        <span className={styles.itemPrice}>
+                                            {item.price + '$'}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     )}
                 </main>

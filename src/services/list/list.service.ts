@@ -11,19 +11,27 @@ export async function createList(list: ListBase): Promise<List | void> {
 }
 export async function getLists(): Promise<List[]> {
     try {
-        const response = await httpService.get('lists');
-        console.log('yo')
-        return response
+        const lists = await httpService.get('lists');
+        return lists
     } catch (err) {
-        // console.error('Error fetching lists:', err);
+        console.error('Error fetching lists:', err);
         return [];
+    }
+}
+export async function getList(listId: string): Promise<List | null> {
+    try {
+        const list = await httpService.get('lists' + `/${listId}`);
+        return list
+    } catch (err) {
+        console.error('Error fetching lists:', err);
+        return null;
     }
 }
 
 export async function deleteList(id: string) {
     try {
-        const newList = await httpService.delete('lists' + `/${id}`);
-        return newList
+        await httpService.delete('lists' + `/${id}`);
+
     } catch (err) {
         console.error('Error fetching lists:', err);
     }
