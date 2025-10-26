@@ -80,40 +80,58 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
                 </button>
                 <h1 className={styles.title}>List Detail</h1>
             </header>
+            <div className={styles.listDetailContainer}>
+                <main className={styles.content}>
+                    {isLoading ? (
+                        <div className={styles.loading}>Loading items...</div>
+                    ) : isError ? (
+                        <div className={styles.error}>
+                            <p>Failed to load items. Please try again.</p>
+                            {error instanceof Error && <p className={styles.errorDetail}>{error.message}</p>}
+                        </div>
+                    ) : items.length === 0 ? (
+                        <div className={styles.empty}>
+                            <p>No items yet. Start adding tasks to your list!</p>
+                        </div>
+                    ) : (
+                        <div className={styles.itemsList}>
+                            {items.map((item) => (
+                                <div key={item._id} className={styles.itemRow}>
+                                    <label className={styles.checkboxWrapper}>
+                                        <input
+                                            type="checkbox"
+                                            checked={item.checked || false}
+                                            onChange={() => handleToggleItem(item._id, item.checked || false)}
+                                            className={styles.checkbox}
+                                        />
+                                        <span className={styles.checkmark} />
+                                    </label>
+                                    <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
+                                        {item.name}
+                                    </span>
+                                    <span className={styles.itemPrice}>
+                                        {item.price + '$'}
+                                    </span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </main>
 
-            <main className={styles.content}>
-                {isLoading ? (
-                    <div className={styles.loading}>Loading items...</div>
-                ) : isError ? (
-                    <div className={styles.error}>
-                        <p>Failed to load items. Please try again.</p>
-                        {error instanceof Error && <p className={styles.errorDetail}>{error.message}</p>}
+                <div className={styles.addItemContainer}>
+                    <div className={styles.addItem} >
+                        <div className='flex item-center justify-between'>
+                            <h1>Add products</h1>
+                            <button>x</button>
+                        </div>
+                        <div className='flex item-center justify-between'>
+                            <input type="text" placeholder='e.g milk' className='p-3' />
+                            <button>Add</button>
+                        </div>
                     </div>
-                ) : items.length === 0 ? (
-                    <div className={styles.empty}>
-                        <p>No items yet. Start adding tasks to your list!</p>
-                    </div>
-                ) : (
-                    <div className={styles.itemsList}>
-                        {items.map((item) => (
-                            <div key={item._id} className={styles.itemRow}>
-                                <label className={styles.checkboxWrapper}>
-                                    <input
-                                        type="checkbox"
-                                        checked={item.checked || false}
-                                        onChange={() => handleToggleItem(item._id, item.checked || false)}
-                                        className={styles.checkbox}
-                                    />
-                                    <span className={styles.checkmark} />
-                                </label>
-                                <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
-                                    {item.name}
-                                </span>
-                            </div>
-                        ))}
-                    </div>
-                )}
-            </main>
+                </div>
+            </div>
+
         </div>
     );
 }
