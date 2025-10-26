@@ -1,10 +1,11 @@
 // components/ListDetailPage/ListDetailPage.tsx
 'use client';
 
+import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './ListDetailPage.module.scss';
-import { Item } from '@/types';
-import { getItems, updateItem } from '@/services/item/item.service';
+import { Item, ItemBase } from '@/types';
+import { getItems, updateItem, createItem } from '@/services/item/item.service';
 
 interface ListDetailPageProps {
     listId: string;
@@ -13,6 +14,7 @@ interface ListDetailPageProps {
 
 export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) {
     const queryClient = useQueryClient();
+    const [itemName, setItemName] = useState('');
 
     const { data: items = [], isLoading, isError, error } = useQuery({
         queryKey: ['items', listId],
@@ -47,11 +49,40 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
         },
     });
 
+    const createItemMutation = useMutation({
+        mutationFn: (newItem: ItemBase) => createItem(newItem),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['items', listId] });
+            setItemName('');
+        },
+        onError: (err) => {
+            console.error('Failed to create item:', err);
+        },
+    });
+
     const handleToggleItem = (_id: string, currentChecked: boolean) => {
         updateItemMutation.mutate({
             _id,
             updates: { checked: !currentChecked },
         });
+    };
+
+    const handleAddItem = () => {
+        if (itemName.trim()) {
+            createItemMutation.mutate({
+                listId,
+                name: itemName.trim(),
+                price: 0,
+                checked: false,
+                category: 'none',
+            });
+        }
+    };
+
+    const handleKeyPress = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter') {
+            handleAddItem();
+        }
     };
 
     return (
@@ -119,19 +150,33 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
                 </main>
 
                 <div className={styles.addItemContainer}>
-                    <div className={styles.addItem} >
-                        <div className='flex item-center justify-between'>
-                            <h1>Add products</h1>
-                            <button>x</button>
+                    <div className={styles.addItem}>
+                        <div className={styles.addItemHeader}>
+                            <h2 className={styles.addItemTitle}>Add products</h2>
                         </div>
-                        <div className='flex item-center justify-between'>
-                            <input type="text" placeholder='e.g milk' className='p-3' />
-                            <button>Add</button>
+                        <div className={styles.inputGroup}>
+                            <input
+                                type="text"
+                                placeholder="e.g. milk"
+                                value={itemName}
+                                onChange={(e) => setItemName(e.target.value)}
+                                onKeyPress={handleKeyPress}
+                                className={styles.input}
+                            />
                         </div>
+                        <div className={styles.inputGroup}>
+                        </div>
+                        <button
+                            onClick={handleAddItem}
+                            disabled={!itemName.trim() || createItemMutation.isPending}
+                            className={styles.addButton}
+                            type="button"
+                        >
+                            {createItemMutation.isPending ? 'Adding...' : 'Add Item'}
+                        </button>
                     </div>
                 </div>
             </div>
-
         </div>
     );
 }
