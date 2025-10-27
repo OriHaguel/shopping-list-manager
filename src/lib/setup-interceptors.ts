@@ -8,7 +8,7 @@ let isSetup = false;
 /**
  * Refresh the access token by calling the refresh endpoint
  */
-export async function refreshAccessToken(): Promise<string> {
+async function refreshAccessToken(): Promise<string> {
     try {
         const csrfToken = getCsrfToken();
         // Make refresh request without interceptors to avoid infinite loop
@@ -18,7 +18,7 @@ export async function refreshAccessToken(): Promise<string> {
             {
                 headers: {
                     'X-Skip-Interceptor': 'true',
-                    'x-csrf-token': csrfToken
+                    ...(csrfToken && { 'x-csrf-token': csrfToken })
                 }
             }
         );
@@ -27,8 +27,9 @@ export async function refreshAccessToken(): Promise<string> {
 
         return accessToken;
     } catch (error) {
-        // Refresh failed, clear tokens
+        // Refresh failed, clear tokens and redirect to login
         tokenService.clearTokens();
+        window.location.assign('/');
         throw error;
     }
 }
@@ -36,6 +37,7 @@ export async function refreshAccessToken(): Promise<string> {
 export function setupAxiosInterceptors() {
     if (isSetup) return;
     isSetup = true;
+
     // ============ REQUEST INTERCEPTOR ============
     axiosInstance.interceptors.request.use(
         async (config) => {
@@ -51,7 +53,10 @@ export function setupAxiosInterceptors() {
             if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '')) {
                 const csrfToken = getCsrfToken();
                 if (csrfToken) {
+                    console.log("🚀 ~ setupAxiosInterceptors ~ csrfToken:", csrfToken);
                     config.headers['x-csrf-token'] = csrfToken;
+                } else {
+                    console.warn('CSRF token not available yet for', method, config.url);
                 }
             }
 
@@ -112,7 +117,9 @@ export function setupAxiosInterceptors() {
 
                         try {
                             // Fetch new CSRF token
-                            const response = await axiosInstance.get('/users/csrf-token');
+                            const response = await axiosInstance.get('/users/csrf-token', {
+                                headers: { 'X-Skip-Interceptor': 'true' }
+                            });
                             updateCsrfToken(response.data.csrfToken);
 
                             // Retry original request with new token
@@ -155,7 +162,7 @@ export function setupAxiosInterceptors() {
                     return axiosInstance(originalRequest);
                 } catch (refreshError) {
                     // Refresh failed, reject the original request
-                    return Promise.reject(error);
+                    return Promise.reject(refreshError);
                 }
             }
 

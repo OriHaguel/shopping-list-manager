@@ -2,35 +2,43 @@
 
 import { useEffect, useState } from 'react';
 import { initializeCsrf } from '@/lib/csrf';
-import { setupAxiosInterceptors, refreshAccessToken } from '@/lib/setup-interceptors';
+import { setupAxiosInterceptors } from '@/lib/setup-interceptors';
 
 export function Providers({ children }: { children: React.ReactNode }) {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isInitialized, setIsInitialized] = useState(false);
 
     useEffect(() => {
-        const initializeApp = async () => {
+        async function initialize() {
             try {
-                // Setup interceptors first (only runs once)
+                // Setup interceptors first (synchronous)
                 setupAxiosInterceptors();
 
-                // Initialize CSRF and Auth in parallel
-                await Promise.all([
-                    initializeCsrf(),
-                    refreshAccessToken().catch(err => console.error('Auth refresh failed', err)) // Don't let a failed auth refresh block CSRF
-                ]);
+                // Then fetch CSRF token (async) - WAIT for it
+                await initializeCsrf();
 
+                setIsInitialized(true);
             } catch (error) {
-                console.error('App initialization failed', error);
-            } finally {
-                setIsLoading(false);
+                console.error('Failed to initialize:', error);
+                // Even on error, allow render to avoid blocking the app
+                setIsInitialized(true);
             }
-        };
+        }
 
-        initializeApp();
+        initialize();
     }, []);
 
-    if (isLoading) {
-        return <div>Loading...</div>; // Or a proper loading spinner component
+    // Don't render children until initialization is complete
+    if (!isInitialized) {
+        return (
+            <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100vh'
+            }}>
+                Loading...
+            </div>
+        );
     }
 
     return <>{children}</>;

@@ -1,4 +1,4 @@
-import { AuthenticationError, SavedUser, User, UserSignupLogin } from "@/types";
+import { AuthenticationError, SavedUser, UserSignupLogin } from "@/types";
 import { httpService } from "../http.service";
 import { tokenService } from "./token.service";
 
