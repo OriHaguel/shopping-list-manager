@@ -38,7 +38,7 @@ export default function ListsPage() {
         queryKey: ['lists'],
         queryFn: getLists,
         // staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
-        enabled: shouldList
+        // enabled: shouldList
     });
 
 

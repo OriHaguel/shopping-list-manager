@@ -8,7 +8,7 @@ let isSetup = false;
 /**
  * Refresh the access token by calling the refresh endpoint
  */
-async function refreshAccessToken(): Promise<string> {
+export async function refreshAccessToken(): Promise<string> {
     try {
         const csrfToken = getCsrfToken();
         // Make refresh request without interceptors to avoid infinite loop
@@ -22,6 +22,7 @@ async function refreshAccessToken(): Promise<string> {
                 }
             }
         );
+        console.log('this is called')
         const { accessToken } = response.data;
         tokenService.setAccessToken(accessToken);
 
