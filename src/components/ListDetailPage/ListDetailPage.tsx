@@ -7,6 +7,7 @@ import styles from './ListDetailPage.module.scss';
 import { Item, ItemBase } from '@/types';
 import { getItems, updateItem, createItem } from '@/services/item/item.service';
 import { getList } from '@/services/list/list.service';
+import { AddProducts } from '../AddProducts/AddProducts';
 
 interface ListDetailPageProps {
     listId: string;
@@ -85,38 +86,11 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
         }
     };
 
-    const handleKeyPress = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter') {
-            handleAddItem();
-        }
-    };
+
 
     return (
         <div className={styles.container}>
-            <header className={styles.header}>
-                <button
-                    className={styles.backButton}
-                    onClick={onBack}
-                    aria-label="Go back to lists"
-                    type="button"
-                >
-                    <svg
-                        width="24"
-                        height="24"
-                        fill="none"
-                        stroke="currentColor"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M19 12H5M12 19L5 12L12 5"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                    </svg>
-                </button>
-                <h1 className={styles.title}>List Detail</h1>
-            </header>
+
             <div className={styles.listDetailContainer}>
                 <main className={styles.content}>
                     {isLoading ? (
@@ -163,34 +137,7 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
                         </div>
                     )}
                 </main>
-
-                <div className={styles.addItemContainer}>
-                    <div className={styles.addItem}>
-                        <div className={styles.addItemHeader}>
-                            <h2 className={styles.addItemTitle}>Add products</h2>
-                        </div>
-                        <div className={styles.inputGroup}>
-                            <input
-                                type="text"
-                                placeholder="e.g. milk"
-                                value={itemName}
-                                onChange={(e) => setItemName(e.target.value)}
-                                onKeyPress={handleKeyPress}
-                                className={styles.input}
-                            />
-                        </div>
-                        <div className={styles.inputGroup}>
-                        </div>
-                        <button
-                            onClick={handleAddItem}
-                            disabled={!itemName.trim() || createItemMutation.isPending}
-                            className={styles.addButton}
-                            type="button"
-                        >
-                            {createItemMutation.isPending ? 'Adding...' : 'Add Item'}
-                        </button>
-                    </div>
-                </div>
+                <AddProducts itemName={itemName} handleAddItem={handleAddItem} setItemName={setItemName} createItemMutation={createItemMutation} />
             </div>
         </div>
     );
