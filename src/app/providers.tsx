@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { initializeCsrf } from '@/lib/csrf';
-import { refreshAccessToken, setupAxiosInterceptors } from '@/lib/setup-interceptors';
+import { setupAxiosInterceptors } from '@/lib/setup-interceptors';
 
 export function Providers({ children }: { children: React.ReactNode }) {
     const [isInitialized, setIsInitialized] = useState(false);
@@ -16,9 +16,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 // Then fetch CSRF token (async) - WAIT for it
                 await initializeCsrf();
 
-                refreshAccessToken().catch((err) => {
-                    console.error('Failed to refresh access token during initialization:', err);
-                });
                 setIsInitialized(true);
             } catch (error) {
                 console.error('Failed to initialize:', error);

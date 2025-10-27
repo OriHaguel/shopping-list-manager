@@ -3,7 +3,7 @@ import { httpService } from "../http.service";
 import { tokenService } from "./token.service";
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser';
-
+// saveLoggedinUser AND getLoggedinUser MIGHT NOT BE NEEDED 
 export async function signup(userCred: UserSignupLogin): Promise<SavedUser> {
     try {
         const response = await httpService.post('users/signup', userCred);
@@ -13,7 +13,7 @@ export async function signup(userCred: UserSignupLogin): Promise<SavedUser> {
         if (response.accessToken) {
             tokenService.setAccessToken(response.accessToken);
         }
-
+        // MIGHT NOT BE NEEDED 
         return saveLoggedinUser(response.user);
     } catch (err) {
         throw new AuthenticationError(
