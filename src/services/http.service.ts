@@ -47,7 +47,7 @@ function handleAxiosError(err: unknown): never {
             try {
                 sessionStorage.clear();
             } finally {
-                window.location.assign('/');
+                // window.location.assign('/');
             }
         }
 

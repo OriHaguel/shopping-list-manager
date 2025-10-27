@@ -8,7 +8,7 @@ let isSetup = false;
 /**
  * Refresh the access token by calling the refresh endpoint
  */
-async function refreshAccessToken(): Promise<string> {
+export async function refreshAccessToken(): Promise<string> {
     try {
         const csrfToken = getCsrfToken();
         // Make refresh request without interceptors to avoid infinite loop
@@ -27,9 +27,8 @@ async function refreshAccessToken(): Promise<string> {
 
         return accessToken;
     } catch (error) {
-        // Refresh failed, clear tokens and redirect to login
+        // Refresh failed, clear tokens
         tokenService.clearTokens();
-        window.location.assign('/');
         throw error;
     }
 }
@@ -52,7 +51,6 @@ export function setupAxiosInterceptors() {
             if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '')) {
                 const csrfToken = getCsrfToken();
                 if (csrfToken) {
-                    console.log("🚀 ~ setupAxiosInterceptors ~ csrfToken:", csrfToken)
                     config.headers['x-csrf-token'] = csrfToken;
                 }
             }

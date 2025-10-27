@@ -26,13 +26,13 @@ class TokenService {
      * Store access token with optional expiry
     */
     setAccessToken(token: string): void {
+        console.log("🚀 ~ TokenService ~ accessToken:", token)
         this.accessToken = token;
         // payload.exp doesnt work rn fix later no manuallt expired
         const payload = parseJwt(token);
         if (payload.exp) {
             const expiryTime = new Date(payload.exp * 1000);
             this.tokenExpiry = expiryTime;
-            console.log("🚀 ~ TokenService ~ accessToken:", this.tokenExpiry)
         } else {
             this.tokenExpiry = null;
         }
