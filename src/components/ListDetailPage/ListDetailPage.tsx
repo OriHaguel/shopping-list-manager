@@ -1,13 +1,14 @@
 // components/ListDetailPage/ListDetailPage.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './ListDetailPage.module.scss';
 import { Item, ItemBase } from '@/types';
 import { getItems, updateItem, createItem } from '@/services/item/item.service';
 import { getList } from '@/services/list/list.service';
 import { AddProducts } from '../AddProducts/AddProducts';
+import { ItemInputs } from '../ItemInputs/ItemInputs';
 
 interface ListDetailPageProps {
     listId: string;
@@ -17,6 +18,8 @@ interface ListDetailPageProps {
 export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) {
     const queryClient = useQueryClient();
     const [itemName, setItemName] = useState('');
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const menuRef = useRef<HTMLDivElement>(null);
 
     const { data: items = [], isLoading, isError, error } = useQuery({
         queryKey: ['items', listId],
@@ -86,6 +89,34 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
         }
     };
 
+    const handleUncheckAll = () => {
+        items.forEach(item => {
+            if (item.checked) {
+                updateItemMutation.mutate({
+                    _id: item._id,
+                    updates: { checked: false },
+                });
+            }
+        });
+        setIsMenuOpen(false);
+    };
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        if (isMenuOpen) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isMenuOpen]);
+
     return (
         <div className={styles.container}>
 
@@ -106,9 +137,7 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
                         <div className='flex flex-col'>
                             <div className={styles.itemInputscontainer}>
                                 <div className={styles.headerRadius}>
-                                    <div className={styles.itemInputs}>
-                                        <span className='pl-4'>{list?.name}</span>
-                                    </div>
+                                    <ItemInputs list={list} menuRef={menuRef} setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} handleUncheckAll={handleUncheckAll} />
                                 </div>
                             </div>
                             <div className={styles.itemsList}>
