@@ -3,7 +3,7 @@
 .container {
     min-height: 100vh;
     background: #E8F1F5;
-    padding: 32px 24px;
+    // padding: 32px 24px;
 }
 
 .header {
@@ -84,7 +84,7 @@
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
     padding: 0.5rem;
-    box-shadow: 0 2px 16px rgba(91, 140, 168, 0.15);
+    // box-shadow: 0 2px 16px rgba(91, 140, 168, 0.15);
 }
 
 .itemRow {
@@ -184,12 +184,21 @@
     position: sticky;
     top: 0;
     padding-top: 2rem;
-    background: #FFFFFF;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    background-color: #E8F1F5;
+    z-index: 100;
+
+    .headerRadius {
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        padding: 1rem;
+        padding-top: 1.5rem;
+        background-color: #fff;
+    }
 
     .itemInputs {
 
+        position: relative;
+        background: #FFFFFF;
         margin-bottom: .75rem;
         display: flex;
         height: 2.75rem;
@@ -197,6 +206,8 @@
         justify-content: space-between;
         padding-left: 0;
         padding-right: 0;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
     }
 }
 

@@ -86,8 +86,6 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
         }
     };
 
-
-
     return (
         <div className={styles.container}>
 
@@ -107,7 +105,7 @@ export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) 
                     ) : (
                         <div className='flex flex-col'>
                             <div className={styles.itemInputscontainer}>
-                                <div className='p-4 pt-6'>
+                                <div className={styles.headerRadius}>
                                     <div className={styles.itemInputs}>
                                         <span className='pl-4'>{list?.name}</span>
                                     </div>
