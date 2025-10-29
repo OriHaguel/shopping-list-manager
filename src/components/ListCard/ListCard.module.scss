@@ -22,11 +22,13 @@
 }
 
 .name {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 1.125rem;
+    font-weight: 700;
     color: #1F2937;
     margin: 0 0 8px 0;
-    word-break: break-word;
+    // word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .date {

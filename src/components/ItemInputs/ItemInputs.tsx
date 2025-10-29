@@ -13,7 +13,7 @@ interface ItemInputsProps {
 export function ItemInputs({ list, menuRef, setIsMenuOpen, isMenuOpen, handleUncheckAll }: ItemInputsProps) {
     return (
         <div className={styles.itemInputs}>
-            <span className='pl-4'>{list?.name}</span>
+            <span className={styles.itemlistName}>{list?.name}</span>
             <div className={styles.iconGroup}>
                 <button className={styles.iconButton} aria-label="Search">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
