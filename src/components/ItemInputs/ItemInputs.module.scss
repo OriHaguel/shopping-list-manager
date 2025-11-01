@@ -97,13 +97,9 @@
             font-size: 1.875rem;
             line-height: 2.25rem;
             width: 300px;
-            // display: inline-block;
-            /* allows width control */
             overflow: hidden;
-            /* hides overflow text */
             text-overflow: ellipsis;
-            /* adds "..." when cut off */
-            // white-space: nowrap;
-            /* keeps text on one line */
+            padding-bottom: 0.2rem;
+
         }
     }
