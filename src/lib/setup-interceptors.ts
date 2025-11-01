@@ -7,8 +7,10 @@ let isSetup = false;
 
 /**
  * Refresh the access token by calling the refresh endpoint
+ * Includes retry logic for transient failures (network errors, server errors)
+ * but immediately fails on authentication errors (401, 403)
  */
-async function refreshAccessToken(): Promise<string> {
+async function refreshAccessToken(retryCount = 0): Promise<string> {
     try {
         const csrfToken = getCsrfToken();
         // Make refresh request without interceptors to avoid infinite loop
@@ -27,7 +29,29 @@ async function refreshAccessToken(): Promise<string> {
 
         return accessToken;
     } catch (error) {
-        // Refresh failed, clear tokens and redirect to login
+        const axiosError = error as AxiosError;
+
+        // Don't retry on auth failures (401, 403) - these are permanent failures
+        if (axiosError.response?.status === 401 || axiosError.response?.status === 403) {
+            console.warn('Refresh token authentication failed, redirecting to login');
+            tokenService.clearTokens();
+            window.location.assign('/');
+            throw error;
+        }
+
+        // Retry on network errors or server errors (5xx), max 2 retries
+        const isNetworkError = !axiosError.response;
+        const isServerError = axiosError.response && axiosError.response.status >= 500;
+
+        if (retryCount < 2 && (isNetworkError || isServerError)) {
+            const delay = 1000 * (retryCount + 1); // Exponential backoff: 1s, 2s
+            console.warn(`Refresh token request failed (attempt ${retryCount + 1}/3), retrying in ${delay}ms...`);
+            await new Promise(resolve => setTimeout(resolve, delay));
+            return refreshAccessToken(retryCount + 1);
+        }
+
+        // All retries exhausted or non-retryable error
+        console.error('Refresh token request failed after all retries, redirecting to login');
         tokenService.clearTokens();
         window.location.assign('/');
         throw error;

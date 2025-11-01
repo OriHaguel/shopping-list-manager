@@ -12,10 +12,9 @@ import { ItemInputs } from '../ItemInputs/ItemInputs';
 
 interface ListDetailPageProps {
     listId: string;
-    onBack: () => void;
 }
 
-export default function ListDetailPage({ listId, onBack }: ListDetailPageProps) {
+export default function ListDetailPage({ listId }: ListDetailPageProps) {
     const queryClient = useQueryClient();
     const [itemName, setItemName] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);

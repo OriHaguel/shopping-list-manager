@@ -15,7 +15,6 @@ import { createList, getLists, deleteList } from '@/services/list/list.service';
 
 export default function ListsPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [shouldList, setShouldList] = useState(false);
     const router = useRouter();
     const queryClient = useQueryClient();
 
@@ -26,7 +25,6 @@ export default function ListsPage() {
     };
     async function loginCheck() {
         await login(userToTest)
-        setShouldList(true)
     }
     // Fetch lists with React Query
     const {
@@ -38,7 +36,6 @@ export default function ListsPage() {
         queryKey: ['lists'],
         queryFn: getLists,
         // staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
-        // enabled: shouldList
     });
 
 
