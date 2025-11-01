@@ -5,11 +5,11 @@ import { useState, useRef, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './ListDetailPage.module.scss';
 import { Item, ItemBase } from '@/types';
-import { getItems, updateItem, createItem } from '@/services/item/item.service';
+import { getItems, updateItem, createItem, createEmptyItem } from '@/services/item/item.service';
 import { getList } from '@/services/list/list.service';
 import { AddProducts } from '../AddProducts/AddProducts';
 import { ItemInputs } from '../ItemInputs/ItemInputs';
-
+import ItemDrawer, { ItemData } from '../ItemDrawer/ItemDrawer';
 interface ListDetailPageProps {
     listId: string;
 }
@@ -18,6 +18,8 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
     const queryClient = useQueryClient();
     const [itemName, setItemName] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState<Item | null>(null);
     const menuRef = useRef<HTMLDivElement>(null);
 
     const { data: items = [], isLoading, isError, error } = useQuery({
@@ -77,13 +79,12 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
     };
 
     const handleAddItem = () => {
+        const emptyItem = createEmptyItem()
         if (itemName.trim()) {
             createItemMutation.mutate({
+                ...emptyItem,
                 listId,
                 name: itemName.trim(),
-                price: 0,
-                checked: false,
-                category: 'none',
             });
         }
     };
@@ -98,6 +99,35 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
             }
         });
         setIsMenuOpen(false);
+    };
+
+    const handleItemClick = (item: Item) => {
+        setSelectedItem(item);
+        setIsDrawerOpen(true);
+    };
+
+    const handleDrawerSave = (itemData: ItemData) => {
+        if (selectedItem) {
+            updateItemMutation.mutate({
+                _id: selectedItem._id,
+                updates: {
+                    name: itemData.name,
+                    category: itemData.category,
+                    price: itemData.price || 0,
+                    unit: itemData.unit,
+                    quantity: itemData.quantity || 0,
+                    description: itemData.description,
+                    // Add quantity, unit, description to your Item type if needed
+                },
+            });
+        }
+        setIsDrawerOpen(false);
+        setSelectedItem(null);
+    };
+
+    const handleDrawerClose = () => {
+        setIsDrawerOpen(false);
+        setSelectedItem(null);
     };
 
     useEffect(() => {
@@ -118,7 +148,6 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
 
     return (
         <div className={styles.container}>
-
             <div className={styles.listDetailContainer}>
                 <main className={styles.content}>
                     {isLoading ? (
@@ -136,13 +165,26 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                         <div className='flex flex-col'>
                             <div className={styles.itemInputscontainer}>
                                 <div className={styles.headerRadius}>
-                                    <ItemInputs list={list} menuRef={menuRef} setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} handleUncheckAll={handleUncheckAll} />
+                                    <ItemInputs
+                                        list={list}
+                                        menuRef={menuRef}
+                                        setIsMenuOpen={setIsMenuOpen}
+                                        isMenuOpen={isMenuOpen}
+                                        handleUncheckAll={handleUncheckAll}
+                                    />
                                 </div>
                             </div>
                             <div className={styles.itemsList}>
                                 {items.map((item) => (
-                                    <div key={item._id} className={styles.itemRow}>
-                                        <label className={styles.checkboxWrapper}>
+                                    <div
+                                        key={item._id}
+                                        className={styles.itemRow}
+                                        onClick={() => handleItemClick(item)}
+                                    >
+                                        <label
+                                            className={styles.checkboxWrapper}
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
                                             <input
                                                 type="checkbox"
                                                 checked={item.checked || false}
@@ -163,8 +205,28 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                         </div>
                     )}
                 </main>
-                <AddProducts itemName={itemName} handleAddItem={handleAddItem} setItemName={setItemName} createItemMutation={createItemMutation} />
+                <AddProducts
+                    itemName={itemName}
+                    handleAddItem={handleAddItem}
+                    setItemName={setItemName}
+                    createItemMutation={createItemMutation}
+                />
             </div>
+
+            {/* Item Drawer */}
+            <ItemDrawer
+                isOpen={isDrawerOpen}
+                onClose={handleDrawerClose}
+                onSave={handleDrawerSave}
+                initialData={selectedItem ? {
+                    name: selectedItem.name,
+                    category: selectedItem.category || 'Other',
+                    quantity: selectedItem.quantity || 0,
+                    unit: selectedItem.unit || '',
+                    price: selectedItem.price || 0,
+                    description: selectedItem.description || '',
+                } : undefined}
+            />
         </div>
     );
 }

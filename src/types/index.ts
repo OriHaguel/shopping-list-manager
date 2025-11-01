@@ -35,9 +35,9 @@ export interface ItemBase {
     category: string;
     checked: boolean;
     price: number;
-    unit?: string;
-    quantity?: number;
-    description?: string;
+    unit: string;
+    quantity: number;
+    description: string;
 }
 export interface Item extends ItemBase {
     _id: string;

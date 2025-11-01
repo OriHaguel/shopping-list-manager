@@ -45,9 +45,12 @@ export function createEmptyItem(): ItemBase {
     return {
         listId: '',
         name: 'whatever',
-        category: 'none',
+        category: 'Other',
         checked: false,
         price: 0,
+        unit: '',
+        quantity: 0,
+        description: '',
     };
 }
 
