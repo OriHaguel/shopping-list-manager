@@ -48,8 +48,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 24px;
-    border-bottom: 1px solid #E0E5EB;
+    // padding: 24px;
 }
 
 .title {
@@ -60,6 +59,9 @@
 }
 
 .closeButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
     width: 40px;
     height: 40px;
     border-radius: 9999px;
@@ -84,7 +86,7 @@
 
 .formContent {
     flex: 1;
-    padding: 24px;
+    padding: 64px 32px;
     overflow-y: auto;
 
     /* Custom scrollbar */

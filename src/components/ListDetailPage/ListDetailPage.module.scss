@@ -195,6 +195,11 @@
     background-color: #E8F1F5;
     z-index: 100;
 
+    @media (max-width: 950px) {
+        position: static;
+        padding-top: 1rem;
+    }
+
     .headerRadius {
         border-top-left-radius: 16px;
         border-top-right-radius: 16px;

@@ -84,7 +84,6 @@ export default function ItemDrawer({ isOpen, onClose, onSave, initialData }: Ite
                 <form onSubmit={handleSubmit} className={styles.form}>
                     {/* Header */}
                     <div className={styles.header}>
-                        <h2 className={styles.title}>Add Item Details</h2>
                         <button
                             type="button"
                             onClick={handleClose}
