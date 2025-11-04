@@ -5,10 +5,8 @@ import styles from './AuthPage.module.scss';
 const AuthPage: React.FC = () => {
     const [isSignUp, setIsSignUp] = useState(false);
     const [formData, setFormData] = useState({
-        name: '',
         email: '',
         password: '',
-        confirmPassword: ''
     });
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,20 +87,6 @@ const AuthPage: React.FC = () => {
                     </div>
 
                     <div className={styles.authForm}>
-                        {isSignUp && (
-                            <div className={styles.formGroup}>
-                                <label htmlFor="name">Full Name</label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleInputChange}
-                                    placeholder="Enter your full name"
-                                    className={styles.input}
-                                />
-                            </div>
-                        )}
 
                         <div className={styles.formGroup}>
                             <label htmlFor="email">Email Address</label>
@@ -129,31 +113,6 @@ const AuthPage: React.FC = () => {
                                 className={styles.input}
                             />
                         </div>
-
-                        {isSignUp && (
-                            <div className={styles.formGroup}>
-                                <label htmlFor="confirmPassword">Confirm Password</label>
-                                <input
-                                    type="password"
-                                    id="confirmPassword"
-                                    name="confirmPassword"
-                                    value={formData.confirmPassword}
-                                    onChange={handleInputChange}
-                                    placeholder="Confirm your password"
-                                    className={styles.input}
-                                />
-                            </div>
-                        )}
-
-                        {!isSignUp && (
-                            <div className={styles.formOptions}>
-                                <label className={styles.checkboxLabel}>
-                                    <input type="checkbox" />
-                                    <span>Remember me</span>
-                                </label>
-                                <a href="#" className={styles.forgotLink}>Forgot password?</a>
-                            </div>
-                        )}
 
                         <button onClick={handleSubmit} className={styles.submitBtn}>
                             {isSignUp ? 'Create Account' : 'Sign In'}
