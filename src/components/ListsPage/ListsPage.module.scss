@@ -1,4 +1,6 @@
 // components/ListsPage/ListsPage.module.scss
+@use '../../styles/setup/variables' as *;
+
 .container {
     min-height: 100vh;
     margin: auto;
@@ -16,7 +18,7 @@
 .title {
     font-size: 32px;
     font-weight: 700;
-    color: #1F2937;
+    color: $neutral-text;
     margin: 0 0 8px 0;
 }
 
@@ -41,13 +43,13 @@
 .emptyText {
     font-size: 18px;
     font-weight: 600;
-    color: #1F2937;
+    color: $neutral-text;
     margin: 0 0 8px 0;
 }
 
 .emptySubtext {
     font-size: 14px;
-    color: #6B7280;
+    color: $neutral-dark-gray;
     margin: 0;
 }
 

@@ -1,4 +1,6 @@
 // components/CreateListModal/CreateListModal.module.scss
+@use '../../styles/setup/variables' as *;
+
 .backdrop {
     position: fixed;
     inset: 0;
@@ -46,7 +48,7 @@
 .title {
     font-size: 24px;
     font-weight: 600;
-    color: #1F2937;
+    color: $neutral-text;
     margin: 0 0 24px 0;
 }
 
@@ -54,21 +56,21 @@
     width: 100%;
     padding: 12px;
     border-radius: 12px;
-    border: 1px solid #E0E5EB;
+    border: 1px solid $neutral-medium-gray;
     background: white;
     font-size: 14px;
-    color: #1F2937;
+    color: $neutral-text;
     transition: all 0.2s ease;
     box-sizing: border-box;
     font-family: inherit;
 
     &::placeholder {
-        color: #6B7280;
+        color: $neutral-dark-gray;
     }
 
     &:focus {
         outline: none;
-        border-color: #5B8CA8;
+        border-color: $primary-blue;
         box-shadow: 0 0 0 3px rgba(91, 140, 168, 0.1);
     }
 }
@@ -96,29 +98,29 @@
 }
 
 .cancelButton {
-    background: #F5F7FA;
-    color: #6B7280;
+    background: $neutral-light-gray;
+    color: $neutral-dark-gray;
 
     &:hover {
-        background: #E0E5EB;
+        background: $neutral-medium-gray;
     }
 }
 
 .createButton {
-    background: #FF8B6B;
+    background: $accent-coral;
     color: white;
 
     &:hover {
-        background: #FFA07A;
+        background: $accent-peach;
     }
 
     &:disabled {
-        background: #E0E5EB;
-        color: #6B7280;
+        background: $neutral-medium-gray;
+        color: $neutral-dark-gray;
         cursor: not-allowed;
 
         &:hover {
-            background: #E0E5EB;
+            background: $neutral-medium-gray;
         }
     }
 }

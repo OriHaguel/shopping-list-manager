@@ -1,15 +1,14 @@
 // components/FAB/FAB.module.scss
+@use '../../styles/setup/variables' as *;
+
 .fab {
-    // position: fixed;
-    // bottom: 32px;
-    // right: 32px;
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background: #FF8B6B;
+    background: $accent-coral;
     border: none;
     color: white;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    box-shadow: $shadow-lg;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -20,7 +19,7 @@
     &:hover {
         transform: scale(1.05);
         box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
-        background: #FFA07A;
+        background: $accent-peach;
     }
 
     &:active {
