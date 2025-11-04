@@ -404,3 +404,14 @@
         flex-direction: column;
     }
 }
+
+.inputError {
+    border-color: #ef4444 !important;
+}
+
+.errorMessage {
+    display: block;
+    color: #ef4444;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}

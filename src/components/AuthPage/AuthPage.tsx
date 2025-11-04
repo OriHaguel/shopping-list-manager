@@ -1,6 +1,8 @@
 'use client'
 import { useState } from 'react';
 import styles from './AuthPage.module.scss';
+import { i } from 'motion/react-client';
+import { login, signup } from '@/services/user/user.service';
 
 const AuthPage: React.FC = () => {
     const [isSignUp, setIsSignUp] = useState(false);
@@ -8,17 +10,98 @@ const AuthPage: React.FC = () => {
         email: '',
         password: '',
     });
+    const [errors, setErrors] = useState({
+        email: '',
+        password: '',
+    });
+    const [touched, setTouched] = useState({
+        email: false,
+        password: false,
+    });
+
+    const validateEmail = (email: string): boolean => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(email);
+    };
+
+    const validatePassword = (password: string): boolean => {
+        return password.length >= 6;
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [name]: value
         });
+
+        // Validate on change if field has been touched
+        if (touched[name as keyof typeof touched]) {
+            validateField(name, value);
+        }
+    };
+
+    const handleBlur = (fieldName: string) => {
+        setTouched({
+            ...touched,
+            [fieldName]: true
+        });
+        validateField(fieldName, formData[fieldName as keyof typeof formData]);
+    };
+
+    const validateField = (fieldName: string, value: string) => {
+        let error = '';
+
+        if (fieldName === 'email') {
+            if (!value) {
+                error = 'Email is required';
+            } else if (!validateEmail(value)) {
+                error = 'Please enter a valid email address';
+            }
+        }
+
+        if (fieldName === 'password') {
+            if (!value) {
+                error = 'Password is required';
+            } else if (!validatePassword(value)) {
+                error = 'Password must be at least 6 characters long';
+            }
+        }
+
+        setErrors(prev => ({
+            ...prev,
+            [fieldName]: error
+        }));
     };
 
     const handleSubmit = (e: React.MouseEvent) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+
+        // Mark all fields as touched
+        setTouched({
+            email: true,
+            password: true
+        });
+
+        // Validate all fields
+        const emailError = !formData.email ? 'Email is required' :
+            !validateEmail(formData.email) ? 'Please enter a valid email address' : '';
+        const passwordError = !formData.password ? 'Password is required' :
+            !validatePassword(formData.password) ? 'Password must be at least 6 characters long' : '';
+
+        setErrors({
+            email: emailError,
+            password: passwordError
+        });
+
+        // Only submit if no errors
+        if (!emailError && !passwordError) {
+            let toSignIn = isSignUp ? signup(formData) : login(formData);
+            console.log("🚀 ~ handleSubmit ~ toLogIn:", toSignIn)
+            console.log('Form submitted:', formData);
+            // Add your submission logic here
+        }
     };
 
     return (
@@ -96,9 +179,13 @@ const AuthPage: React.FC = () => {
                                 name="email"
                                 value={formData.email}
                                 onChange={handleInputChange}
+                                onBlur={() => handleBlur('email')}
                                 placeholder="Enter your email"
-                                className={styles.input}
+                                className={`${styles.input} ${errors.email && touched.email ? styles.inputError : ''}`}
                             />
+                            {errors.email && touched.email && (
+                                <span className={styles.errorMessage}>{errors.email}</span>
+                            )}
                         </div>
 
                         <div className={styles.formGroup}>
@@ -109,9 +196,13 @@ const AuthPage: React.FC = () => {
                                 name="password"
                                 value={formData.password}
                                 onChange={handleInputChange}
+                                onBlur={() => handleBlur('password')}
                                 placeholder="Enter your password"
-                                className={styles.input}
+                                className={`${styles.input} ${errors.password && touched.password ? styles.inputError : ''}`}
                             />
+                            {errors.password && touched.password && (
+                                <span className={styles.errorMessage}>{errors.password}</span>
+                            )}
                         </div>
 
                         <button onClick={handleSubmit} className={styles.submitBtn}>
