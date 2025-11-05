@@ -1,6 +1,14 @@
 // app/page.tsx
-import ListsPage from '@/components/ListsPage/ListsPage';
+'use client'
+import { useRouter } from 'next/navigation';
+
 
 export default function Home() {
-  return <ListsPage />;
+  const router = useRouter();
+
+  const handleListClick = () => {
+    router.push(`list`);
+  };
+
+  return <button onClick={() => handleListClick()}>click me biatch</button>;
 }

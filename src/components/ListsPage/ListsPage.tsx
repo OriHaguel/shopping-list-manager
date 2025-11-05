@@ -88,7 +88,7 @@ export default function ListsPage() {
     };
 
     const handleListClick = (listId: string) => {
-        router.push(`/${listId}`);
+        router.push(`list/${listId}`);
     };
 
     const handleDeleteList = (listId: string) => {
