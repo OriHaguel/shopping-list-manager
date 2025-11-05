@@ -5,21 +5,18 @@ import { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 let isSetup = false;
 
-/**
- * Refresh the access token by calling the refresh endpoint
- * Includes retry logic for transient failures (network errors, server errors)
- * but immediately fails on authentication errors (401, 403)
- */
-async function refreshAccessToken(retryCount = 0): Promise<string> {
+export async function refreshAccessToken(retryCount = 0): Promise<string> {
     try {
         const csrfToken = getCsrfToken();
+
+
         // Make refresh request without interceptors to avoid infinite loop
         const response = await axiosInstance.post(
             'users/refresh',
             {},
             {
+                skipInterceptor: true, // <--- Correct placement
                 headers: {
-                    'X-Skip-Interceptor': 'true',
                     ...(csrfToken && { 'x-csrf-token': csrfToken })
                 }
             }
@@ -27,15 +24,24 @@ async function refreshAccessToken(retryCount = 0): Promise<string> {
         const { accessToken } = response.data;
         tokenService.setAccessToken(accessToken);
 
+        // If refresh was successful and user is on auth pages, redirect to /list
+        const currentPath = window.location.pathname;
+        if (currentPath === '/' || currentPath === '/auth') {
+            window.location.assign('/list');
+        }
+
         return accessToken;
     } catch (error) {
         const axiosError = error as AxiosError;
+        const currentPath = window.location.pathname;
 
         // Don't retry on auth failures (401, 403) - these are permanent failures
         if (axiosError.response?.status === 401 || axiosError.response?.status === 403) {
             console.warn('Refresh token authentication failed, redirecting to login');
             tokenService.clearTokens();
-            window.location.assign('/');
+            if (currentPath != '/' && currentPath != '/auth') {
+                window.location.assign('/');
+            }
             throw error;
         }
 
@@ -57,18 +63,17 @@ async function refreshAccessToken(retryCount = 0): Promise<string> {
         throw error;
     }
 }
-
 export function setupAxiosInterceptors() {
     if (isSetup) return;
     isSetup = true;
 
     // ============ REQUEST INTERCEPTOR ============
     axiosInstance.interceptors.request.use(
-        async (config) => {
+        async (config: InternalAxiosRequestConfig & { skipInterceptor?: boolean }) => {
             // Skip interceptor for specific requests (like refresh token)
-            if (config.headers?.['X-Skip-Interceptor']) {
-                delete config.headers['X-Skip-Interceptor'];
+            if (config.skipInterceptor) {
                 return config;
+
             }
 
             const method = config.method?.toUpperCase();
@@ -77,7 +82,6 @@ export function setupAxiosInterceptors() {
             if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '')) {
                 const csrfToken = getCsrfToken();
                 if (csrfToken) {
-                    console.log("🚀 ~ setupAxiosInterceptors ~ csrfToken:", csrfToken);
                     config.headers['x-csrf-token'] = csrfToken;
                 } else {
                     console.warn('CSRF token not available yet for', method, config.url);
@@ -122,8 +126,13 @@ export function setupAxiosInterceptors() {
             return response;
         },
         async (error: AxiosError) => {
-            const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
-
+            const originalRequest = error.config as InternalAxiosRequestConfig & {
+                _retry?: boolean, skipInterceptor?:
+                boolean
+            };
+            if (originalRequest.skipInterceptor) {
+                return Promise.reject(error);
+            }
             // Handle 403 CSRF token errors
             if (error.response?.status === 403) {
                 const errorData = error.response.data;
@@ -142,7 +151,7 @@ export function setupAxiosInterceptors() {
                         try {
                             // Fetch new CSRF token
                             const response = await axiosInstance.get('/users/csrf-token', {
-                                headers: { 'X-Skip-Interceptor': 'true' }
+                                skipInterceptor: true
                             });
                             updateCsrfToken(response.data.csrfToken);
 

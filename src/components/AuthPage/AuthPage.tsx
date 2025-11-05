@@ -1,10 +1,10 @@
 'use client'
 import { useState } from 'react';
 import styles from './AuthPage.module.scss';
-import { i } from 'motion/react-client';
 import { login, signup } from '@/services/user/user.service';
-
+import { useRouter } from 'next/navigation';
 const AuthPage: React.FC = () => {
+    const router = useRouter();
     const [isSignUp, setIsSignUp] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
@@ -97,10 +97,13 @@ const AuthPage: React.FC = () => {
 
         // Only submit if no errors
         if (!emailError && !passwordError) {
-            let toSignIn = isSignUp ? signup(formData) : login(formData);
+            let toSignIn = isSignUp ? signup(formData).then(() => router.push(`list`)) : login(formData).then(() => router.push(`list`));
             console.log("🚀 ~ handleSubmit ~ toLogIn:", toSignIn)
             console.log('Form submitted:', formData);
             // Add your submission logic here
+            // if (isSignUp) {
+            //     router.push(`list`);
+            // }
         }
     };
 
