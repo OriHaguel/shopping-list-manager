@@ -30,7 +30,7 @@ export async function login(userCred: UserSignupLogin): Promise<SavedUser> {
         if (response.accessToken) {
             tokenService.setAccessToken(response.accessToken);
         }
-
+        // MIGHT NOT BE NEEDED 
         return saveLoggedinUser(response.user);
     } catch (err) {
         throw new AuthenticationError(

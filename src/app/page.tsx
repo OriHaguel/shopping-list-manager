@@ -7,7 +7,7 @@ export default function Home() {
   const router = useRouter();
 
   const handleListClick = () => {
-    router.push(`list`);
+    router.push(`auth`);
   };
 
   return <button onClick={() => handleListClick()}>click me biatch</button>;

@@ -10,7 +10,7 @@ import FAB from '../FAB/FAB';
 import styles from './ListsPage.module.scss';
 import { List } from '@/types';
 import { Button } from '../ui/button';
-import { login } from '@/services/user/user.service';
+import { logout } from '@/services/user/user.service';
 import { createList, getLists, deleteList } from '@/services/list/list.service';
 
 export default function ListsPage() {
@@ -23,8 +23,9 @@ export default function ListsPage() {
         email: 'testest@gmail.com',
         password: 'gdf8g7dfg7df8'
     };
-    async function loginCheck() {
-        await login(userToTest)
+    async function logoutCheck() {
+        await logout()
+        router.push('auth');
     }
     // Fetch lists with React Query
     const {
@@ -99,7 +100,7 @@ export default function ListsPage() {
         <div className={styles.container}>
             <div className={styles.header}>
                 <h1 className={styles.title}>Your shopping lists</h1>
-                <Button onClick={() => loginCheck()}>Log in</Button>
+                <Button onClick={() => logoutCheck()}>Log out</Button>
                 <FAB onClick={() => setIsModalOpen(true)} />
             </div>
 
