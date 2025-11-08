@@ -215,12 +215,15 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                             />
                                             <span className={styles.checkmark} />
                                         </label>
-                                        <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
-                                            {item.name}
-                                        </span>
-                                        <span>
-                                            {item.quantity}
-                                        </span>
+                                        <div className='flex gap-6'>
+
+                                            <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
+                                                {item.name}
+                                            </span>
+                                            <span className={styles.itemQuantity}>
+                                                {item.quantity}
+                                            </span>
+                                        </div>
                                         <span className={styles.itemPrice}>
                                             {item.price + '$'}
                                         </span>

@@ -179,6 +179,17 @@
     }
 }
 
+.itemQuantity {
+    font-size: .875rem;
+    color: $neutral-dark-gray;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 90px;
+    text-overflow: ellipsis;
+    margin-left: auto;
+}
+
 .itemPrice {
     font-size: .875rem;
     color: $neutral-dark-gray;
@@ -187,6 +198,7 @@
     overflow: hidden;
     max-width: 90px;
     text-overflow: ellipsis;
+    margin-left: auto;
 }
 
 .itemInputscontainer {
