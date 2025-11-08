@@ -6,6 +6,7 @@ type AddProductsProps = {
     handleAddItem: (name?: string) => void;
     setItemName: (name: string) => void;
     createItemMutation: { isPending: boolean };
+    quickAddDisabled: boolean;
 };
 
 const POPULAR_ITEMS = [
@@ -14,7 +15,7 @@ const POPULAR_ITEMS = [
     'Apples', 'Bananas', 'Yogurt', 'Coffee', 'Sugar'
 ];
 
-export function AddProducts({ itemName, handleAddItem, setItemName, createItemMutation }: AddProductsProps) {
+export function AddProducts({ itemName, handleAddItem, setItemName, createItemMutation, quickAddDisabled }: AddProductsProps) {
     const [activeTab, setActiveTab] = useState<'popular' | 'recent'>('popular');
     const [recentItems, setRecentItems] = useState<string[]>([]);
 
@@ -91,6 +92,8 @@ export function AddProducts({ itemName, handleAddItem, setItemName, createItemMu
                                 key={index}
                                 className={styles.quickAddItem}
                                 onClick={() => handleQuickAdd(item)}
+                                // Apply the new disabled state
+                                disabled={quickAddDisabled || createItemMutation.isPending}
                                 type="button"
                             >
                                 {item}
@@ -103,6 +106,8 @@ export function AddProducts({ itemName, handleAddItem, setItemName, createItemMu
                                     key={index}
                                     className={styles.quickAddItem}
                                     onClick={() => handleQuickAdd(item)}
+                                    // Apply the new disabled state
+                                    disabled={quickAddDisabled || createItemMutation.isPending}
                                     type="button"
                                 >
                                     {item}

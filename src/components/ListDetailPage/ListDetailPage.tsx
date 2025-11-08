@@ -20,6 +20,8 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+    const [quickAddDisabled, setQuickAddDisabled] = useState(false);
+
     const menuRef = useRef<HTMLDivElement>(null);
 
     const { data: items = [], isLoading, isError, error } = useQuery({
@@ -83,6 +85,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
         const itemNameExists = items.find(
             item => item.name.toLowerCase() === trimmedName.toLowerCase()
         );
+
         if (!trimmedName) return;
         if (itemNameExists) {
             updateItemMutation.mutate({
@@ -90,6 +93,14 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                 updates: { quantity: itemNameExists.quantity + 1 }
             })
         } else {
+
+            // 1. Set the button to disabled immediately
+            setQuickAddDisabled(true);
+
+            // 2. Schedule re-enabling after 300ms (0.3 seconds)
+            setTimeout(() => {
+                setQuickAddDisabled(false);
+            }, 400);
             const emptyItem = createEmptyItem();
             createItemMutation.mutate({
                 ...emptyItem,
@@ -224,6 +235,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                     handleAddItem={handleAddItem}
                     setItemName={setItemName}
                     createItemMutation={createItemMutation}
+                    quickAddDisabled={quickAddDisabled}
                 />
             </div>
 
