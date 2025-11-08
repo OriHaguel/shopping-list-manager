@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styles from './AddProducts.module.scss';
 
 type AddProductsProps = {
@@ -5,11 +6,40 @@ type AddProductsProps = {
     handleAddItem: () => void;
     setItemName: (name: string) => void;
     createItemMutation: { isPending: boolean };
+    handleAddItemList: (ItemListName: string) => void;
 };
 
-export function AddProducts({ itemName, handleAddItem, setItemName, createItemMutation }: AddProductsProps) {
+const POPULAR_ITEMS = [
+    'Milk', 'Bread', 'Eggs', 'Butter', 'Cheese',
+    'Chicken', 'Rice', 'Pasta', 'Tomatoes', 'Onions',
+    'Apples', 'Bananas', 'Yogurt', 'Coffee', 'Sugar'
+];
+
+export function AddProducts({ itemName, handleAddItem, setItemName, createItemMutation, handleAddItemList }: AddProductsProps) {
+    const [activeTab, setActiveTab] = useState<'popular' | 'recent'>('popular');
+    const [recentItems, setRecentItems] = useState<string[]>([]);
+
     const handleKeyPress = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter') handleAddItem();
+        if (e.key === 'Enter') handleAddItemWithRecent();
+    };
+
+    const handleAddItemWithRecent = () => {
+        if (itemName.trim()) {
+            // Add to recent items if not already there
+            if (!recentItems.includes(itemName.trim())) {
+                setRecentItems(prev => [itemName.trim(), ...prev].slice(0, 15));
+            }
+            handleAddItem();
+        }
+    };
+
+    const handleQuickAdd = (item: string) => {
+        // Add to recent items
+        if (!recentItems.includes(item)) {
+            setRecentItems(prev => [item, ...prev].slice(0, 15));
+        }
+        // Set the item name and trigger add
+        handleAddItemList(item);
     };
 
     return (
@@ -19,7 +49,7 @@ export function AddProducts({ itemName, handleAddItem, setItemName, createItemMu
                     <h2 className={styles.addItemTitle}>Add products</h2>
                 </div>
 
-                <div className={styles.inputGroup}>
+                <div className={styles.inputWithButton}>
                     <input
                         type="text"
                         placeholder="e.g. milk"
@@ -28,16 +58,64 @@ export function AddProducts({ itemName, handleAddItem, setItemName, createItemMu
                         onKeyDown={handleKeyPress}
                         className={styles.input}
                     />
+                    <button
+                        onClick={handleAddItemWithRecent}
+                        disabled={!itemName.trim() || createItemMutation.isPending}
+                        className={styles.addButton}
+                        type="button"
+                    >
+                        {createItemMutation.isPending ? '...' : '+'}
+                    </button>
                 </div>
 
-                <button
-                    onClick={handleAddItem}
-                    disabled={!itemName.trim() || createItemMutation.isPending}
-                    className={styles.addButton}
-                    type="button"
-                >
-                    {createItemMutation.isPending ? 'Adding...' : 'Add Item'}
-                </button>
+                <div className={styles.tabBar}>
+                    <button
+                        className={`${styles.tab} ${activeTab === 'popular' ? styles.activeTab : ''}`}
+                        onClick={() => setActiveTab('popular')}
+                        type="button"
+                    >
+                        Popular
+                    </button>
+                    <button
+                        className={`${styles.tab} ${activeTab === 'recent' ? styles.activeTab : ''}`}
+                        onClick={() => setActiveTab('recent')}
+                        type="button"
+                    >
+                        Recent
+                    </button>
+                </div>
+
+                <div className={styles.itemsList}>
+                    {activeTab === 'popular' ? (
+                        POPULAR_ITEMS.map((item, index) => (
+                            <button
+                                key={index}
+                                className={styles.quickAddItem}
+                                onClick={() => handleQuickAdd(item)}
+                                type="button"
+                            >
+                                {item}
+                            </button>
+                        ))
+                    ) : (
+                        recentItems.length > 0 ? (
+                            recentItems.map((item, index) => (
+                                <button
+                                    key={index}
+                                    className={styles.quickAddItem}
+                                    onClick={() => handleQuickAdd(item)}
+                                    type="button"
+                                >
+                                    {item}
+                                </button>
+                            ))
+                        ) : (
+                            <div className={styles.emptyState}>
+                                No recent items yet
+                            </div>
+                        )
+                    )}
+                </div>
             </div>
         </div>
     );

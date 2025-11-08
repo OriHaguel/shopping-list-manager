@@ -88,6 +88,16 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
             });
         }
     };
+    const handleAddItemList = (ItemListName: string) => {
+        const emptyItem = createEmptyItem()
+        if (ItemListName.trim()) {
+            createItemMutation.mutate({
+                ...emptyItem,
+                listId,
+                name: ItemListName.trim(),
+            });
+        }
+    };
 
     const handleUncheckAll = () => {
         items.forEach(item => {
@@ -210,6 +220,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                     handleAddItem={handleAddItem}
                     setItemName={setItemName}
                     createItemMutation={createItemMutation}
+                    handleAddItemList={handleAddItemList}
                 />
             </div>
 
