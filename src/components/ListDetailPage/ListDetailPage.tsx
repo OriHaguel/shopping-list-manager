@@ -80,18 +80,23 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
 
     const handleAddItem = (name?: string) => {
         const trimmedName = (name ?? itemName).trim();
-        const itemNameExists = items.some(
+        const itemNameExists = items.find(
             item => item.name.toLowerCase() === trimmedName.toLowerCase()
         );
-
         if (!trimmedName) return;
-
-        const emptyItem = createEmptyItem();
-        createItemMutation.mutate({
-            ...emptyItem,
-            listId,
-            name: trimmedName,
-        });
+        if (itemNameExists) {
+            updateItemMutation.mutate({
+                _id: itemNameExists._id,
+                updates: { quantity: itemNameExists.quantity + 1 }
+            })
+        } else {
+            const emptyItem = createEmptyItem();
+            createItemMutation.mutate({
+                ...emptyItem,
+                listId,
+                name: trimmedName,
+            });
+        }
     };
 
 
@@ -201,6 +206,9 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                         </label>
                                         <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
                                             {item.name}
+                                        </span>
+                                        <span>
+                                            {item.quantity}
                                         </span>
                                         <span className={styles.itemPrice}>
                                             {item.price + '$'}
