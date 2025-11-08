@@ -78,26 +78,22 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
         });
     };
 
-    const handleAddItem = () => {
-        const emptyItem = createEmptyItem()
-        if (itemName.trim()) {
-            createItemMutation.mutate({
-                ...emptyItem,
-                listId,
-                name: itemName.trim(),
-            });
-        }
+    const handleAddItem = (name?: string) => {
+        const trimmedName = (name ?? itemName).trim();
+        const itemNameExists = items.some(
+            item => item.name.toLowerCase() === trimmedName.toLowerCase()
+        );
+
+        if (!trimmedName) return;
+
+        const emptyItem = createEmptyItem();
+        createItemMutation.mutate({
+            ...emptyItem,
+            listId,
+            name: trimmedName,
+        });
     };
-    const handleAddItemList = (ItemListName: string) => {
-        const emptyItem = createEmptyItem()
-        if (ItemListName.trim()) {
-            createItemMutation.mutate({
-                ...emptyItem,
-                listId,
-                name: ItemListName.trim(),
-            });
-        }
-    };
+
 
     const handleUncheckAll = () => {
         items.forEach(item => {
@@ -220,7 +216,6 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                     handleAddItem={handleAddItem}
                     setItemName={setItemName}
                     createItemMutation={createItemMutation}
-                    handleAddItemList={handleAddItemList}
                 />
             </div>
 

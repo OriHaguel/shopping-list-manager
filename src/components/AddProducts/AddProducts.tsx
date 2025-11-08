@@ -3,10 +3,9 @@ import styles from './AddProducts.module.scss';
 
 type AddProductsProps = {
     itemName: string;
-    handleAddItem: () => void;
+    handleAddItem: (name?: string) => void;
     setItemName: (name: string) => void;
     createItemMutation: { isPending: boolean };
-    handleAddItemList: (ItemListName: string) => void;
 };
 
 const POPULAR_ITEMS = [
@@ -15,7 +14,7 @@ const POPULAR_ITEMS = [
     'Apples', 'Bananas', 'Yogurt', 'Coffee', 'Sugar'
 ];
 
-export function AddProducts({ itemName, handleAddItem, setItemName, createItemMutation, handleAddItemList }: AddProductsProps) {
+export function AddProducts({ itemName, handleAddItem, setItemName, createItemMutation }: AddProductsProps) {
     const [activeTab, setActiveTab] = useState<'popular' | 'recent'>('popular');
     const [recentItems, setRecentItems] = useState<string[]>([]);
 
@@ -39,7 +38,7 @@ export function AddProducts({ itemName, handleAddItem, setItemName, createItemMu
             setRecentItems(prev => [item, ...prev].slice(0, 15));
         }
         // Set the item name and trigger add
-        handleAddItemList(item);
+        handleAddItem(item);
     };
 
     return (
