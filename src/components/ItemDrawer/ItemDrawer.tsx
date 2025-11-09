@@ -3,15 +3,20 @@
 
 import { useState, useEffect } from 'react';
 import styles from './ItemDrawer.module.scss';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteItem } from '@/services/item/item.service';
+import { Item } from '@/types';
 
 interface ItemDrawerProps {
     isOpen: boolean;
     onClose: () => void;
     onSave: (itemData: ItemData) => void;
     initialData?: ItemData;
+    listId: string;
 }
 
 export interface ItemData {
+    _id: string;
     name: string;
     category: string;
     price: number;
@@ -22,8 +27,9 @@ export interface ItemData {
 
 const categories = ['Vegetables', 'Fruits', 'Dairy', 'Meat', 'Bakery', 'Beverages', 'Snacks', 'Other'];
 
-export default function ItemDrawer({ isOpen, onClose, onSave, initialData }: ItemDrawerProps) {
+export default function ItemDrawer({ isOpen, onClose, onSave, initialData, listId }: ItemDrawerProps) {
     const [formData, setFormData] = useState<ItemData>({
+        _id: '',
         name: '',
         category: 'Other',
         quantity: 0,
@@ -31,6 +37,7 @@ export default function ItemDrawer({ isOpen, onClose, onSave, initialData }: Ite
         price: 0,
         description: '',
     });
+    const queryClient = useQueryClient();
 
     useEffect(() => {
         if (initialData) {
@@ -49,6 +56,20 @@ export default function ItemDrawer({ isOpen, onClose, onSave, initialData }: Ite
         };
     }, [isOpen]);
 
+
+    const deleteItemMutation = useMutation({
+        mutationFn: (itemId: string) => deleteItem(itemId),
+
+        onSuccess: () => {
+            // Refetch after error or success
+            queryClient.invalidateQueries({ queryKey: ['items', listId] });
+        },
+        onError: (error) => {
+            console.error('Failed to delete list:', error);
+        },
+    });
+
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onSave(formData);
@@ -57,6 +78,7 @@ export default function ItemDrawer({ isOpen, onClose, onSave, initialData }: Ite
 
     const handleClose = () => {
         setFormData({
+            _id: '',
             name: '',
             category: 'Other',
             quantity: 0,
@@ -70,6 +92,12 @@ export default function ItemDrawer({ isOpen, onClose, onSave, initialData }: Ite
     const handleChange = (field: keyof ItemData, value: string) => {
         setFormData(prev => ({ ...prev, [field]: value }));
     };
+    const handleDelete = () => {
+        deleteItemMutation.mutate(formData._id);
+        handleClose();
+    };
+
+
 
     return (
         <>
@@ -208,7 +236,25 @@ export default function ItemDrawer({ isOpen, onClose, onSave, initialData }: Ite
                                 rows={4}
                             />
                         </div>
+                        <button
+                            onClick={() => handleDelete()}
+                            type="button"
+                            className={styles.deleteButton}
+                        >
+                            <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                                <path
+                                    d="M3 5h14M8 5V3h4v2m-5 0v10m4-10v10m-7-8v10a1 1 0 001 1h8a1 1 0 001-1V7"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                            Delete Item
+                        </button>
                     </div>
+
+
 
                     {/* Done Button */}
                     <div className={styles.footer}>

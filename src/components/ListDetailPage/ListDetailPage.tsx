@@ -248,6 +248,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                 onClose={handleDrawerClose}
                 onSave={handleDrawerSave}
                 initialData={selectedItem ? {
+                    _id: selectedItem._id,
                     name: selectedItem.name,
                     category: selectedItem.category || 'Other',
                     quantity: selectedItem.quantity || 0,
@@ -255,6 +256,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                     price: selectedItem.price || 0,
                     description: selectedItem.description || '',
                 } : undefined}
+                listId={listId}
             />
         </div>
     );
