@@ -92,9 +92,13 @@ export default function ItemDrawer({ isOpen, onClose, onSave, initialData, listI
     const handleChange = (field: keyof ItemData, value: string) => {
         setFormData(prev => ({ ...prev, [field]: value }));
     };
-    const handleDelete = () => {
-        deleteItemMutation.mutate(formData._id);
-        handleClose();
+    const handleDelete = async () => {
+        try {
+            await deleteItemMutation.mutateAsync(formData._id);
+            handleClose(); // runs only after delete is done successfully
+        } catch (error) {
+            console.error('Delete failed:', error);
+        }
     };
 
 

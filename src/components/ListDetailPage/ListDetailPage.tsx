@@ -180,9 +180,23 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                             {error instanceof Error && <p className={styles.errorDetail}>{error.message}</p>}
                         </div>
                     ) : items.length === 0 ? (
-                        <div className={styles.empty}>
-                            <p>No items yet. Start adding tasks to your list!</p>
+                        <div>
+                            <div className={styles.itemInputscontainer}>
+                                <div className={styles.headerRadius}>
+                                    <ItemInputs
+                                        list={list}
+                                        menuRef={menuRef}
+                                        setIsMenuOpen={setIsMenuOpen}
+                                        isMenuOpen={isMenuOpen}
+                                        handleUncheckAll={handleUncheckAll}
+                                    />
+                                </div>
+                            </div>
+                            <div className={styles.empty}>
+                                <p>No items yet. Start adding tasks to your list!</p>
+                            </div>
                         </div>
+
                     ) : (
                         <div className='flex flex-col'>
                             <div className={styles.itemInputscontainer}>
