@@ -36,3 +36,12 @@ export async function deleteList(id: string) {
         console.error('Error fetching lists:', err);
     }
 }
+export async function shareList(listId: string, email: string) {
+    try {
+        await httpService.put('lists' + `/${listId}/share`, { email });
+
+    } catch (err) {
+        console.error('Error fetching lists:', err);
+    }
+}
+// shareList('6910f3934ea46ef8584e3f98', 'orih32yt@gmail.com')
