@@ -1,107 +1,227 @@
-    @use '../../styles/setup/variables' as *;
+@use '../../styles/setup/variables' as *;
 
-    .itemInputs {
-        position: relative;
-        background: #FFFFFF;
-        margin-bottom: .75rem;
+.itemInputs {
+    position: relative;
+    background: #FFFFFF;
+    margin-bottom: .75rem;
+    display: flex;
+    height: 2.75rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 0;
+    padding-right: 0;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+
+    .searchContainer {
         display: flex;
-        height: 2.75rem;
-        flex-direction: row;
-        justify-content: space-between;
         align-items: center;
-        padding-left: 0;
-        padding-right: 0;
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
+        width: 100%;
+        gap: 8px;
+        padding: 0 12px;
+        animation: fadeIn 0.2s ease;
 
-        .iconGroup {
+        .searchInput {
+            flex: 2;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid $neutral-medium-gray;
+            background: #FFFFFF;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.2s ease;
+
+            &::placeholder {
+                color: $neutral-dark-gray;
+            }
+
+            &:focus {
+                border: 1px solid $primary-blue;
+                box-shadow: 0 0 0 3px rgba(91, 140, 168, 0.1);
+            }
+        }
+
+        .closeSearchButton {
+            width: 40px;
+            height: 40px;
+            border-radius: 9999px;
+            background: transparent;
+            border: none;
             display: flex;
             align-items: center;
-            gap: 4px;
-            padding-right: 12px;
+            justify-content: center;
+            color: $neutral-dark-gray;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
 
-            .iconButton {
-                width: 40px;
-                height: 40px;
-                border-radius: 9999px;
-                background: transparent;
-                border: none;
+            &:hover {
+                background: $neutral-light-gray;
+            }
+
+            &:active {
+                transform: scale(0.95);
+            }
+        }
+    }
+
+    .iconGroup {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding-right: 12px;
+
+        .iconButton {
+            width: 40px;
+            height: 40px;
+            border-radius: 9999px;
+            background: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: $neutral-dark-gray;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: $neutral-light-gray;
+            }
+
+            &:active {
+                transform: scale(0.95);
+            }
+
+            svg {
+                flex-shrink: 0;
+            }
+        }
+
+        .menuContainer {
+            position: relative;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            background: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: $shadow-lg;
+            min-width: 180px;
+            padding: 8px;
+            z-index: 1000;
+            animation: fadeIn 0.2s ease;
+
+            .dropdownItem {
+                width: 100%;
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                color: $neutral-dark-gray;
+                gap: 12px;
+                padding: 12px;
+                border: none;
+                background: transparent;
+                border-radius: 8px;
+                font-size: 14px;
+                color: $neutral-text;
                 cursor: pointer;
                 transition: all 0.2s ease;
+                text-align: left;
+                position: relative;
 
                 &:hover {
                     background: $neutral-light-gray;
                 }
 
                 &:active {
-                    transform: scale(0.95);
+                    transform: scale(0.98);
                 }
 
                 svg {
+                    color: $neutral-dark-gray;
                     flex-shrink: 0;
                 }
             }
 
-            .menuContainer {
+            .sortContainer {
                 position: relative;
-            }
+                width: 100%;
 
-            .dropdown {
-                position: absolute;
-                top: calc(100% + 8px);
-                right: 0;
-                background: #FFFFFF;
-                border-radius: 12px;
-                box-shadow: $shadow-lg;
-                min-width: 180px;
-                padding: 8px;
-                z-index: 1000;
-                animation: fadeIn 0.2s ease;
+                .sortMenu {
+                    position: absolute;
+                    top: 0;
+                    left: calc(100% + 8px);
+                    background: #FFFFFF;
+                    border-radius: 12px;
+                    box-shadow: $shadow-lg;
+                    min-width: 160px;
+                    padding: 8px;
+                    z-index: 1001;
+                    animation: slideIn 0.2s ease;
 
-                .dropdownItem {
-                    width: 100%;
-                    display: flex;
-                    align-items: center;
-                    gap: 12px;
-                    padding: 12px;
-                    border: none;
-                    background: transparent;
-                    border-radius: 8px;
-                    font-size: 14px;
-                    color: $neutral-text;
-                    cursor: pointer;
-                    transition: all 0.2s ease;
-                    text-align: left;
+                    .sortMenuItem {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 12px;
+                        border: none;
+                        background: transparent;
+                        border-radius: 8px;
+                        font-size: 14px;
+                        color: $neutral-text;
+                        cursor: pointer;
+                        transition: all 0.2s ease;
+                        text-align: left;
 
-                    &:hover {
-                        background: $neutral-light-gray;
-                    }
+                        &:hover {
+                            background: $neutral-light-gray;
+                        }
 
-                    &:active {
-                        transform: scale(0.98);
-                    }
+                        &:active {
+                            transform: scale(0.98);
+                        }
 
-                    svg {
-                        color: $neutral-dark-gray;
-                        flex-shrink: 0;
+                        svg {
+                            color: $neutral-dark-gray;
+                            flex-shrink: 0;
+                        }
                     }
                 }
-
             }
         }
-
-        .itemlistName {
-            padding-left: 1rem;
-            font-size: 1.875rem;
-            line-height: 2.25rem;
-            width: 300px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding-bottom: 0.2rem;
-
-        }
     }
+
+    .itemlistName {
+        padding-left: 1rem;
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+        width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-bottom: 0.2rem;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

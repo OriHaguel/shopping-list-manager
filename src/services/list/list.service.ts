@@ -44,4 +44,3 @@ export async function shareList(listId: string, email: string) {
         console.error('Error fetching lists:', err);
     }
 }
-// shareList('6910f3934ea46ef8584e3f98', 'orih32yt@gmail.com')

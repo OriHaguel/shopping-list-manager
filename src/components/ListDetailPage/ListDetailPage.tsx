@@ -1,7 +1,7 @@
 // components/ListDetailPage/ListDetailPage.tsx
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './ListDetailPage.module.scss';
 import { Item, ItemBase } from '@/types';
@@ -10,6 +10,7 @@ import { getList } from '@/services/list/list.service';
 import { AddProducts } from '../AddProducts/AddProducts';
 import { ItemInputs } from '../ItemInputs/ItemInputs';
 import ItemDrawer, { ItemData } from '../ItemDrawer/ItemDrawer';
+
 interface ListDetailPageProps {
     listId: string;
 }
@@ -21,6 +22,8 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
     const [quickAddDisabled, setQuickAddDisabled] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [sortType, setSortType] = useState<'a-z' | 'category' | null>(null);
 
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -29,11 +32,38 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
         queryFn: () => getItems(listId),
         staleTime: 5 * 60 * 1000,
     });
+
     const { data: list } = useQuery({
         queryKey: ['list', listId],
         queryFn: () => getList(listId),
         staleTime: 5 * 60 * 1000,
     });
+
+    // Filter and sort items
+    const filteredAndSortedItems = useMemo(() => {
+        let result = [...items];
+
+        // Filter by search query
+        if (searchQuery.trim()) {
+            const query = searchQuery.toLowerCase();
+            result = result.filter(item =>
+                item.name.toLowerCase().includes(query)
+            );
+        }
+
+        // Sort items
+        if (sortType === 'a-z') {
+            result.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (sortType === 'category') {
+            result.sort((a, b) => {
+                const categoryA = a.category || 'Other';
+                const categoryB = b.category || 'Other';
+                return categoryA.localeCompare(categoryB);
+            });
+        }
+
+        return result;
+    }, [items, searchQuery, sortType]);
 
     const updateItemMutation = useMutation({
         mutationFn: ({ _id, updates }: { _id: string; updates: Partial<Item> }) =>
@@ -93,14 +123,12 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                 updates: { quantity: itemNameExists.quantity + 1 }
             })
         } else {
-
-            // 1. Set the button to disabled immediately
             setQuickAddDisabled(true);
 
-            // 2. Schedule re-enabling after 300ms (0.3 seconds)
             setTimeout(() => {
                 setQuickAddDisabled(false);
             }, 400);
+
             const emptyItem = createEmptyItem();
             createItemMutation.mutate({
                 ...emptyItem,
@@ -109,7 +137,6 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
             });
         }
     };
-
 
     const handleUncheckAll = () => {
         items.forEach(item => {
@@ -139,7 +166,6 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                     unit: itemData.unit,
                     quantity: itemData.quantity || 0,
                     description: itemData.description,
-                    // Add quantity, unit, description to your Item type if needed
                 },
             });
         }
@@ -150,6 +176,14 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
     const handleDrawerClose = () => {
         setIsDrawerOpen(false);
         setSelectedItem(null);
+    };
+
+    const handleSearch = (query: string) => {
+        setSearchQuery(query);
+    };
+
+    const handleSort = (type: 'a-z' | 'category') => {
+        setSortType(type);
     };
 
     useEffect(() => {
@@ -189,6 +223,8 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                         setIsMenuOpen={setIsMenuOpen}
                                         isMenuOpen={isMenuOpen}
                                         handleUncheckAll={handleUncheckAll}
+                                        onSearch={handleSearch}
+                                        onSort={handleSort}
                                     />
                                 </div>
                             </div>
@@ -196,7 +232,6 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                 <p>No items yet. Start adding tasks to your list!</p>
                             </div>
                         </div>
-
                     ) : (
                         <div className='flex flex-col'>
                             <div className={styles.itemInputscontainer}>
@@ -207,43 +242,50 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                         setIsMenuOpen={setIsMenuOpen}
                                         isMenuOpen={isMenuOpen}
                                         handleUncheckAll={handleUncheckAll}
+                                        onSearch={handleSearch}
+                                        onSort={handleSort}
                                     />
                                 </div>
                             </div>
-                            <div className={styles.itemsList}>
-                                {items.map((item) => (
-                                    <div
-                                        key={item._id}
-                                        className={styles.itemRow}
-                                        onClick={() => handleItemClick(item)}
-                                    >
-                                        <label
-                                            className={styles.checkboxWrapper}
-                                            onClick={(e) => e.stopPropagation()}
+                            {filteredAndSortedItems.length === 0 ? (
+                                <div className={styles.empty}>
+                                    <p>No items match your search.</p>
+                                </div>
+                            ) : (
+                                <div className={styles.itemsList}>
+                                    {filteredAndSortedItems.map((item) => (
+                                        <div
+                                            key={item._id}
+                                            className={styles.itemRow}
+                                            onClick={() => handleItemClick(item)}
                                         >
-                                            <input
-                                                type="checkbox"
-                                                checked={item.checked || false}
-                                                onChange={() => handleToggleItem(item._id, item.checked || false)}
-                                                className={styles.checkbox}
-                                            />
-                                            <span className={styles.checkmark} />
-                                        </label>
-                                        <div className='flex gap-6'>
-
-                                            <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
-                                                {item.name}
-                                            </span>
-                                            <span className={styles.itemQuantity}>
-                                                {item.quantity}
+                                            <label
+                                                className={styles.checkboxWrapper}
+                                                onClick={(e) => e.stopPropagation()}
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    checked={item.checked || false}
+                                                    onChange={() => handleToggleItem(item._id, item.checked || false)}
+                                                    className={styles.checkbox}
+                                                />
+                                                <span className={styles.checkmark} />
+                                            </label>
+                                            <div className='flex gap-6'>
+                                                <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
+                                                    {item.name}
+                                                </span>
+                                                <span className={styles.itemQuantity}>
+                                                    {item.quantity}
+                                                </span>
+                                            </div>
+                                            <span className={styles.itemPrice}>
+                                                {item.price + '$'}
                                             </span>
                                         </div>
-                                        <span className={styles.itemPrice}>
-                                            {item.price + '$'}
-                                        </span>
-                                    </div>
-                                ))}
-                            </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     )}
                 </main>
@@ -256,7 +298,6 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                 />
             </div>
 
-            {/* Item Drawer */}
             <ItemDrawer
                 isOpen={isDrawerOpen}
                 onClose={handleDrawerClose}
