@@ -22,6 +22,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
     const [quickAddDisabled, setQuickAddDisabled] = useState(false);
+    const [isAddProductOpen, setIsAddProductOpen] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
     const [sortType, setSortType] = useState<'a-z' | 'category' | null>(null);
 
@@ -358,13 +359,17 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                         </div>
                     )}
                 </main>
-                <AddProducts
-                    itemName={itemName}
-                    handleAddItem={handleAddItem}
-                    setItemName={setItemName}
-                    createItemMutation={createItemMutation}
-                    quickAddDisabled={quickAddDisabled}
-                />
+                {isAddProductOpen &&
+                    <AddProducts
+                        itemName={itemName}
+                        handleAddItem={handleAddItem}
+                        setItemName={setItemName}
+                        createItemMutation={createItemMutation}
+                        quickAddDisabled={quickAddDisabled}
+                        onClose={() => setIsAddProductOpen(false)}
+                    />
+
+                }
             </div>
 
             <ItemDrawer
@@ -382,6 +387,13 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                 } : undefined}
                 listId={listId}
             />
+            {!isAddProductOpen &&
+                <div className={styles.addProductButtonContainer}>
+                    <button onClick={() => setIsAddProductOpen(true)} className={styles.addProductButton}>
+                        Add Products
+                    </button>
+                </div>
+            }
         </div>
     );
 }

@@ -345,3 +345,38 @@
 .totalRow:not(:last-child) {
     padding-right: 1rem;
 }
+
+.addProductButtonContainer {
+    position: sticky;
+    bottom: 2rem;
+    justify-self: center;
+    // transform: translate(-50%, 50px);
+    /* Center horizontally, move down 50px */
+    z-index: 10;
+}
+
+.addProductButton {
+    padding: 12px 24px;
+    /* Smaller padding */
+    background: $accent-coral;
+    /* Consistent with AddProducts button */
+    color: #FFFFFF;
+    border: none;
+    border-radius: 12px;
+    /* Rounded corners */
+    font-size: 16px;
+    /* Smaller font size */
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    /* More prominent shadow */
+
+    &:hover {
+        background: #FF9B70;
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}

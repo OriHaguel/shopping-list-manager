@@ -7,6 +7,7 @@ type AddProductsProps = {
     setItemName: (name: string) => void;
     createItemMutation: { isPending: boolean };
     quickAddDisabled: boolean;
+    onClose: () => void;
 };
 
 const POPULAR_ITEMS = [
@@ -15,7 +16,7 @@ const POPULAR_ITEMS = [
     'Apples', 'Bananas', 'Yogurt', 'Coffee', 'Sugar'
 ];
 
-export function AddProducts({ itemName, handleAddItem, setItemName, createItemMutation, quickAddDisabled }: AddProductsProps) {
+export function AddProducts({ itemName, handleAddItem, setItemName, createItemMutation, quickAddDisabled, onClose }: AddProductsProps) {
     const [activeTab, setActiveTab] = useState<'popular' | 'recent'>('popular');
     const [recentItems, setRecentItems] = useState<string[]>([]);
 
@@ -47,6 +48,9 @@ export function AddProducts({ itemName, handleAddItem, setItemName, createItemMu
             <div className={styles.addItem}>
                 <div className={styles.addItemHeader}>
                     <h2 className={styles.addItemTitle}>Add products</h2>
+                    <button onClick={onClose} className={styles.closeButton} type="button">
+                        &times;
+                    </button>
                 </div>
 
                 <div className={styles.inputWithButton}>
