@@ -49,7 +49,7 @@ export function createEmptyItem(): ItemBase {
         checked: false,
         price: 0,
         unit: '',
-        quantity: 0,
+        quantity: 1,
         description: '',
     };
 }
