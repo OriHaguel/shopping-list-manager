@@ -65,6 +65,24 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
         return result;
     }, [items, searchQuery, sortType]);
 
+    const totalPrice = useMemo(() => {
+        return items.reduce((sum, item) => {
+            return sum + ((item.price || 0) * (item.quantity || 0));
+        }, 0);
+    }, [items]);
+
+    const totalCheckedPrice = useMemo(() => {
+        return items.reduce((sum, item) => {
+            return sum + (item.checked ? (item.price || 0) * (item.quantity || 0) : 0);
+        }, 0);
+    }, [items]);
+
+    const totalUncheckedPrice = useMemo(() => {
+        return items.reduce((sum, item) => {
+            return sum + (!item.checked ? (item.price || 0) * (item.quantity || 0) : 0);
+        }, 0);
+    }, [items]);
+
     const updateItemMutation = useMutation({
         mutationFn: ({ _id, updates }: { _id: string; updates: Partial<Item> }) =>
             updateItem(_id, updates),
@@ -286,6 +304,20 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                     ))}
                                 </div>
                             )}
+                            <div className={styles.totalsContainer}>
+                                <div className={styles.totalRow}>
+                                    <span>Unchecked</span>
+                                    <span>{totalUncheckedPrice.toFixed(2)}$</span>
+                                </div>
+                                <div className={styles.totalRow}>
+                                    <span>Checked</span>
+                                    <span>{totalCheckedPrice.toFixed(2)}$</span>
+                                </div>
+                                <div className={styles.totalRow}>
+                                    <span>Total</span>
+                                    <span>{totalPrice.toFixed(2)}$</span>
+                                </div>
+                            </div>
                         </div>
                     )}
                 </main>
