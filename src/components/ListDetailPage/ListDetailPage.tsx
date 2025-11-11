@@ -318,6 +318,43 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                     <span>{totalPrice.toFixed(2)}$</span>
                                 </div>
                             </div>
+                            {filteredAndSortedItems.filter((item) => item.checked === true).length > 0 && (
+                                <div className={styles.checkedSection}>
+                                    <div className={styles.checkedItemsList}>
+                                        {filteredAndSortedItems.filter((item) => item.checked === true).map((item) => (
+                                            <div
+                                                key={item._id}
+                                                className={styles.checkedItemRow}
+                                                onClick={() => handleItemClick(item)}
+                                            >
+                                                <label
+                                                    className={styles.checkboxWrapper}
+                                                    onClick={(e) => e.stopPropagation()}
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={item.checked || false}
+                                                        onChange={() => handleToggleItem(item._id, item.checked || false)}
+                                                        className={styles.checkbox}
+                                                    />
+                                                    <span className={styles.checkmark} />
+                                                </label>
+                                                <div className='flex gap-6'>
+                                                    <span className={`${styles.itemName} ${styles.completed}`}>
+                                                        {item.name}
+                                                    </span>
+                                                    <span className={styles.itemQuantity}>
+                                                        {item.quantity}
+                                                    </span>
+                                                </div>
+                                                <span className={styles.itemPrice}>
+                                                    {item.price + '$'}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     )}
                 </main>

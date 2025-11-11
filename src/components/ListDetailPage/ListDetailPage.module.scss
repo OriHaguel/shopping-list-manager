@@ -172,8 +172,6 @@
 
     &.completed {
         color: $neutral-dark-gray;
-        text-decoration: line-through;
-        opacity: 0.6;
     }
 }
 
@@ -220,6 +218,46 @@
     }
 
 
+}
+
+
+.checkedSection {
+    margin-top: 16px;
+    overflow: hidden;
+}
+
+
+
+.checkedCount {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $accent-coral;
+    color: #FFFFFF;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.checkedItemsList {
+    padding: 0.5rem;
+}
+
+.checkedItemRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.5625rem 0.725rem;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    margin: 0.25rem 0;
+
+    &:hover {
+        background: $neutral-light-gray;
+    }
 }
 
 @keyframes fadeIn {
