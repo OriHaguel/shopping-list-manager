@@ -271,7 +271,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                 </div>
                             ) : (
                                 <div className={styles.itemsList}>
-                                    {filteredAndSortedItems.map((item) => (
+                                    {filteredAndSortedItems.filter((item) => item.checked === false).map((item) => (
                                         <div
                                             key={item._id}
                                             className={styles.itemRow}
