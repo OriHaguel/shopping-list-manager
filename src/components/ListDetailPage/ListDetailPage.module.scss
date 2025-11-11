@@ -58,7 +58,12 @@
 .content {
     width: 625px;
     max-width: 100%;
+
+    @media (max-width: 1600px) {
+        width: 500px;
+    }
 }
+
 
 .loading,
 .empty {
