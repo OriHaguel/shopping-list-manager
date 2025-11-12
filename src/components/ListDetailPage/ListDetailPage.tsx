@@ -5,7 +5,7 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './ListDetailPage.module.scss';
 import { Item, ItemBase } from '@/types';
-import { getItems, updateItem, createItem, createEmptyItem } from '@/services/item/item.service';
+import { getItems, updateItem, createItem, createEmptyItem, deleteItem } from '@/services/item/item.service';
 import { getList } from '@/services/list/list.service';
 import { AddProducts } from '../AddProducts/AddProducts';
 import { ItemInputs } from '../ItemInputs/ItemInputs';
@@ -122,6 +122,17 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
         },
     });
 
+    const deleteItemMutation = useMutation({
+        mutationFn: (itemId: string) => deleteItem(itemId),
+
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['items', listId] });
+        },
+        onError: (error) => {
+            console.error('Failed to delete list:', error);
+        },
+    });
+
     const handleToggleItem = (_id: string, currentChecked: boolean) => {
         updateItemMutation.mutate({
             _id,
@@ -131,7 +142,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
 
     function getItemQuantity(queryItem: string): number {
         const foundItem = items.find(item => item.name.toLowerCase() === queryItem.toLowerCase());
-        return foundItem ? (foundItem.quantity || 1) : 1;
+        return foundItem ? (foundItem.quantity || 1) : 0;
     }
 
     const handleAddItem = (name?: string) => {
@@ -160,6 +171,30 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                 name: trimmedName,
             });
         }
+    };
+    const handleRemoveItem = (name: string) => {
+        const trimmedName = name.trim();
+        const itemNameExists = items.find(
+            item => item.name.toLowerCase() === trimmedName.toLowerCase()
+        );
+
+        if (!trimmedName) return;
+        if (!itemNameExists) return;
+        if (itemNameExists.quantity > 1) {
+
+            updateItemMutation.mutate({
+                _id: itemNameExists._id,
+                updates: { quantity: itemNameExists.quantity - 1 }
+            })
+        }
+
+        // const emptyItem = createEmptyItem();
+        // createItemMutation.mutate({
+        //     ...emptyItem,
+        //     listId,
+        //     name: trimmedName,
+
+
     };
 
     const handleUncheckAll = () => {
@@ -373,6 +408,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                         quickAddDisabled={quickAddDisabled}
                         onClose={() => setIsAddProductOpen(false)}
                         getItemQuantity={getItemQuantity}
+                        handleRemoveItem={handleRemoveItem}
                     />
 
                 }
@@ -391,7 +427,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                     price: selectedItem.price || 0,
                     description: selectedItem.description || '',
                 } : undefined}
-                listId={listId}
+                deleteItemMutation={deleteItemMutation}
             />
             {!isAddProductOpen &&
                 <div className={styles.addProductButtonContainer}>

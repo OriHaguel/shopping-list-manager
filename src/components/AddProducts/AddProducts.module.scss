@@ -184,7 +184,6 @@
 
             .quickAddItem {
                 width: 100%;
-                padding: 12px;
                 border-radius: 12px;
                 border: none;
                 background: transparent;
@@ -211,16 +210,17 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-size: 1rem;
-                    font-weight: 400;
+                    font-size: 0.875rem;
+                    font-weight: 500;
                     flex-shrink: 0;
                     transition: all 0.2s ease;
-                    color: $accent-coral;
-                    width: 20px;
-
-                    &.animating {
-                        animation: plusPulse 0.3s ease;
-                    }
+                    color: #FFFFFF;
+                    background: $accent-coral;
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 50%;
+                    line-height: 1;
+                    padding-bottom: 1px;
                 }
 
                 .itemName {
@@ -231,25 +231,31 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-size: 1rem;
-                    font-weight: 400;
+                    font-size: 1.25rem;
+                    font-weight: 500;
                     flex-shrink: 0;
                     transition: all 0.2s ease;
-                    border: none;
-                    cursor: pointer;
-                    padding: 0;
-                    background: transparent;
-                    color: #EF4444;
-                    width: 20px;
+                    color: #ff0000;
+                    width: 35px;
+                    height: 35px;
+                    border-radius: 50%;
+                    line-height: 1;
+                    padding-bottom: 1px;
 
                     &:hover {
                         color: #DC2626;
-                        transform: scale(1.2);
+                        background-color: rgba(239, 68, 68, 0.12);
+                        border-radius: 50%;
                     }
 
                     &:active {
                         transform: scale(0.9);
                     }
+                }
+
+                > :nth-child(3) {
+                    // This targets the 3rd *child element* inside .parent
+                    margin-right: -7px;
                 }
             }
 

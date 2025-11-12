@@ -3,16 +3,15 @@
 
 import { useState, useEffect } from 'react';
 import styles from './ItemDrawer.module.scss';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteItem } from '@/services/item/item.service';
-import { Item } from '@/types';
+import { UseMutationResult, useQueryClient } from '@tanstack/react-query';
+
 
 interface ItemDrawerProps {
     isOpen: boolean;
     onClose: () => void;
     onSave: (itemData: ItemData) => void;
     initialData?: ItemData;
-    listId: string;
+    deleteItemMutation: UseMutationResult<void, Error, string, unknown>
 }
 
 export interface ItemData {
@@ -27,7 +26,7 @@ export interface ItemData {
 
 const categories = ['Vegetables', 'Fruits', 'Dairy', 'Meat', 'Bakery', 'Beverages', 'Snacks', 'Other'];
 
-export default function ItemDrawer({ isOpen, onClose, onSave, initialData, listId }: ItemDrawerProps) {
+export default function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMutation }: ItemDrawerProps) {
     const [formData, setFormData] = useState<ItemData>({
         _id: '',
         name: '',
@@ -55,20 +54,6 @@ export default function ItemDrawer({ isOpen, onClose, onSave, initialData, listI
             document.body.style.overflow = 'unset';
         };
     }, [isOpen]);
-
-
-    const deleteItemMutation = useMutation({
-        mutationFn: (itemId: string) => deleteItem(itemId),
-
-        onSuccess: () => {
-            // Refetch after error or success
-            queryClient.invalidateQueries({ queryKey: ['items', listId] });
-        },
-        onError: (error) => {
-            console.error('Failed to delete list:', error);
-        },
-    });
-
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();

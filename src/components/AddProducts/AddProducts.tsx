@@ -9,7 +9,7 @@ type AddProductsProps = {
     quickAddDisabled: boolean;
     onClose: () => void;
     getItemQuantity?: (itemName: string) => number;
-    handleRemoveItem?: (itemName: string) => void;
+    handleRemoveItem: (itemName: string) => void;
 };
 
 const POPULAR_ITEMS = [
@@ -26,11 +26,11 @@ export function AddProducts({
     quickAddDisabled,
     onClose,
     getItemQuantity,
-    handleRemoveItem
+    handleRemoveItem,
+
 }: AddProductsProps) {
     const [activeTab, setActiveTab] = useState<'popular' | 'recent'>('popular');
     const [recentItems, setRecentItems] = useState<string[]>([]);
-    const [animatingItems, setAnimatingItems] = useState<Set<string>>(new Set());
 
     const handleKeyPress = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') handleAddItemWithRecent();
@@ -48,14 +48,6 @@ export function AddProducts({
 
     const handleQuickAdd = (item: string) => {
         // Trigger animation
-        setAnimatingItems(prev => new Set(prev).add(item));
-        setTimeout(() => {
-            setAnimatingItems(prev => {
-                const newSet = new Set(prev);
-                newSet.delete(item);
-                return newSet;
-            });
-        }, 400);
 
         // Add to recent items
         if (!recentItems.includes(item)) {
@@ -133,10 +125,11 @@ export function AddProducts({
                                     disabled={quickAddDisabled || createItemMutation.isPending}
                                     type="button"
                                 >
-                                    <span className={`${styles.plusButton} ${animatingItems.has(item) ? styles.animating : ''}`}>
+                                    <span className={styles.plusButton}>
                                         +
                                     </span>
                                     <span className={styles.itemName}>{item}</span>
+                                    <span >{quantity === 0 ? '' : quantity}</span>
                                     {showRemove && (
                                         <button
                                             className={styles.removeButton}
@@ -165,7 +158,7 @@ export function AddProducts({
                                         disabled={quickAddDisabled || createItemMutation.isPending}
                                         type="button"
                                     >
-                                        <span className={`${styles.plusButton} ${animatingItems.has(item) ? styles.animating : ''}`}>
+                                        <span className={styles.plusButton}>
                                             +
                                         </span>
                                         <span className={styles.itemName}>{item}</span>
