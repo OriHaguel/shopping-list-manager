@@ -129,6 +129,11 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
         });
     };
 
+    function getItemQuantity(queryItem: string): number {
+        const foundItem = items.find(item => item.name.toLowerCase() === queryItem.toLowerCase());
+        return foundItem ? (foundItem.quantity || 1) : 1;
+    }
+
     const handleAddItem = (name?: string) => {
         const trimmedName = (name ?? itemName).trim();
         const itemNameExists = items.find(
@@ -367,6 +372,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                         createItemMutation={createItemMutation}
                         quickAddDisabled={quickAddDisabled}
                         onClose={() => setIsAddProductOpen(false)}
+                        getItemQuantity={getItemQuantity}
                     />
 
                 }

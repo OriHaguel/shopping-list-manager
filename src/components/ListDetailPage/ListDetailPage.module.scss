@@ -211,7 +211,7 @@
 
     @media (max-width: 950px) {
         position: static;
-        padding-top: 1rem;
+        padding-top: 0;
     }
 
     .headerRadius {
@@ -288,9 +288,6 @@
 }
 
 @media (max-width: 640px) {
-    .container {
-        padding: 24px 16px;
-    }
 
     .header {
         margin-bottom: 24px;
@@ -298,10 +295,6 @@
 
     .title {
         font-size: 20px;
-    }
-
-    .itemRow {
-        padding: 16px 12px;
     }
 
     .listDetailContainer {
@@ -320,7 +313,7 @@
     padding: 0.75rem;
     margin-top: -1px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     text-align: center;
 }
 
@@ -341,11 +334,19 @@
         overflow: hidden;
         text-overflow: ellipsis;
         width: 125px;
+
+        @media (max-width: 640px) {
+            width: 100px;
+        }
     }
 }
 
 .totalRow:not(:first-child) {
     padding-left: 1rem;
+
+    @media (max-width: 640px) {
+        padding-left: 0;
+    }
 }
 
 .totalRow:not(:last-child) {

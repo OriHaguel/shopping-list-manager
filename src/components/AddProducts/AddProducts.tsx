@@ -8,6 +8,8 @@ type AddProductsProps = {
     createItemMutation: { isPending: boolean };
     quickAddDisabled: boolean;
     onClose: () => void;
+    getItemQuantity?: (itemName: string) => number;
+    handleRemoveItem?: (itemName: string) => void;
 };
 
 const POPULAR_ITEMS = [
@@ -16,9 +18,19 @@ const POPULAR_ITEMS = [
     'Apples', 'Bananas', 'Yogurt', 'Coffee', 'Sugar'
 ];
 
-export function AddProducts({ itemName, handleAddItem, setItemName, createItemMutation, quickAddDisabled, onClose }: AddProductsProps) {
+export function AddProducts({
+    itemName,
+    handleAddItem,
+    setItemName,
+    createItemMutation,
+    quickAddDisabled,
+    onClose,
+    getItemQuantity,
+    handleRemoveItem
+}: AddProductsProps) {
     const [activeTab, setActiveTab] = useState<'popular' | 'recent'>('popular');
     const [recentItems, setRecentItems] = useState<string[]>([]);
+    const [animatingItems, setAnimatingItems] = useState<Set<string>>(new Set());
 
     const handleKeyPress = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') handleAddItemWithRecent();
@@ -35,12 +47,29 @@ export function AddProducts({ itemName, handleAddItem, setItemName, createItemMu
     };
 
     const handleQuickAdd = (item: string) => {
+        // Trigger animation
+        setAnimatingItems(prev => new Set(prev).add(item));
+        setTimeout(() => {
+            setAnimatingItems(prev => {
+                const newSet = new Set(prev);
+                newSet.delete(item);
+                return newSet;
+            });
+        }, 400);
+
         // Add to recent items
         if (!recentItems.includes(item)) {
             setRecentItems(prev => [item, ...prev].slice(0, 15));
         }
         // Set the item name and trigger add
         handleAddItem(item);
+    };
+
+    const handleRemove = (item: string, e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (handleRemoveItem) {
+            handleRemoveItem(item);
+        }
     };
 
     return (
@@ -91,32 +120,68 @@ export function AddProducts({ itemName, handleAddItem, setItemName, createItemMu
 
                 <div className={styles.itemsList}>
                     {activeTab === 'popular' ? (
-                        POPULAR_ITEMS.map((item, index) => (
-                            <button
-                                key={index}
-                                className={styles.quickAddItem}
-                                onClick={() => handleQuickAdd(item)}
-                                // Apply the new disabled state
-                                disabled={quickAddDisabled || createItemMutation.isPending}
-                                type="button"
-                            >
-                                {item}
-                            </button>
-                        ))
-                    ) : (
-                        recentItems.length > 0 ? (
-                            recentItems.map((item, index) => (
+                        POPULAR_ITEMS.map((item, index) => {
+                            const quantity = getItemQuantity ? getItemQuantity(item) : 0;
+                            const showRemove = quantity >= 1;
+                            const showMinus = quantity > 1;
+
+                            return (
                                 <button
                                     key={index}
                                     className={styles.quickAddItem}
                                     onClick={() => handleQuickAdd(item)}
-                                    // Apply the new disabled state
                                     disabled={quickAddDisabled || createItemMutation.isPending}
                                     type="button"
                                 >
-                                    {item}
+                                    <span className={`${styles.plusButton} ${animatingItems.has(item) ? styles.animating : ''}`}>
+                                        +
+                                    </span>
+                                    <span className={styles.itemName}>{item}</span>
+                                    {showRemove && (
+                                        <button
+                                            className={styles.removeButton}
+                                            onClick={(e) => handleRemove(item, e)}
+                                            type="button"
+                                            aria-label={showMinus ? 'Decrease quantity' : 'Remove item'}
+                                        >
+                                            {showMinus ? '−' : '×'}
+                                        </button>
+                                    )}
                                 </button>
-                            ))
+                            );
+                        })
+                    ) : (
+                        recentItems.length > 0 ? (
+                            recentItems.map((item, index) => {
+                                const quantity = getItemQuantity ? getItemQuantity(item) : 0;
+                                const showRemove = quantity >= 1;
+                                const showMinus = quantity > 1;
+
+                                return (
+                                    <button
+                                        key={index}
+                                        className={styles.quickAddItem}
+                                        onClick={() => handleQuickAdd(item)}
+                                        disabled={quickAddDisabled || createItemMutation.isPending}
+                                        type="button"
+                                    >
+                                        <span className={`${styles.plusButton} ${animatingItems.has(item) ? styles.animating : ''}`}>
+                                            +
+                                        </span>
+                                        <span className={styles.itemName}>{item}</span>
+                                        {showRemove && (
+                                            <button
+                                                className={styles.removeButton}
+                                                onClick={(e) => handleRemove(item, e)}
+                                                type="button"
+                                                aria-label={showMinus ? 'Decrease quantity' : 'Remove item'}
+                                            >
+                                                {showMinus ? '−' : '×'}
+                                            </button>
+                                        )}
+                                    </button>
+                                );
+                            })
                         ) : (
                             <div className={styles.emptyState}>
                                 No recent items yet
