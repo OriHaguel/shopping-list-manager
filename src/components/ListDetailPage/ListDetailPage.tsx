@@ -22,7 +22,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
     const [quickAddDisabled, setQuickAddDisabled] = useState(false);
-    const [isAddProductOpen, setIsAddProductOpen] = useState(true);
+    const [isAddProductOpen, setIsAddProductOpen] = useState(window.innerWidth <= 768 ? false : true);
     const [searchQuery, setSearchQuery] = useState('');
     const [sortType, setSortType] = useState<'a-z' | 'category' | null>(null);
 

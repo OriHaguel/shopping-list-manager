@@ -216,7 +216,7 @@ export default function ItemDrawer({ isOpen, onClose, onSave, initialData, listI
                                 <input
                                     id="itemPrice"
                                     type="number"
-                                    value={formData.price}
+                                    value={formData.price === 0 ? '' : formData.price}
                                     onChange={(e) => handleChange('price', e.target.value)}
                                     placeholder="0.00"
                                     className={styles.input}
