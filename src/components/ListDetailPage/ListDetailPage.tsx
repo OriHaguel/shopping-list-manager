@@ -186,15 +186,9 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                 _id: itemNameExists._id,
                 updates: { quantity: itemNameExists.quantity - 1 }
             })
+        } else if (itemNameExists.quantity <= 1) {
+            deleteItemMutation.mutate(itemNameExists._id);
         }
-
-        // const emptyItem = createEmptyItem();
-        // createItemMutation.mutate({
-        //     ...emptyItem,
-        //     listId,
-        //     name: trimmedName,
-
-
     };
 
     const handleUncheckAll = () => {
