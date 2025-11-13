@@ -46,6 +46,7 @@ export default function ListsPage() {
         onSuccess: (newList) => {
             // Optimistically update the cache
             queryClient.setQueryData<List[]>(['lists'], (old: any = []) => [...old, newList]);
+            router.push(`list/${newList?._id}`);
             setIsModalOpen(false);
         },
         onError: (error) => {

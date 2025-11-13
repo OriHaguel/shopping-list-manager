@@ -198,9 +198,10 @@
         font-size: 1.875rem;
         line-height: 2.25rem;
         width: 300px;
+        padding-bottom: 0.2rem;
         overflow: hidden;
         text-overflow: ellipsis;
-        padding-bottom: 0.2rem;
+        white-space: nowrap;
     }
 }
 
