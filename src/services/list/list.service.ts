@@ -9,6 +9,14 @@ export async function createList(list: ListBase): Promise<List | void> {
         console.error('Error fetching lists:', err);
     }
 }
+export async function updateList(list: List): Promise<List | void> {
+    try {
+        const newList = await httpService.put('lists' + `/${list._id}`, list);
+        return newList
+    } catch (err) {
+        console.error('Error fetching lists:', err);
+    }
+}
 export async function getLists(): Promise<List[]> {
     try {
         const lists = await httpService.get('lists');

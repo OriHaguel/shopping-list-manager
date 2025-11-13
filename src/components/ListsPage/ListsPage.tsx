@@ -11,7 +11,7 @@ import styles from './ListsPage.module.scss';
 import { List } from '@/types';
 import { Button } from '../ui/button';
 import { logout } from '@/services/user/user.service';
-import { createList, getLists, deleteList } from '@/services/list/list.service';
+import { createList, getLists, deleteList, updateList } from '@/services/list/list.service';
 
 export default function ListsPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,6 +48,18 @@ export default function ListsPage() {
             queryClient.setQueryData<List[]>(['lists'], (old: any = []) => [...old, newList]);
             router.push(`list/${newList?._id}`);
             setIsModalOpen(false);
+        },
+        onError: (error) => {
+            console.error('Failed to create list:', error);
+            // You could show a toast notification here
+        },
+    });
+    const updateListMutation = useMutation({
+        mutationFn: (list: List) => updateList(list),
+        onSuccess: (newList) => {
+            // Optimistically update the cache
+            queryClient.setQueryData<List[]>(['lists'], (old = []) =>
+                old.map(list => list._id === newList?._id ? { ...list, ...newList } : list))
         },
         onError: (error) => {
             console.error('Failed to create list:', error);
@@ -96,6 +108,9 @@ export default function ListsPage() {
     const handleDeleteList = (listId: string) => {
         deleteListMutation.mutate(listId);
     };
+    const handleUpdateList = (list: List) => {
+        updateListMutation.mutate(list);
+    };
 
     return (
         <div className={styles.container}>
@@ -130,6 +145,8 @@ export default function ListsPage() {
                             list={list}
                             onClick={() => handleListClick(list._id)}
                             onDelete={() => handleDeleteList(list._id)}
+                            // onRename={() => console.log(list)}
+                            onRename={() => handleUpdateList(list)}
                         />
                     ))
                 )}
