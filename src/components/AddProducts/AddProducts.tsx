@@ -162,6 +162,8 @@ export function AddProducts({
                                             +
                                         </span>
                                         <span className={styles.itemName}>{item}</span>
+                                        <span >{quantity === 0 ? '' : quantity}</span>
+
                                         {showRemove && (
                                             <button
                                                 className={styles.removeButton}
