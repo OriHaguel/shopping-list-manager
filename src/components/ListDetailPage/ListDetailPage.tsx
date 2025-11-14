@@ -34,7 +34,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
         staleTime: 5 * 60 * 1000,
     });
 
-    const { data: list } = useQuery({
+    const { data: list, isLoading: isLoadingList } = useQuery({
         queryKey: ['list', listId],
         queryFn: () => getList(listId),
         staleTime: 5 * 60 * 1000,
@@ -259,7 +259,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
         <div className={styles.container}>
             <div className={styles.listDetailContainer}>
                 <main className={styles.content}>
-                    {isLoading ? (
+                    {isLoading || isLoadingList ? (
                         <div className={styles.loading}>Loading items...</div>
                     ) : isError ? (
                         <div className={styles.error}>
