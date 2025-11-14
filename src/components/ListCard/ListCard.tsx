@@ -8,7 +8,7 @@ interface ListCardProps {
     list: List;
     onClick: () => void;
     onDelete: () => void;
-    onRename?: () => void;
+    onRename: () => void;
     onShare?: () => void;
     onCopy?: () => void;
 }
@@ -69,17 +69,15 @@ export default function ListCard({ list, onClick, onDelete, onRename, onShare, o
                 </button>
                 {isMenuOpen && (
                     <div className={styles.menu}>
-                        {onRename && (
-                            <button
-                                className={styles.menuItem}
-                                onClick={(e) => handleMenuAction(e, onRename)}
-                            >
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                    <path d="M11 2L14 5L6 13L2 14L3 10L11 2Z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <span>Rename</span>
-                            </button>
-                        )}
+                        <button
+                            className={styles.menuItem}
+                            onClick={(e) => handleMenuAction(e, onRename)}
+                        >
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
+                                <path d="M11 2L14 5L6 13L2 14L3 10L11 2Z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                            <span>Rename</span>
+                        </button>
                         {onShare && (
                             <button
                                 className={styles.menuItem}

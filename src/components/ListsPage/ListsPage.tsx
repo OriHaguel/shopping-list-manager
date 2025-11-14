@@ -15,6 +15,7 @@ import { createList, getLists, deleteList, updateList } from '@/services/list/li
 
 export default function ListsPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [listToRename, setListToRename] = useState<List | null>(null);
     const router = useRouter();
     const queryClient = useQueryClient();
 
@@ -60,6 +61,11 @@ export default function ListsPage() {
             // Optimistically update the cache
             queryClient.setQueryData<List[]>(['lists'], (old = []) =>
                 old.map(list => list._id === newList?._id ? { ...list, ...newList } : list))
+            setIsModalOpen(false);
+            setListToRename(null);
+
+            console.log("🚀 ~ ListsPage ~ listToRename:", listToRename)
+            queryClient.invalidateQueries({ queryKey: ['list', listToRename?._id] });
         },
         onError: (error) => {
             console.error('Failed to create list:', error);
@@ -97,8 +103,12 @@ export default function ListsPage() {
         },
     });
 
-    const handleCreateList = (name: string) => {
-        createListMutation.mutate(name);
+    const handleSaveList = (name: string) => {
+        if (listToRename) {
+            updateListMutation.mutate({ ...listToRename, name });
+        } else {
+            createListMutation.mutate(name);
+        }
     };
 
     const handleListClick = (listId: string) => {
@@ -108,8 +118,14 @@ export default function ListsPage() {
     const handleDeleteList = (listId: string) => {
         deleteListMutation.mutate(listId);
     };
-    const handleUpdateList = (list: List) => {
-        updateListMutation.mutate(list);
+    const handleRename = (list: List) => {
+        setListToRename(list);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setListToRename(null);
     };
 
     return (
@@ -145,8 +161,7 @@ export default function ListsPage() {
                             list={list}
                             onClick={() => handleListClick(list._id)}
                             onDelete={() => handleDeleteList(list._id)}
-                            // onRename={() => console.log(list)}
-                            onRename={() => handleUpdateList(list)}
+                            onRename={() => handleRename(list)}
                         />
                     ))
                 )}
@@ -154,8 +169,9 @@ export default function ListsPage() {
 
             <CreateListModal
                 isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                onCreate={handleCreateList}
+                onClose={handleCloseModal}
+                onSave={handleSaveList}
+                listToRename={listToRename}
             />
         </div>
     );
