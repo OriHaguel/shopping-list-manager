@@ -226,11 +226,53 @@
         padding: 1rem;
         padding-top: 1.5rem;
         background-color: #fff;
+
+        .progressBarContainer {
+            margin-left: 16px;
+            width: 95%;
+            height: 6px;
+            background: $neutral-light-gray;
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+
+            .progressBarFill {
+                height: 100%;
+                background: linear-gradient(90deg, $accent-coral 0%, $accent-peach 100%);
+                border-radius: 9999px;
+                transition: width 0.3s ease;
+                position: relative;
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: linear-gradient(90deg,
+                            rgba(255, 255, 255, 0) 0%,
+                            rgba(255, 255, 255, 0.3) 50%,
+                            rgba(255, 255, 255, 0) 100%);
+                    animation: shimmer 2s infinite;
+
+                }
+            }
+        }
     }
 
 
 }
 
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
 
 .checkedSection {
     margin-top: 16px;

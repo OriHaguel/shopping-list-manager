@@ -47,7 +47,6 @@ export function AddProducts({
     };
 
     const handleQuickAdd = (item: string) => {
-        // Trigger animation
 
         // Add to recent items
         if (!recentItems.includes(item)) {

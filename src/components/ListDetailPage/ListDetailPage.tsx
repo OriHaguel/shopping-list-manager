@@ -28,6 +28,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
 
     const menuRef = useRef<HTMLDivElement>(null);
 
+
     const { data: items = [], isLoading, isError, error } = useQuery({
         queryKey: ['items', listId],
         queryFn: () => getItems(listId),
@@ -40,6 +41,10 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
         staleTime: 5 * 60 * 1000,
     });
 
+    const checkedCount = items.filter(item => item.checked).length;
+    const totalCount = items.length;
+
+    const progressPercentage = totalCount > 0 ? (checkedCount / totalCount) * 100 : 0;
     // Filter and sort items
     const filteredAndSortedItems = useMemo(() => {
         let result = [...items];
@@ -298,7 +303,14 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                         onSearch={handleSearch}
                                         onSort={handleSort}
                                     />
+                                    <div className={styles.progressBarContainer}>
+                                        <div
+                                            className={styles.progressBarFill}
+                                            style={{ width: `${progressPercentage}%` }}
+                                        />
+                                    </div>
                                 </div>
+
                             </div>
                             {filteredAndSortedItems.length === 0 ? (
                                 <div className={styles.empty}>
