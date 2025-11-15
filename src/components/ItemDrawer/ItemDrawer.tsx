@@ -24,7 +24,7 @@ export interface ItemData {
     description: string;
 }
 
-const categories = ['Vegetables', 'Fruits', 'Dairy', 'Meat', 'Bakery', 'Beverages', 'Snacks', 'Other'];
+const categories = ['Vegetables', 'Fruits', 'Dairy', 'Meat', 'Frozen', 'Fish', 'Bakery', 'Beverages', 'Alcohol', 'Snacks', 'Cleaning', 'Pets', 'Electronics', 'Health', 'Clothing', 'Baby', 'Other'];
 
 export default function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMutation }: ItemDrawerProps) {
     const [formData, setFormData] = useState<ItemData>({

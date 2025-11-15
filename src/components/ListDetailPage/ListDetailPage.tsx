@@ -7,6 +7,7 @@ import { AddProducts } from '../AddProducts/AddProducts';
 import { ItemInputs } from '../ItemInputs/ItemInputs';
 import ItemDrawer, { ItemData } from '../ItemDrawer/ItemDrawer';
 import { useListItems } from '@/hooks/useListItems';
+import { CategoryIcon } from '../CategoryIcon/CategoryIcon';
 
 interface ListDetailPageProps {
     listId: string;
@@ -222,9 +223,14 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                                     {item.quantity}
                                                 </span>
                                             </div>
+
                                             <span className={styles.itemPrice}>
                                                 {item.price + '$'}
                                             </span>
+                                            <CategoryIcon
+                                                category={item.category || 'Other'}
+                                                size={20}
+                                            />
                                         </div>
                                     ))}
                                 </div>
@@ -272,9 +278,15 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                                         {item.quantity}
                                                     </span>
                                                 </div>
+
                                                 <span className={styles.itemPrice}>
                                                     {item.price + '$'}
                                                 </span>
+
+                                                <CategoryIcon
+                                                    category={item.category || 'Other'}
+                                                    size={20}
+                                                />
                                             </div>
                                         ))}
                                     </div>
