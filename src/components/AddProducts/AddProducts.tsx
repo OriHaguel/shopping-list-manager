@@ -3,9 +3,9 @@ import styles from './AddProducts.module.scss';
 
 type AddProductsProps = {
     itemName: string;
-    handleAddItem: (name?: string) => void;
+    handleAddItem: (name: string) => void;
     setItemName: (name: string) => void;
-    createItemMutation: { isPending: boolean };
+    isCreating: boolean;
     quickAddDisabled: boolean;
     onClose: () => void;
     getItemQuantity?: (itemName: string) => number;
@@ -22,11 +22,11 @@ export function AddProducts({
     itemName,
     handleAddItem,
     setItemName,
-    createItemMutation,
     quickAddDisabled,
     onClose,
     getItemQuantity,
     handleRemoveItem,
+    isCreating
 
 }: AddProductsProps) {
     const [activeTab, setActiveTab] = useState<'popular' | 'recent'>('popular');
@@ -42,7 +42,7 @@ export function AddProducts({
             if (!recentItems.includes(itemName.trim())) {
                 setRecentItems(prev => [itemName.trim(), ...prev].slice(0, 15));
             }
-            handleAddItem();
+            handleAddItem(itemName);
         }
     };
 
@@ -84,11 +84,11 @@ export function AddProducts({
                     />
                     <button
                         onClick={handleAddItemWithRecent}
-                        disabled={!itemName.trim() || createItemMutation.isPending}
+                        disabled={!itemName.trim() || isCreating}
                         className={styles.addButton}
                         type="button"
                     >
-                        {createItemMutation.isPending ? '...' : '+'}
+                        {isCreating ? '...' : '+'}
                     </button>
                 </div>
 
@@ -121,7 +121,7 @@ export function AddProducts({
                                     key={index}
                                     className={styles.quickAddItem}
                                     onClick={() => handleQuickAdd(item)}
-                                    disabled={quickAddDisabled || createItemMutation.isPending}
+                                    disabled={quickAddDisabled || isCreating}
                                     type="button"
                                 >
                                     <span className={styles.plusButton}>
@@ -154,7 +154,7 @@ export function AddProducts({
                                         key={index}
                                         className={styles.quickAddItem}
                                         onClick={() => handleQuickAdd(item)}
-                                        disabled={quickAddDisabled || createItemMutation.isPending}
+                                        disabled={quickAddDisabled || isCreating}
                                         type="button"
                                     >
                                         <span className={styles.plusButton}>

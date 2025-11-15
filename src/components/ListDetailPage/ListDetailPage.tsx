@@ -1,22 +1,18 @@
 // components/ListDetailPage/ListDetailPage.tsx
 'use client';
-
 import { useState, useRef, useEffect, useMemo } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './ListDetailPage.module.scss';
-import { Item, ItemBase } from '@/types';
-import { getItems, updateItem, createItem, createEmptyItem, deleteItem } from '@/services/item/item.service';
-import { getList } from '@/services/list/list.service';
+import { Item } from '@/types';
 import { AddProducts } from '../AddProducts/AddProducts';
 import { ItemInputs } from '../ItemInputs/ItemInputs';
 import ItemDrawer, { ItemData } from '../ItemDrawer/ItemDrawer';
+import { useListItems } from '@/hooks/useListItems';
 
 interface ListDetailPageProps {
     listId: string;
 }
 
 export default function ListDetailPage({ listId }: ListDetailPageProps) {
-    const queryClient = useQueryClient();
     const [itemName, setItemName] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -27,19 +23,21 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
     const [sortType, setSortType] = useState<'a-z' | 'category' | null>(null);
 
     const menuRef = useRef<HTMLDivElement>(null);
-
-
-    const { data: items = [], isLoading, isError, error } = useQuery({
-        queryKey: ['items', listId],
-        queryFn: () => getItems(listId),
-        staleTime: 5 * 60 * 1000,
-    });
-
-    const { data: list, isLoading: isLoadingList } = useQuery({
-        queryKey: ['list', listId],
-        queryFn: () => getList(listId),
-        staleTime: 5 * 60 * 1000,
-    });
+    const {
+        items,
+        list,
+        isLoading,
+        isError,
+        error,
+        handleToggleItem,
+        handleAddItem,
+        handleRemoveItem,
+        handleUpdateItem,
+        handleUncheckAll,
+        getItemQuantity,
+        deleteItemMutation,
+        isCreating,
+    } = useListItems(listId);
 
     const checkedCount = items.filter(item => item.checked).length;
     const totalCount = items.length;
@@ -89,125 +87,6 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
         }, 0);
     }, [items]);
 
-    const updateItemMutation = useMutation({
-        mutationFn: ({ _id, updates }: { _id: string; updates: Partial<Item> }) =>
-            updateItem(_id, updates),
-        onMutate: async ({ _id, updates }) => {
-            await queryClient.cancelQueries({ queryKey: ['items', listId] });
-            const previousItems = queryClient.getQueryData<Item[]>(['items', listId]);
-
-            queryClient.setQueryData<Item[]>(['items', listId], (old = []) =>
-                old.map(item => item._id === _id ? { ...item, ...updates } : item)
-            );
-
-            return { previousItems };
-        },
-        onError: (err, _variables, context) => {
-            if (context?.previousItems) {
-                queryClient.setQueryData(['items', listId], context.previousItems);
-            }
-            console.error('Failed to update item:', err);
-        },
-        onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ['items', listId],
-                refetchType: 'none'
-            });
-        },
-    });
-
-    const createItemMutation = useMutation({
-        mutationFn: (newItem: ItemBase) => createItem(newItem),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['items', listId] });
-            setItemName('');
-        },
-        onError: (err) => {
-            console.error('Failed to create item:', err);
-        },
-    });
-
-    const deleteItemMutation = useMutation({
-        mutationFn: (itemId: string) => deleteItem(itemId),
-
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['items', listId] });
-        },
-        onError: (error) => {
-            console.error('Failed to delete list:', error);
-        },
-    });
-
-    const handleToggleItem = (_id: string, currentChecked: boolean) => {
-        updateItemMutation.mutate({
-            _id,
-            updates: { checked: !currentChecked },
-        });
-    };
-
-    function getItemQuantity(queryItem: string): number {
-        const foundItem = items.find(item => item.name.toLowerCase() === queryItem.toLowerCase());
-        return foundItem ? (foundItem.quantity || 1) : 0;
-    }
-
-    const handleAddItem = (name?: string) => {
-        const trimmedName = (name ?? itemName).trim();
-        const itemNameExists = items.find(
-            item => item.name.toLowerCase() === trimmedName.toLowerCase()
-        );
-
-        if (!trimmedName) return;
-        if (itemNameExists) {
-            updateItemMutation.mutate({
-                _id: itemNameExists._id,
-                updates: { quantity: itemNameExists.quantity + 1 }
-            })
-        } else {
-            setQuickAddDisabled(true);
-
-            setTimeout(() => {
-                setQuickAddDisabled(false);
-            }, 400);
-
-            const emptyItem = createEmptyItem();
-            createItemMutation.mutate({
-                ...emptyItem,
-                listId,
-                name: trimmedName,
-            });
-        }
-    };
-    const handleRemoveItem = (name: string) => {
-        const trimmedName = name.trim();
-        const itemNameExists = items.find(
-            item => item.name.toLowerCase() === trimmedName.toLowerCase()
-        );
-
-        if (!trimmedName) return;
-        if (!itemNameExists) return;
-        if (itemNameExists.quantity > 1) {
-
-            updateItemMutation.mutate({
-                _id: itemNameExists._id,
-                updates: { quantity: itemNameExists.quantity - 1 }
-            })
-        } else if (itemNameExists.quantity <= 1) {
-            deleteItemMutation.mutate(itemNameExists._id);
-        }
-    };
-
-    const handleUncheckAll = () => {
-        items.forEach(item => {
-            if (item.checked) {
-                updateItemMutation.mutate({
-                    _id: item._id,
-                    updates: { checked: false },
-                });
-            }
-        });
-        setIsMenuOpen(false);
-    };
-
     const handleItemClick = (item: Item) => {
         setSelectedItem(item);
         setIsDrawerOpen(true);
@@ -215,16 +94,15 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
 
     const handleDrawerSave = (itemData: ItemData) => {
         if (selectedItem) {
-            updateItemMutation.mutate({
-                _id: selectedItem._id,
-                updates: {
-                    name: itemData.name,
-                    category: itemData.category,
-                    price: itemData.price || 0,
-                    unit: itemData.unit,
-                    quantity: itemData.quantity || 0,
-                    description: itemData.description,
-                },
+            handleUpdateItem(selectedItem._id, {
+
+                name: itemData.name,
+                category: itemData.category,
+                price: itemData.price || 0,
+                unit: itemData.unit,
+                quantity: itemData.quantity || 0,
+                description: itemData.description,
+
             });
         }
         setIsDrawerOpen(false);
@@ -264,7 +142,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
         <div className={styles.container}>
             <div className={styles.listDetailContainer}>
                 <main className={styles.content}>
-                    {isLoading || isLoadingList ? (
+                    {isLoading ? (
                         <div className={styles.loading}>Loading items...</div>
                     ) : isError ? (
                         <div className={styles.error}>
@@ -410,13 +288,12 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                         itemName={itemName}
                         handleAddItem={handleAddItem}
                         setItemName={setItemName}
-                        createItemMutation={createItemMutation}
+                        isCreating={isCreating}
                         quickAddDisabled={quickAddDisabled}
                         onClose={() => setIsAddProductOpen(false)}
                         getItemQuantity={getItemQuantity}
                         handleRemoveItem={handleRemoveItem}
                     />
-
                 }
             </div>
 

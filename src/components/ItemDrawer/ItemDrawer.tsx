@@ -36,7 +36,6 @@ export default function ItemDrawer({ isOpen, onClose, onSave, initialData, delet
         price: 0,
         description: '',
     });
-    const queryClient = useQueryClient();
 
     useEffect(() => {
         if (initialData) {
