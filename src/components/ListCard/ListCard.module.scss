@@ -56,7 +56,7 @@
 
     &:hover {
         background: $neutral-light-gray;
-        color: #5B8CA8;
+        color: $primary-blue;
     }
 
     &:active {
@@ -115,7 +115,7 @@
         background: $neutral-light-gray;
 
         svg {
-            color: #5B8CA8;
+            color: $primary-blue;
         }
     }
 

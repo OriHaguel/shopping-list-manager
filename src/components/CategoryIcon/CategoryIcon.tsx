@@ -1,5 +1,6 @@
 // components/CategoryIcon/CategoryIcon.tsx
 import React from 'react';
+import styles from './CategoryIcon.module.scss';
 
 interface CategoryIconProps {
     category: string;
@@ -18,16 +19,12 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         // Fruits & Vegetables
         if (categoryLower.includes('fruit') || categoryLower.includes('vegetable') || categoryLower.includes('produce')) {
             return (
-                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M12 2a10 10 0 0 0-9.95 9h19.9A10 10 0 0 0 12 2Z" />
-                    <path d="M12 22a10 10 0 0 0 9.95-9H2.05A10 10 0 0 0 12 22Z" />
-                    <path d="M8 12h8" />
-                </svg>
+                '🍎'
             );
         }
 
         // Meat & Seafood
-        if (categoryLower.includes('meat') || categoryLower.includes('seafood') || categoryLower.includes('fish') || categoryLower.includes('chicken') || categoryLower.includes('beef')) {
+        if (categoryLower.includes('meat') || categoryLower.includes('chicken') || categoryLower.includes('beef')) {
             return (
                 <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
                     <path d="M6.5 12c.94-3.46 4.94-6 8.5-6 3.56 0 6.06 2.54 7 6-.94 3.47-3.44 6-7 6s-7.56-2.53-8.5-6Z" />
@@ -37,30 +34,24 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
                 </svg>
             );
         }
+        if (categoryLower.includes('seafood') || categoryLower.includes('fish')) {
+            return (
+                <img src="/icons/fish.png" alt="" className={styles.iconImg} />
+
+            );
+        }
 
         // Dairy
         if (categoryLower.includes('dairy') || categoryLower.includes('milk') || categoryLower.includes('cheese') || categoryLower.includes('yogurt')) {
             return (
-                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M8 2h8" />
-                    <path d="M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2" />
-                    <path d="M7 15a6.472 6.472 0 0 1 5 0 6.47 6.47 0 0 0 5 0" />
-                </svg>
+                <img src="/icons/dairy.png" alt="" className={styles.iconImg} />
             );
         }
 
         // Bakery & Bread
         if (categoryLower.includes('bakery') || categoryLower.includes('bread') || categoryLower.includes('pastry')) {
             return (
-                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M17 21H7a4 4 0 0 1-4-4V11a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a4 4 0 0 1-4 4Z" />
-                    <path d="M8 21V9" />
-                    <path d="M12 21V9" />
-                    <path d="M16 21V9" />
-                    <path d="M7 3L6 9" />
-                    <path d="M12 3v6" />
-                    <path d="M17 3l1 6" />
-                </svg>
+                <img src="/icons/bread.png" alt="" width={45} height={45} className={styles.iconImg} />
             );
         }
 
@@ -89,22 +80,6 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
             );
         }
 
-        // Frozen
-        if (categoryLower.includes('frozen')) {
-            return (
-                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M12 2v20" />
-                    <path d="m3 9 4.5 1.5" />
-                    <path d="m3 15 4.5-1.5" />
-                    <path d="m21 9-4.5 1.5" />
-                    <path d="m21 15-4.5-1.5" />
-                    <path d="M6 7.5 12 12" />
-                    <path d="M6 16.5 12 12" />
-                    <path d="M18 7.5 12 12" />
-                    <path d="M18 16.5 12 12" />
-                </svg>
-            );
-        }
 
         // Household / Cleaning
         if (categoryLower.includes('household') || categoryLower.includes('cleaning') || categoryLower.includes('detergent')) {
