@@ -3,77 +3,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Item, ItemBase } from '@/types';
 import { getItems, updateItem, createItem, createEmptyItem, deleteItem } from '@/services/item/item.service';
 import { getList } from '@/services/list/list.service';
+import { CATEGORIES } from '@/lib/category-names';
 
-const CATEGORIES: Record<string, string[]> = {
-    Vegetables: [
-        'carrots', 'broccoli', 'spinach', 'potatoes', 'onions',
-        'lettuce', 'cucumber', 'peppers', 'zucchini', 'celery'
-    ],
-    Fruits: [
-        'apples', 'bananas', 'oranges', 'grapes', 'berries',
-        'mango', 'pineapple', 'kiwi', 'peaches', 'plums'
-    ],
-    Dairy: [
-        'milk', 'cheese', 'yogurt', 'butter', 'eggs',
-        'cream', 'sour cream', 'cottage cheese', 'cream cheese', 'margarine'
-    ],
-    Meat: [
-        'chicken', 'beef', 'pork', 'turkey', 'ham',
-        'sausage', 'bacon', 'lamb', 'ground beef', 'steak'
-    ],
-    Frozen: [
-        'ice cream', 'frozen vegetables', 'frozen pizza', 'frozen fruit', 'waffles',
-        'french fries', 'chicken nuggets', 'fish sticks', 'frozen meals', 'sorbet'
-    ],
-    Fish: [
-        'salmon', 'tuna', 'cod', 'shrimp', 'tilapia',
-        'sardines', 'mackerel', 'crab', 'lobster', 'oysters'
-    ],
-    Bakery: [
-        'bread', 'bagels', 'croissants', 'muffins', 'cookies',
-        'cake', 'donuts', 'rolls', 'tortillas', 'buns'
-    ],
-    Beverages: [
-        'water', 'juice', 'soda', 'coffee', 'tea',
-        'milkshake', 'smoothie', 'energy drink', 'sports drink', 'hot chocolate'
-    ],
-    Alcohol: [
-        'beer', 'wine', 'liquor', 'vodka', 'whiskey',
-        'rum', 'gin', 'tequila', 'champagne', 'cider'
-    ],
-    Snacks: [
-        'chips', 'crackers', 'nuts', 'popcorn', 'chocolate',
-        'candy', 'pretzels', 'granola bar', 'fruit snacks', 'gummy bears'
-    ],
-    Cleaning: [
-        'detergent', 'soap', 'cleaner', 'dish soap', 'bleach',
-        'fabric softener', 'glass cleaner', 'toilet cleaner', 'sponges', 'gloves'
-    ],
-    Pets: [
-        'pet food', 'dog food', 'cat food', 'bird seed', 'fish food',
-        'cat litter', 'dog treats', 'pet toys', 'flea treatment', 'pet shampoo'
-    ],
-    Electronics: [
-        'batteries', 'light bulbs', 'headphones', 'charger', 'usb cable',
-        'power bank', 'smartwatch', 'speaker', 'webcam', 'router'
-    ],
-    Health: [
-        'medicine', 'vitamins', 'pain reliever', 'band-aids', 'antiseptic',
-        'cough syrup', 'cold medicine', 'thermometer', 'supplements', 'first aid kit'
-    ],
-    Clothing: [
-        'socks', 'underwear', 't-shirt', 'pants', 'shorts',
-        'dress', 'skirt', 'jacket', 'sweater', 'hat'
-    ],
-    Baby: [
-        'diapers', 'baby food', 'formula', 'wipes', 'baby lotion',
-        'baby shampoo', 'pacifier', 'baby bottle', 'baby clothes', 'baby powder'
-    ],
-    Other: [
-        'sugar', 'flour', 'salt', 'pepper', 'olive oil',
-        'canned tomatoes', 'beans', 'spices', 'condiments', 'paper towels'
-    ]
-};
 
 function getCategoryForItem(itemName: string): string {
     const lowerCaseItemName = itemName.toLowerCase();
