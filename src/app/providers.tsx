@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { initializeCsrf } from '@/lib/csrf';
 import { refreshAccessToken, setupAxiosInterceptors } from '@/lib/setup-interceptors';
+import ProductivityLoader from '@/components/Loader/Loader';
 
 export function Providers({ children }: { children: React.ReactNode }) {
     const [isInitialized, setIsInitialized] = useState(false);
@@ -29,14 +30,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     // Don't render children until initialization is complete
     if (!isInitialized) {
         return (
-            <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '100vh'
-            }}>
-                Loading...
-            </div>
+            <ProductivityLoader />
         );
     }
 

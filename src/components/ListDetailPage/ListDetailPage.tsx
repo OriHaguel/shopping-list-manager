@@ -8,6 +8,7 @@ import { ItemInputs } from '../ItemInputs/ItemInputs';
 import ItemDrawer, { ItemData } from '../ItemDrawer/ItemDrawer';
 import { useListItems } from '@/hooks/useListItems';
 import { CategoryIcon } from '../CategoryIcon/CategoryIcon';
+import ProductivityLoader from '../Loader/Loader';
 
 interface ListDetailPageProps {
     listId: string;
@@ -144,7 +145,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
             <div className={styles.listDetailContainer}>
                 <main className={styles.content}>
                     {isLoading ? (
-                        <div className={styles.loading}>Loading items...</div>
+                        <ProductivityLoader />
                     ) : isError ? (
                         <div className={styles.error}>
                             <p>Failed to load items. Please try again.</p>

@@ -12,6 +12,7 @@ import { List } from '@/types';
 import { Button } from '../ui/button';
 import { logout } from '@/services/user/user.service';
 import { createList, getLists, deleteList, updateList } from '@/services/list/list.service';
+import ProductivityLoader from '../Loader/Loader';
 
 export default function ListsPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -138,9 +139,7 @@ export default function ListsPage() {
 
             <div className={styles.listsGrid}>
                 {isLoading ? (
-                    <div className={styles.emptyState}>
-                        <p className={styles.emptyText}>Loading lists...</p>
-                    </div>
+                    <ProductivityLoader />
                 ) : isError ? (
                     <div className={styles.emptyState}>
                         <p className={styles.emptyText}>Failed to load lists</p>
