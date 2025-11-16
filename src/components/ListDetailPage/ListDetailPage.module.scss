@@ -227,6 +227,12 @@
         padding-top: 1.5rem;
         background-color: #fff;
 
+        @media (max-width: 600px) {
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+        }
+
+
         .progressBarContainer {
             margin-left: 16px;
             width: 95%;
@@ -277,6 +283,10 @@
 .checkedSection {
     margin-top: 16px;
     overflow: hidden;
+
+    @media(max-width:600px) {
+        margin-top: 0;
+    }
 }
 
 
@@ -363,6 +373,11 @@
     display: flex;
     justify-content: space-evenly;
     text-align: center;
+
+    @media(max-width:600px) {
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
 }
 
 .totalRow {

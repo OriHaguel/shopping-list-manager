@@ -170,7 +170,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                             </div>
                         </div>
                     ) : (
-                        <div className='flex flex-col'>
+                        <div className='flex flex-col min-h-[100vh]'>
                             <div className={styles.itemInputscontainer}>
                                 <div className={styles.headerRadius}>
                                     <ItemInputs
