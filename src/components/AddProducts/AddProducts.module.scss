@@ -57,6 +57,7 @@
             display: flex;
             gap: 8px;
             align-items: center;
+            position: relative; // Added for positioning the clear button
 
             .input {
                 flex: 1;
@@ -68,6 +69,7 @@
                 color: $neutral-text;
                 font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
                 transition: all 0.2s ease;
+                padding-right: 40px; // Make space for the clear button
 
                 &::placeholder {
                     color: $neutral-dark-gray;
@@ -81,6 +83,29 @@
 
                 &:hover {
                     border-color: $primary-blue;
+                }
+            }
+
+            .clearInputButton {
+                position: absolute;
+                right: 60px; // Position relative to the right of the input field, accounting for the add button
+                background: none;
+                border: none;
+                font-size: 1.2rem;
+                color: $neutral-dark-gray;
+                cursor: pointer;
+                transition: color 0.2s ease;
+                padding: 0;
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+
+                &:hover {
+                    color: $primary-blue;
+                    background-color: rgba($primary-blue, 0.1);
                 }
             }
 

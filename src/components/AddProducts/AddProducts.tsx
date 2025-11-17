@@ -80,6 +80,16 @@ export function AddProducts({
                         onKeyDown={handleKeyPress}
                         className={styles.input}
                     />
+                    {itemName.trim() && (
+                        <button
+                            onClick={() => setItemName('')}
+                            className={styles.clearInputButton}
+                            type="button"
+                            aria-label="Clear input"
+                        >
+                            &times;
+                        </button>
+                    )}
                     <button
                         onClick={handleAddItemWithRecent}
                         disabled={!itemName.trim() || isCreating}
