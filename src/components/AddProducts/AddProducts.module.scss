@@ -88,7 +88,7 @@
 
             .clearInputButton {
                 position: absolute;
-                right: 60px; // Position relative to the right of the input field, accounting for the add button
+                right: 65px; // Position relative to the right of the input field, accounting for the add button
                 background: none;
                 border: none;
                 font-size: 1.2rem;
@@ -96,17 +96,10 @@
                 cursor: pointer;
                 transition: color 0.2s ease;
                 padding: 0;
-                width: 24px;
-                height: 24px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 border-radius: 50%;
-
-                &:hover {
-                    color: $primary-blue;
-                    background-color: rgba($primary-blue, 0.1);
-                }
             }
 
             .addButton {

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './AddProducts.module.scss';
-
+import { AddCircle } from '../svg/AddCircle/AddCircle'
+import { CircleClose } from '../svg/CircleClose/CircleClose'
 type AddProductsProps = {
     itemName: string;
     handleAddItem: (name: string) => void;
@@ -87,7 +88,7 @@ export function AddProducts({
                             type="button"
                             aria-label="Clear input"
                         >
-                            &times;
+                            <CircleClose />
                         </button>
                     )}
                     <button
@@ -132,8 +133,8 @@ export function AddProducts({
                                     disabled={isCreating}
                                     type="button"
                                 >
-                                    <span className={styles.plusButton}>+</span>
-
+                                    {/* <span className={styles.plusButton}>+</span> */}
+                                    <AddCircle />
                                     <span className={styles.itemName}>{item}</span>
 
                                     <span>{quantity === 0 ? '' : quantity}</span>
