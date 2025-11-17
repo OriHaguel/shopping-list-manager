@@ -6,7 +6,6 @@ type AddProductsProps = {
     handleAddItem: (name: string) => void;
     setItemName: (name: string) => void;
     isCreating: boolean;
-    quickAddDisabled: boolean;
     onClose: () => void;
     getItemQuantity?: (itemName: string) => number;
     handleRemoveItem: (itemName: string) => void;
@@ -22,7 +21,6 @@ export function AddProducts({
     itemName,
     handleAddItem,
     setItemName,
-    quickAddDisabled,
     onClose,
     getItemQuantity,
     handleRemoveItem,
@@ -121,26 +119,31 @@ export function AddProducts({
                                     key={index}
                                     className={styles.quickAddItem}
                                     onClick={() => handleQuickAdd(item)}
-                                    disabled={quickAddDisabled || isCreating}
+                                    disabled={isCreating}
                                     type="button"
                                 >
-                                    <span className={styles.plusButton}>
-                                        +
-                                    </span>
+                                    <span className={styles.plusButton}>+</span>
+
                                     <span className={styles.itemName}>{item}</span>
-                                    <span >{quantity === 0 ? '' : quantity}</span>
+
+                                    <span>{quantity === 0 ? '' : quantity}</span>
+
                                     {showRemove && (
-                                        <button
+                                        <span
                                             className={styles.removeButton}
-                                            onClick={(e) => handleRemove(item, e)}
-                                            type="button"
+                                            onClick={(e) => {
+                                                e.stopPropagation(); // prevent parent button click
+                                                handleRemove(item, e);
+                                            }}
+                                            role="button"
                                             aria-label={showMinus ? 'Decrease quantity' : 'Remove item'}
                                         >
                                             {showMinus ? '−' : '×'}
-                                        </button>
+                                        </span>
                                     )}
                                 </button>
                             );
+
                         })
                     ) : (
                         recentItems.length > 0 ? (
@@ -154,7 +157,7 @@ export function AddProducts({
                                         key={index}
                                         className={styles.quickAddItem}
                                         onClick={() => handleQuickAdd(item)}
-                                        disabled={quickAddDisabled || isCreating}
+                                        disabled={isCreating}
                                         type="button"
                                     >
                                         <span className={styles.plusButton}>

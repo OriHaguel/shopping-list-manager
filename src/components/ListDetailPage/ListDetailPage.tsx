@@ -19,7 +19,6 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
-    const [quickAddDisabled, setQuickAddDisabled] = useState(false);
     const [isAddProductOpen, setIsAddProductOpen] = useState(window.innerWidth <= 768 ? false : true);
     const [searchQuery, setSearchQuery] = useState('');
     const [sortType, setSortType] = useState<'a-z' | 'category' | null>(null);
@@ -173,8 +172,35 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                 </div>
                             </div>
                             <div className={styles.empty}>
-                                <p>No items yet. Start adding tasks to your list!</p>
+                                <div className={styles.emptyIllustration}>
+                                    <div className={styles.emptyCheckboxes}>
+                                        <div className={styles.emptyCheckboxRow}>
+                                            <div className={styles.emptyCheckbox}></div>
+                                            <div className={`${styles.emptyLine} ${styles.long}`}></div>
+                                        </div>
+                                        <div className={styles.emptyCheckboxRow}>
+                                            <div className={styles.emptyCheckbox}></div>
+                                            <div className={`${styles.emptyLine} ${styles.medium}`}></div>
+                                        </div>
+                                        <div className={styles.emptyCheckboxRow}>
+                                            <div className={styles.emptyCheckbox}></div>
+                                            <div className={`${styles.emptyLine} ${styles.short}`}></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3 className={styles.emptyTitle}>No items yet</h3>
+                                <p className={styles.emptyMessage}>
+                                    Your list is ready and waiting. Add your first item to get started!
+                                </p>
+                                {!isAddProductOpen &&
+                                    <div className={styles.addProductButtonContainer}>
+                                        <button onClick={() => setIsAddProductOpen(true)} className={styles.addProductButton}>
+                                            Add Products
+                                        </button>
+                                    </div>
+                                }
                             </div>
+
                         </div>
                     ) : (
                         <div className='flex flex-col min-h-[100vh]'>
@@ -308,7 +334,6 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                         handleAddItem={handleAddItem}
                         setItemName={setItemName}
                         isCreating={isCreating}
-                        quickAddDisabled={quickAddDisabled}
                         onClose={() => setIsAddProductOpen(false)}
                         getItemQuantity={getItemQuantity}
                         handleRemoveItem={handleRemoveItem}
@@ -331,7 +356,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                 } : undefined}
                 deleteItemMutation={deleteItemMutation}
             />
-            {!isAddProductOpen &&
+            {!isAddProductOpen && items.length > 0 &&
                 <div className={styles.addProductButtonContainer}>
                     <button onClick={() => setIsAddProductOpen(true)} className={styles.addProductButton}>
                         Add Products

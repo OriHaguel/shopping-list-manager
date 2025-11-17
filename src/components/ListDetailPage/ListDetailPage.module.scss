@@ -70,9 +70,111 @@
 .loading,
 .empty {
     text-align: center;
-    padding: 48px 24px;
+    padding: 4.375rem 2rem;
+    background: #FFFFFF;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    margin-top: -1px;
+
+    @media (max-width: 600px) {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        padding: 3rem 1.5rem;
+    }
+}
+
+.emptyIllustration {
+    width: 180px;
+    height: 120px;
+    margin: 0 auto 2rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.emptyCheckboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.emptyCheckboxRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+
+    &:nth-child(1) {
+        animation-delay: 0.2s;
+    }
+
+    &:nth-child(2) {
+        animation-delay: 0.4s;
+    }
+
+    &:nth-child(3) {
+        animation-delay: 0.6s;
+    }
+}
+
+.emptyCheckbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid $neutral-medium-gray;
+    border-radius: 50%;
+    background: #FFFFFF;
+    flex-shrink: 0;
+    // box-shadow: $shadow-sm;
+}
+
+.emptyLine {
+    height: 8px;
+    background: $neutral-light-gray;
+    border-radius: 4px;
+
+    &.long {
+        width: 120px;
+    }
+
+    &.medium {
+        width: 90px;
+    }
+
+    &.short {
+        width: 100px;
+    }
+}
+
+.emptyTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $neutral-text;
+    margin: 0 0 0.75rem 0;
+}
+
+.emptyMessage {
+    font-size: 0.9375rem;
     color: $neutral-dark-gray;
-    font-size: 14px;
+    margin: 0;
+    line-height: 1.6;
+    max-width: 340px;
+    margin: 0 auto;
+    margin-bottom: 2rem;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .error {
