@@ -164,6 +164,12 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                         onSearch={handleSearch}
                                         onSort={handleSort}
                                     />
+                                    <div className={styles.progressBarContainer}>
+                                        <div
+                                            className={styles.progressBarFill}
+                                            style={{ width: `${progressPercentage}%` }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                             <div className={styles.empty}>

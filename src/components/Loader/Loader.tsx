@@ -14,7 +14,7 @@ const ProductivityLoader: React.FC = () => {
 
                 <div className={styles.loaderText}>Loading</div>
 
-                <div className={styles.loaderSubtext}>Preparing your workspace...</div>
+                <div className={styles.loaderSubtext}>Preparing your lists...</div>
 
                 <div className={styles.loaderDots}>
                     {[0, 1, 2].map((i) => (
