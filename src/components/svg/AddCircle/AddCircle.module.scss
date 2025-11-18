@@ -1,16 +1,62 @@
 @use '../../../styles/setup/variables' as *;
 
 .addCircleIcon {
-    width: 24px;
-    height: 24px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+        .circle {
+            fill: $accent-peach;
+        }
+    }
+
+    &:active {
+        transform: scale(0.9);
+    }
+
+    // Animation keyframes
+    &.clicked {
+        animation: clickPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 }
 
 .circle {
     fill: $accent-coral;
+    transition: fill 0.2s ease;
 }
 
 .plus {
     stroke: white;
     stroke-width: 2;
-    stroke-linecap: round;
+    stroke-linecap: square;
+    transform-origin: center;
+    transition: transform 0.2s ease;
+
+    .addCircleIcon.clicked & {
+        animation: rotatePlus 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+}
+
+@keyframes clickPop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes rotatePlus {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(90deg);
+    }
 }

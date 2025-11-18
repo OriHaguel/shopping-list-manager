@@ -97,7 +97,7 @@ export function AddProducts({
                         className={styles.addButton}
                         type="button"
                     >
-                        {isCreating ? '...' : '+'}
+                        {isCreating ? '...' : <AddCircle />}
                     </button>
                 </div>
 
@@ -134,7 +134,7 @@ export function AddProducts({
                                     type="button"
                                 >
                                     {/* <span className={styles.plusButton}>+</span> */}
-                                    <AddCircle />
+                                    <AddCircle className='w-[24px] h-[24px]' />
                                     <span className={styles.itemName}>{item}</span>
 
                                     <span>{quantity === 0 ? '' : quantity}</span>

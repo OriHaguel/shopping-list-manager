@@ -107,13 +107,11 @@
                 height: 44px;
                 border-radius: 9999px;
                 border: none;
-                background: $accent-coral;
                 color: #FFFFFF;
                 font-size: 24px;
                 font-weight: 400;
                 cursor: pointer;
                 transition: all 0.2s ease;
-                box-shadow: 0 2px 8px rgba(255, 139, 107, 0.25);
                 flex-shrink: 0;
                 display: flex;
                 align-items: center;
@@ -121,11 +119,6 @@
                 line-height: 1;
                 padding-bottom: 2px;
 
-                &:hover:not(:disabled) {
-                    background: #FF9B70;
-                    transform: translateY(-2px) scale(1.05);
-                    box-shadow: 0 4px 12px rgba(255, 139, 107, 0.35);
-                }
 
                 &:active:not(:disabled) {
                     transform: scale(0.95);
