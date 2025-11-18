@@ -70,7 +70,7 @@ export default function ListCard({ list, onClick, onDelete, onRename, onShare, o
                 {isMenuOpen && (
                     <div className={styles.menu}>
                         <button
-                            className={styles.menuItem}
+                            className={styles.menuList}
                             onClick={(e) => handleMenuAction(e, onRename)}
                         >
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
@@ -80,7 +80,7 @@ export default function ListCard({ list, onClick, onDelete, onRename, onShare, o
                         </button>
                         {onShare && (
                             <button
-                                className={styles.menuItem}
+                                className={styles.menuList}
                                 onClick={(e) => handleMenuAction(e, onShare)}
                             >
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
@@ -94,7 +94,7 @@ export default function ListCard({ list, onClick, onDelete, onRename, onShare, o
                         )}
                         {onCopy && (
                             <button
-                                className={styles.menuItem}
+                                className={styles.menuList}
                                 onClick={(e) => handleMenuAction(e, onCopy)}
                             >
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
@@ -105,7 +105,7 @@ export default function ListCard({ list, onClick, onDelete, onRename, onShare, o
                             </button>
                         )}
                         <button
-                            className={`${styles.menuItem} ${styles.deleteItem}`}
+                            className={`${styles.menuList} ${styles.deleteItem}`}
                             onClick={(e) => handleMenuAction(e, handleDelete)}
                         >
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
