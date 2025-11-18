@@ -208,30 +208,10 @@
                 display: flex;
                 align-items: center;
                 gap: 12px;
+                padding: 2px 12px;
 
                 &:hover {
                     background: $neutral-light-gray;
-                }
-
-                &:active {
-                    // transform: scale(0.98);
-                }
-
-                .plusButton {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 0.875rem;
-                    font-weight: 500;
-                    flex-shrink: 0;
-                    transition: all 0.2s ease;
-                    color: #FFFFFF;
-                    background: $accent-coral;
-                    width: 24px;
-                    height: 24px;
-                    border-radius: 50%;
-                    line-height: 1;
-                    padding-bottom: 1px;
                 }
 
                 .itemName {
@@ -242,16 +222,12 @@
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-size: 1.25rem;
-                    font-weight: 500;
-                    flex-shrink: 0;
                     transition: all 0.2s ease;
                     color: #ff0000;
-                    width: 35px;
-                    height: 35px;
+                    width: 20px;
+                    height: 20px;
                     border-radius: 50%;
                     line-height: 1;
-                    padding-bottom: 1px;
 
                     &:hover {
                         color: #DC2626;

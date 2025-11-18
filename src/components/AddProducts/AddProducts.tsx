@@ -2,6 +2,8 @@ import { useState } from 'react';
 import styles from './AddProducts.module.scss';
 import { AddCircle } from '../svg/AddCircle/AddCircle'
 import { CircleClose } from '../svg/CircleClose/CircleClose'
+import { CloseIcon } from '../svg/CloseIcon/CloseIcon';
+import { RemoveIcon } from '../svg/RemoveIcon/RemoveIcon';
 type AddProductsProps = {
     itemName: string;
     handleAddItem: (name: string) => void;
@@ -133,7 +135,6 @@ export function AddProducts({
                                     disabled={isCreating}
                                     type="button"
                                 >
-                                    {/* <span className={styles.plusButton}>+</span> */}
                                     <AddCircle className='w-[24px] h-[24px]' />
                                     <span className={styles.itemName}>{item}</span>
 
@@ -149,7 +150,7 @@ export function AddProducts({
                                             role="button"
                                             aria-label={showMinus ? 'Decrease quantity' : 'Remove item'}
                                         >
-                                            {showMinus ? '−' : '×'}
+                                            {showMinus ? <RemoveIcon /> : <CloseIcon />}
                                         </span>
                                     )}
                                 </button>
@@ -171,9 +172,8 @@ export function AddProducts({
                                         disabled={isCreating}
                                         type="button"
                                     >
-                                        <span className={styles.plusButton}>
-                                            +
-                                        </span>
+                                        <AddCircle className='w-[24px] h-[24px]' />
+
                                         <span className={styles.itemName}>{item}</span>
                                         <span >{quantity === 0 ? '' : quantity}</span>
 
@@ -184,7 +184,7 @@ export function AddProducts({
                                                 type="button"
                                                 aria-label={showMinus ? 'Decrease quantity' : 'Remove item'}
                                             >
-                                                {showMinus ? '−' : '×'}
+                                                {showMinus ? <RemoveIcon /> : <CloseIcon />}
                                             </button>
                                         )}
                                     </button>
