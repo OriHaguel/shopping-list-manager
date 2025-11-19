@@ -97,14 +97,13 @@ const AuthPage: React.FC = () => {
 
         // Only submit if no errors
         if (!emailError && !passwordError) {
-            let toSignIn = isSignUp ? signup(formData).then(() => router.push(`list`)) : login(formData).then(() => router.push(`list`));
-            console.log("🚀 ~ handleSubmit ~ toLogIn:", toSignIn)
-            console.log('Form submitted:', formData);
-            // Add your submission logic here
-            // if (isSignUp) {
-            //     router.push(`list`);
-            // }
+            if (isSignUp) {
+                signup(formData).then(() => router.push('list'));
+            } else {
+                login(formData).then(() => router.push('list'));
+            }
         }
+
     };
 
     return (

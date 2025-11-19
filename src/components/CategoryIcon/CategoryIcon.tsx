@@ -1,7 +1,6 @@
 // components/CategoryIcon/CategoryIcon.tsx
-import React from 'react';
 import styles from './CategoryIcon.module.scss';
-
+import Image from 'next/image';
 interface CategoryIconProps {
     category: string;
     size?: number;
@@ -36,7 +35,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         }
         if (categoryLower.includes('seafood') || categoryLower.includes('fish')) {
             return (
-                <img src="/icons/fish.png" alt="" className={styles.iconImg} />
+                <Image src="/icons/fish.png" alt="" className={styles.iconImg} width={37.5} height={37.5} />
 
             );
         }
@@ -44,14 +43,14 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         // Dairy
         if (categoryLower.includes('dairy') || categoryLower.includes('milk') || categoryLower.includes('cheese') || categoryLower.includes('yogurt')) {
             return (
-                <img src="/icons/dairy.png" alt="" className={styles.iconImg} />
+                <Image src="/icons/dairy.png" alt="" className={styles.iconImg} width={37.5} height={37.5} />
             );
         }
 
         // Bakery & Bread
         if (categoryLower.includes('bakery') || categoryLower.includes('bread') || categoryLower.includes('pastry')) {
             return (
-                <img src="/icons/bread.png" alt="" width={45} height={45} className={styles.iconImg} />
+                <Image src="/icons/bread.png" alt="" width={45} height={45} className={styles.iconImg} />
             );
         }
 

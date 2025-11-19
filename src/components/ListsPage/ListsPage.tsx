@@ -20,11 +20,6 @@ export default function ListsPage() {
     const router = useRouter();
     const queryClient = useQueryClient();
 
-
-    const userToTest = {
-        email: 'testest@gmail.com',
-        password: 'gdf8g7dfg7df8'
-    };
     async function logoutCheck() {
         await logout()
         router.push('auth');

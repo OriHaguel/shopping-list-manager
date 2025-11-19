@@ -34,7 +34,7 @@ export const CATEGORIES: Record<string, string[]> = {
     ],
 
     Fish: [
-        'salmon', 'tuna', 'cod', 'shrimp', 'tilapia', 'sardines', 'mackerel', 'crab', 'lobster', 'oysters',
+        'salmon', 'fish', 'tuna', 'cod', 'shrimp', 'tilapia', 'sardines', 'mackerel', 'crab', 'lobster', 'oysters',
         'anchovies', 'clams', 'scallops', 'halibut', 'trout', 'sea bass', 'herring', 'calamari', 'smoked salmon', 'fish fillet',
         'sushi fish', 'seafood mix', 'fish sticks', 'canned tuna', 'canned salmon', 'salmon fillets', 'cod fillets', 'tuna steaks', 'prawns', 'lobster tails', 'crab legs', 'mussels', 'oysters', 'mahi-mahi', 'swordfish', 'sardines', 'mackerel', 'smoked trout', 'canned sardines', 'fish cakes', 'crab meat', 'imitation crab', 'octopus', 'sushi grade fish', 'caviar', 'roe', 'fish roe', 'fish sauce', 'oyster sauce', 'seaweed', 'nori', 'kelp', 'dulse', 'algae'
     ],

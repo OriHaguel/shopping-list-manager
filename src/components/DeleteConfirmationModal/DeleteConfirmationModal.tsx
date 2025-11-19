@@ -53,9 +53,10 @@ export default function DeleteConfirmationModal({
                 <h2 className={styles.title}>Delete List?</h2>
 
                 <p className={styles.message}>
-                    Are you sure you want to delete <strong>"{listName}"</strong>?
+                    Are you sure you want to delete <strong>&quot;{listName}&quot;</strong>?
                     This action cannot be undone.
                 </p>
+
 
                 <div className={styles.actions}>
                     <button

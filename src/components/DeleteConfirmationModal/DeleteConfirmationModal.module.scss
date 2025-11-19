@@ -132,7 +132,7 @@
     box-shadow: $shadow-base;
 
     &:hover {
-        background: darken($accent-coral, 8%);
+        background: $accent-coral;
         box-shadow: $shadow-md;
     }
 }

@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import styles from './ItemDrawer.module.scss';
-import { UseMutationResult, useQueryClient } from '@tanstack/react-query';
+import { UseMutationResult } from '@tanstack/react-query';
 
 
 interface ItemDrawerProps {
