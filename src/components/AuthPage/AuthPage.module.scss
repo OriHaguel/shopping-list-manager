@@ -133,7 +133,7 @@
 // Right Side - Form
 .authFormSide {
     flex: 1;
-    background: $primary-light-blue;
+    background: #ffffff;
     padding: $spacing-5xl;
     display: flex;
     align-items: center;
@@ -143,11 +143,10 @@
 
 .formContainer {
     width: 100%;
-    max-width: 460px;
+    max-width: 675px;
     background: $neutral-white;
     padding: $spacing-5xl;
     border-radius: $radius-2xl;
-    box-shadow: $shadow-soft;
 }
 
 .formHeader {
