@@ -1,0 +1,197 @@
+@use '../../styles/setup/variables' as *;
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(31, 41, 55, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: $spacing-xl;
+    animation: fadeIn 0.2s ease;
+}
+
+.modal {
+    background: $neutral-white;
+    border-radius: $radius-xl;
+    box-shadow: $shadow-lg;
+    padding: $spacing-3xl;
+    max-width: 440px;
+    width: 100%;
+    position: relative;
+    animation: scaleIn 0.2s ease;
+    text-align: center;
+}
+
+.closeButton {
+    position: absolute;
+    top: $spacing-lg;
+    right: $spacing-lg;
+    width: 40px;
+    height: 40px;
+    border-radius: $radius-full;
+    background: transparent;
+    border: none;
+    color: $neutral-dark-gray;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: $neutral-light-gray;
+        color: $neutral-text;
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+
+    &:focus-visible {
+        outline: 2px solid $primary-blue;
+        outline-offset: 2px;
+    }
+}
+
+.iconContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $spacing-xl;
+    animation: slideUp 0.3s ease 0.1s backwards;
+}
+
+.title {
+    font-family: $font-family;
+    font-size: 24px;
+    font-weight: 600;
+    color: $neutral-text;
+    margin: 0 0 $spacing-md 0;
+    animation: slideUp 0.3s ease 0.15s backwards;
+}
+
+.message {
+    font-family: $font-family;
+    font-size: 14px;
+    font-weight: 400;
+    color: $neutral-dark-gray;
+    line-height: 1.6;
+    margin: 0 0 $spacing-3xl 0;
+    animation: slideUp 0.3s ease 0.2s backwards;
+
+    strong {
+        color: $neutral-text;
+        font-weight: 600;
+    }
+}
+
+.actions {
+    display: flex;
+    gap: $spacing-md;
+    animation: slideUp 0.3s ease 0.25s backwards;
+}
+
+.cancelButton,
+.deleteButton {
+    flex: 1;
+    padding: $spacing-md $spacing-xl;
+    border-radius: $radius-xl;
+    font-family: $font-family;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+
+    &:active {
+        transform: scale(0.97);
+    }
+
+    &:focus-visible {
+        outline: 2px solid $primary-blue;
+        outline-offset: 2px;
+    }
+}
+
+.cancelButton {
+    background: $neutral-light-gray;
+    color: $neutral-text;
+
+    &:hover {
+        background: $neutral-medium-gray;
+    }
+}
+
+.deleteButton {
+    background: $accent-coral;
+    color: $neutral-white;
+    box-shadow: $shadow-base;
+
+    &:hover {
+        background: darken($accent-coral, 8%);
+        box-shadow: $shadow-md;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 640px) {
+    .overlay {
+        padding: $spacing-lg;
+    }
+
+    .modal {
+        padding: $spacing-2xl;
+        max-width: 100%;
+    }
+
+    .title {
+        font-size: 20px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .cancelButton,
+    .deleteButton {
+        width: 100%;
+    }
+}
