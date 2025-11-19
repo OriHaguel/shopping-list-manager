@@ -203,11 +203,11 @@ const AuthPage: React.FC = () => {
                                 <rect x="12" y="28" width="20" height="3" rx="1.5" fill="white" />
                             </svg>
                         </div>
-                        <h1 className={styles.logoText}>ProductivityHub</h1>
+                        <h1 className={styles.logoText}>Ballistic</h1>
                     </div>
 
                     <div className={styles.visualMessage}>
-                        <h2>Organize your life, amplify your productivity</h2>
+                        <h2>Sign In to Smarter Shopping</h2>
                         <p>Track tasks, manage time, and achieve your goals with our intuitive dashboard designed for modern professionals.</p>
                     </div>
 
@@ -217,16 +217,45 @@ const AuthPage: React.FC = () => {
                                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                                 <polyline points="22 4 12 14.01 9 11.01" />
                             </svg>
-                            <span>Task Management</span>
+                            <span>Manage Your Lists</span>
                         </div>
                         <div className={styles.badge}>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                                <line x1="16" y1="2" x2="16" y2="6" />
-                                <line x1="8" y1="2" x2="8" y2="6" />
-                                <line x1="3" y1="10" x2="21" y2="10" />
+                            <svg fill="#ffffffff" version="1.1" id="Layer_1" width="24px" height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+
+                                <g>
+                                    <g>
+                                        <g>
+                                            <path d="M12,24C5.4,24,0,18.6,0,12S5.4,0,12,0s12,5.4,12,12S18.6,24,12,24z M12,2C6.5,2,2,6.5,2,12s4.5,10,10,10s10-4.5,10-10     S17.5,2,12,2z" />
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <path d="M12,13c-1.9,0-3.5-1.2-3.9-2.8C8,10,8,9.8,8,9.5C8,7.6,9.8,6,12,6s4,1.6,4,3.5c0,0.3,0,0.5-0.1,0.7     c-0.1,0.5-0.7,0.9-1.2,0.7c-0.5-0.1-0.9-0.7-0.7-1.2c0-0.1,0-0.2,0-0.3C14,8.7,13.1,8,12,8s-2,0.7-2,1.5c0,0.1,0,0.2,0,0.3     c0.2,0.7,1,1.2,2,1.2c0.6,0,1,0.4,1,1S12.6,13,12,13z" />
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <path d="M12,18c-2.2,0-4-1.6-4-3.5c0-0.3,0-0.5,0.1-0.7c0.1-0.5,0.7-0.9,1.2-0.7c0.5,0.1,0.9,0.7,0.7,1.2c0,0.1,0,0.2,0,0.3     c0,0.8,0.9,1.5,2,1.5s2-0.7,2-1.5c0-0.1,0-0.2,0-0.3c-0.2-0.7-1-1.2-2-1.2c-0.6,0-1-0.4-1-1s0.4-1,1-1c1.9,0,3.5,1.2,3.9,2.8     C16,14,16,14.2,16,14.5C16,16.4,14.2,18,12,18z" />
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <path d="M12,20c-0.6,0-1-0.4-1-1v-2c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,19.6,12.6,20,12,20z" />
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <path d="M12,8c-0.6,0-1-0.4-1-1V5c0-0.6,0.4-1,1-1s1,0.4,1,1v2C13,7.6,12.6,8,12,8z" />
+                                        </g>
+                                    </g>
+                                    <g>
+                                        <g>
+                                            <path d="M15,11c-0.3,0-0.5-0.1-0.7-0.3C14.1,10.5,14,10.3,14,10s0.1-0.5,0.3-0.7c0.4-0.4,1-0.4,1.4,0C15.9,9.5,16,9.7,16,10     s-0.1,0.5-0.3,0.7C15.5,10.9,15.3,11,15,11z" />
+                                        </g>
+                                    </g>
+                                </g>
                             </svg>
-                            <span>Smart Calendar</span>
+                            <span>Track Your Expenses</span>
                         </div>
                         <div className={styles.badge}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -234,7 +263,7 @@ const AuthPage: React.FC = () => {
                                 <line x1="12" y1="20" x2="12" y2="4" />
                                 <line x1="6" y1="20" x2="6" y2="14" />
                             </svg>
-                            <span>Progress Analytics</span>
+                            <span>Shop Smarter</span>
                         </div>
                     </div>
 

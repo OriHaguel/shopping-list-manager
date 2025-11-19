@@ -356,8 +356,9 @@
     }
 
     .authVisual {
-        min-height: 40vh;
-        padding: $spacing-3xl;
+        // min-height: 40vh;
+        // padding: $spacing-3xl;
+        display: none;
     }
 
     .visualMessage h2 {
