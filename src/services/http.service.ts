@@ -6,7 +6,7 @@ import axios, {
 
 const BASE_URL =
     process.env.NODE_ENV === 'production'
-        ? '/api/'
+        ? 'https://shopping-list-manager-backend-lpaq.onrender.com/api/'
         : 'http://localhost:3030/api/';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';

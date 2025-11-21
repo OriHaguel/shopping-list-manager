@@ -219,7 +219,7 @@ const AuthPage: React.FC = () => {
                             <span>Manage Your Lists</span>
                         </div>
                         <div className={styles.badge}>
-                            <svg fill="#ffffffff" version="1.1" id="Layer_1" width="24px" height="24px" viewBox="0 0 24 24" enable-background="new 0 0 24 24">
+                            <svg fill="#ffffffff" version="1.1" id="Layer_1" width="24px" height="24px" viewBox="0 0 24 24">
 
                                 <g>
                                     <g>
