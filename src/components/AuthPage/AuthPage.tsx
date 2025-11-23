@@ -105,7 +105,9 @@ const AuthPage: React.FC = () => {
         }
 
     };
-
+    const handleGoogleLogin = () => {
+        window.location.href = 'http://localhost:3030/api/users/google/login';
+    };
     return (
         <div className={styles.authContainer}>
 
@@ -162,7 +164,7 @@ const AuthPage: React.FC = () => {
                     </div>
 
                     <div className={styles.socialAuth}>
-                        <button className={styles.socialBtn}>
+                        <button className={styles.socialBtn} onClick={handleGoogleLogin}>
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M19.8 10.2c0-.7-.1-1.4-.2-2H10v3.8h5.5c-.2 1.2-1 2.3-2.1 3v2.5h3.4c2-1.8 3-4.5 3-7.3z" fill="#4285F4" />
                                 <path d="M10 20c2.7 0 4.9-.9 6.5-2.4l-3.4-2.5c-.9.6-2.1 1-3.1 1-2.4 0-4.4-1.6-5.2-3.8H1.3v2.6C2.9 17.8 6.2 20 10 20z" fill="#34A853" />
