@@ -106,7 +106,8 @@ const AuthPage: React.FC = () => {
 
     };
     const handleGoogleLogin = () => {
-        window.location.href = 'http://localhost:3030/api/users/google/login';
+        const googleUrl = process.env.NODE_ENV === 'production' ? 'https://shopping-list-manager-backend-lpaq.onrender.com/api/users/google/callback' : 'http://localhost:3030/api/users/google/callback';
+        window.location.href = googleUrl;
     };
     return (
         <div className={styles.authContainer}>
@@ -173,12 +174,12 @@ const AuthPage: React.FC = () => {
                             </svg>
                             <span>Google</span>
                         </button>
-                        <button className={styles.socialBtn}>
+                        {/* <button className={styles.socialBtn}>
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="#1877F2">
                                 <path d="M20 10c0-5.5-4.5-10-10-10S0 4.5 0 10c0 5 3.7 9.1 8.4 9.9v-7H5.9V10h2.5V7.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V10h2.8l-.4 2.9h-2.3v7C16.3 19.1 20 15 20 10z" />
                             </svg>
                             <span>Facebook</span>
-                        </button>
+                        </button> */}
                     </div>
 
                     <div className={styles.toggleAuth}>
