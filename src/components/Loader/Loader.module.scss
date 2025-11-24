@@ -66,14 +66,14 @@
     font-weight: 600;
     color: #5B8CA8;
     margin-bottom: 8px;
-    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: $font-family;
     animation: fadeInOut 2s ease-in-out infinite;
 }
 
 .loaderSubtext {
     font-size: 14px;
     color: #6B7280;
-    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: $font-family;
 }
 
 .loaderDots {

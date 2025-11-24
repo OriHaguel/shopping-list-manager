@@ -147,7 +147,7 @@
     background: #f6fbfd;
     font-size: 14px;
     color: $neutral-text;
-    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: $font-family;
     transition: all 0.2s ease;
 
     &::placeholder {

@@ -67,7 +67,7 @@
                 background: #f6fbfd;
                 font-size: 14px;
                 color: $neutral-text;
-                font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                -family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
                 transition: all 0.2s ease;
                 padding-right: 40px; // Make space for the clear button
 
@@ -149,7 +149,7 @@
                 font-weight: 500;
                 cursor: pointer;
                 transition: all 0.2s ease;
-                font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                font-family: $font-family;
 
                 &:hover {
                     background: rgba(255, 255, 255, 0.5);
@@ -204,7 +204,7 @@
                 cursor: pointer;
                 transition: all 0.2s ease;
                 text-align: left;
-                font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                font-family: $font-family;
                 display: flex;
                 align-items: center;
                 gap: 12px;
