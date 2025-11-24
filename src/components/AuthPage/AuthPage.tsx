@@ -172,7 +172,7 @@ const AuthPage: React.FC = () => {
                                 <path d="M4.8 11.3c-.4-1.2-.4-2.4 0-3.6V5.1H1.3c-1.3 2.6-1.3 5.6 0 8.2l3.5-2z" fill="#FBBC04" />
                                 <path d="M10 3.9c1.3 0 2.5.5 3.4 1.3l2.5-2.5C14.4.9 12.2 0 10 0 6.2 0 2.9 2.2 1.3 5.1l3.5 2.6C5.6 5.5 7.6 3.9 10 3.9z" fill="#EA4335" />
                             </svg>
-                            <span>Google</span>
+                            <span>Continue with Google</span>
                         </button>
                         {/* <button className={styles.socialBtn}>
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="#1877F2">

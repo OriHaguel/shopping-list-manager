@@ -1,0 +1,305 @@
+@use '../../styles/setup/variables' as *;
+
+// Sidebar Styles
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: $primary-blue;
+    padding: $spacing-3xl $spacing-xl;
+    display: flex;
+    flex-direction: column;
+
+    font-family: $font-family;
+    overflow-y: auto;
+
+    &__logo {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        margin-bottom: $spacing-5xl;
+        cursor: pointer;
+        transition: $transition;
+
+        &:hover {
+            opacity: 0.9;
+        }
+
+        svg {
+            flex-shrink: 0;
+        }
+    }
+
+    &__brandName {
+        font-size: $font-size-xl;
+        font-weight: 700;
+        color: $neutral-white;
+        letter-spacing: -0.02em;
+    }
+
+    &__nav {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-md;
+    }
+
+    &__language {
+        position: relative;
+        margin-bottom: $spacing-lg;
+    }
+
+    &__languageButton {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        padding: $spacing-md $spacing-lg;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        border-radius: $radius-md;
+        font-size: $font-size-base;
+        font-weight: 500;
+        color: $neutral-white;
+        cursor: pointer;
+        transition: $transition;
+        font-family: $font-family;
+
+        svg {
+            flex-shrink: 0;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
+
+        &:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.4);
+            outline-offset: 2px;
+        }
+    }
+
+    &__languageText {
+        flex: 1;
+        text-align: left;
+    }
+
+    &__languageCode {
+        font-size: $font-size-sm;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.1);
+        padding: $spacing-xs $spacing-sm;
+        border-radius: $radius-sm;
+    }
+
+    &__dropdown {
+        position: absolute;
+        top: calc(100% + $spacing-sm);
+        left: 0;
+        right: 0;
+        background: $neutral-white;
+        border-radius: $radius-md;
+        box-shadow: $shadow-lg;
+        padding: $spacing-sm;
+        animation: slideDown 0.2s ease;
+        z-index: 10;
+    }
+
+    &__dropdownItem {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: $spacing-md;
+        background: transparent;
+        border: none;
+        border-radius: $radius-sm;
+        text-align: left;
+        font-size: $font-size-base;
+        font-weight: 500;
+        color: $neutral-text;
+        cursor: pointer;
+        transition: $transition;
+        font-family: $font-family;
+
+        &:hover {
+            background: $neutral-light-gray;
+        }
+
+        &.active {
+            background: $primary-light-blue;
+            color: $primary-blue;
+
+            .sidebar__dropdownCode {
+                background: $primary-blue;
+                color: $neutral-white;
+            }
+        }
+
+        &:focus {
+            outline: 2px solid $primary-blue;
+            outline-offset: -2px;
+        }
+    }
+
+    &__dropdownCode {
+        font-size: $font-size-sm;
+        font-weight: 600;
+        color: $neutral-white;
+        background: $neutral-dark-gray;
+        padding: $spacing-xs $spacing-sm;
+        border-radius: $radius-sm;
+        transition: $transition;
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        padding: $spacing-md $spacing-lg;
+        background: transparent;
+        border-radius: $radius-md;
+        font-size: $font-size-base;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.85);
+        text-decoration: none;
+        transition: $transition;
+
+        svg {
+            flex-shrink: 0;
+            color: rgba(255, 255, 255, 0.7);
+            transition: $transition;
+        }
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: $neutral-white;
+
+            svg {
+                color: $neutral-white;
+            }
+        }
+
+        &:active {
+            transform: scale(0.98);
+        }
+
+        &:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.4);
+            outline-offset: 2px;
+        }
+    }
+
+    &__logoutButton {
+        display: flex;
+        align-items: center;
+        gap: $spacing-md;
+        padding: $spacing-lg;
+        background: $accent-coral;
+        border: none;
+        border-radius: $radius-xl;
+        font-size: $font-size-base;
+        font-weight: 600;
+        color: $neutral-white;
+        cursor: pointer;
+        transition: $transition;
+        box-shadow: $shadow-md;
+        font-family: $font-family;
+        margin-top: auto;
+        justify-content: center;
+
+        svg {
+            flex-shrink: 0;
+            stroke: $neutral-white;
+        }
+
+        &:hover {
+            background: darken($accent-coral, 8%);
+            box-shadow: $shadow-lg;
+            transform: translateY(-2px);
+        }
+
+        &:active {
+            transform: scale(0.98) translateY(0);
+        }
+
+        &:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.5);
+            outline-offset: 2px;
+        }
+    }
+}
+
+// Animations
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Scrollbar Styling
+.sidebar {
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: $radius-full;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: $radius-full;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    }
+}
+
+// Responsive Design
+@media (max-width: 1135px) {
+    .sidebar {
+        display: none;
+        width: 240px;
+        padding: $spacing-2xl $spacing-lg;
+
+        &__logo {
+            margin-bottom: $spacing-4xl;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        position: relative;
+        padding: $spacing-2xl $spacing-lg;
+
+        &__logo {
+            margin-bottom: $spacing-3xl;
+        }
+
+        &__nav {
+            gap: $spacing-sm;
+        }
+
+        &__logoutButton {
+            margin-top: $spacing-4xl;
+        }
+    }
+}
