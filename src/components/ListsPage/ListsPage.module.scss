@@ -7,6 +7,11 @@
     padding-top: 32px;
     padding-bottom: 100px;
     max-width: 625px;
+
+    @media (max-width: $screen-sm) {
+        width: 100%;
+        padding: 24px 16px;
+    }
 }
 
 .header {
@@ -24,7 +29,7 @@
 
 .listsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(625px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
     gap: 24px;
 }
 
@@ -53,10 +58,7 @@
     margin: 0;
 }
 
-@media (max-width: 640px) {
-    .container {
-        padding: 24px 16px;
-    }
+@media (max-width: $screen-sm) {
 
     .listsGrid {
         grid-template-columns: 1fr;

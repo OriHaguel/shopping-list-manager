@@ -272,7 +272,7 @@
 }
 
 // Responsive adjustments
-@media (max-width: 600px) {
+@media (max-width: $screen-sm) {
     .drawer {
         width: 100vw;
     }
