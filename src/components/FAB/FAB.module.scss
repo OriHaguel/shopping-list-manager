@@ -29,7 +29,7 @@
 
 @media (max-width: $screen-sm) {
     .fab {
-        position: absolute;
+        position: fixed;
         bottom: 24px;
         right: 24px;
         width: 70px;

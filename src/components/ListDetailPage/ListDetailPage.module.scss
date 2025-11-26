@@ -284,6 +284,10 @@
     &.completed {
         color: $neutral-dark-gray;
     }
+
+    @media (max-width: $screen-sm) {
+        font-size: 1rem;
+    }
 }
 
 .itemQuantity {

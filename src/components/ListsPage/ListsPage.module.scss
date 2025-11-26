@@ -21,16 +21,24 @@
 }
 
 .title {
-    font-size: 32px;
-    font-weight: 700;
+    font-size: 36px;
+    font-weight: 400;
     color: $neutral-text;
     margin: 0 0 8px 0;
+
+    @media (max-width: $screen-sm) {
+        margin: auto;
+    }
 }
 
 .listsGrid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
     gap: 24px;
+
+    @media (max-width: $screen-sm) {
+        grid-template-columns: 1fr;
+    }
 }
 
 .emptyState {
@@ -56,11 +64,4 @@
     font-size: 14px;
     color: $neutral-dark-gray;
     margin: 0;
-}
-
-@media (max-width: $screen-sm) {
-
-    .listsGrid {
-        grid-template-columns: 1fr;
-    }
 }
