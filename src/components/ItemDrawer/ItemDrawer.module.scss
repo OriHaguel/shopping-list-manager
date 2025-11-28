@@ -58,13 +58,14 @@
 .closeButton {
     width: 40px;
     height: 40px;
-    margin: 1rem 0;
+    padding: 1.25rem 0;
     margin-left: auto;
+    margin-top: 1rem;
     border-radius: 9999px;
     border: none;
     display: inline-flex;
     align-items: center;
-    justify-content: end;
+    justify-content: center;
     color: rgb(194, 194, 194);
     cursor: pointer;
     transition: all 0.2s ease;
