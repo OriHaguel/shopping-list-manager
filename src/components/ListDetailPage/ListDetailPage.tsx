@@ -255,6 +255,9 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                                 <span className={styles.itemQuantity}>
                                                     {item.quantity}
                                                 </span>
+                                                <span className={`${styles.itemQuantity} ${styles.itemUnit}`}>
+                                                    {item.unit}
+                                                </span>
                                             </div>
 
                                             <span className={styles.itemPrice}>
@@ -268,6 +271,7 @@ export default function ListDetailPage({ listId }: ListDetailPageProps) {
                                     ))}
                                 </div>
                             )}
+                            {/* item's price */}
                             <div className={styles.totalsContainer}>
                                 <div className={styles.totalRow}>
                                     <span>Unchecked</span>

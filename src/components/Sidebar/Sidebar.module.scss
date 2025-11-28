@@ -219,7 +219,7 @@
         }
 
         &:hover {
-            background: darken($accent-coral, 8%);
+            background: $accent-coral;
             box-shadow: $shadow-lg;
             transform: translateY(-2px);
         }

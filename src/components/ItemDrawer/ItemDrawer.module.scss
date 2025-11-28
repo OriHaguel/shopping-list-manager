@@ -33,6 +33,7 @@
     z-index: 1000;
     display: flex;
     flex-direction: column;
+
 }
 
 .drawerOpen {
@@ -45,12 +46,7 @@
     height: 100%;
 }
 
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    // padding: 24px;
-}
+
 
 .title {
     font-size: 18px;
@@ -68,7 +64,7 @@
     border-radius: 9999px;
     background: $neutral-light-gray;
     border: none;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     color: $neutral-dark-gray;
