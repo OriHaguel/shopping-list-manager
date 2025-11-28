@@ -56,18 +56,16 @@
 }
 
 .closeButton {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
     width: 40px;
     height: 40px;
+    margin: 1rem 0;
+    margin-left: auto;
     border-radius: 9999px;
-    background: $neutral-light-gray;
     border: none;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    color: $neutral-dark-gray;
+    justify-content: end;
+    color: rgb(194, 194, 194);
     cursor: pointer;
     transition: all 0.2s ease;
 
@@ -83,8 +81,11 @@
 
 .formContent {
     flex: 1;
-    padding: 64px 32px;
+    padding: 10px 32px;
+    padding-bottom: 64px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 
     /* Custom scrollbar */
     &::-webkit-scrollbar {

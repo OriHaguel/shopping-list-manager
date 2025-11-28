@@ -98,24 +98,25 @@ export default function ItemDrawer({ isOpen, onClose, onSave, initialData, delet
             {/* Drawer */}
             <div className={`${styles.drawer} ${isOpen ? styles.drawerOpen : ''}`}>
                 <form onSubmit={handleSubmit} className={styles.form}>
-                    <button
-                        type="button"
-                        onClick={handleClose}
-                        className={styles.closeButton}
-                        aria-label="Close drawer"
-                    >
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path
-                                d="M15 5L5 15M5 5L15 15"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                            />
-                        </svg>
-                    </button>
+
 
                     {/* Form Fields */}
                     <div className={styles.formContent}>
+                        <button
+                            type="button"
+                            onClick={handleClose}
+                            className={styles.closeButton}
+                            aria-label="Close drawer"
+                        >
+                            <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
+                                <path
+                                    d="M15 5L5 15M5 5L15 15"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                />
+                            </svg>
+                        </button>
                         {/* Name */}
                         <div className={styles.formGroup}>
                             <label htmlFor="itemName" className={styles.label}>
