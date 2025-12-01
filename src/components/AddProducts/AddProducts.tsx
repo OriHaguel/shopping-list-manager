@@ -4,6 +4,7 @@ import { AddCircle } from '../svg/AddCircle/AddCircle'
 import { CircleClose } from '../svg/CircleClose/CircleClose'
 import { CloseIcon } from '../svg/CloseIcon/CloseIcon';
 import { RemoveIcon } from '../svg/RemoveIcon/RemoveIcon';
+import { Microphone } from '../svg/Microphone/Microphone';
 type AddProductsProps = {
     itemName: string;
     handleAddItem: (name: string) => void;
@@ -83,7 +84,7 @@ export function AddProducts({
                         onKeyDown={handleKeyPress}
                         className={styles.input}
                     />
-                    {itemName.trim() && (
+                    {itemName.trim() ? (
                         <button
                             onClick={() => setItemName('')}
                             className={styles.clearInputButton}
@@ -91,6 +92,15 @@ export function AddProducts({
                             aria-label="Clear input"
                         >
                             <CircleClose />
+                        </button>
+                    ) : (
+                        <button
+                            onClick={() => console.log('Microphone clicked')} // Placeholder for speech-to-text
+                            className={styles.clearInputButton} // Re-use the same styling for now
+                            type="button"
+                            aria-label="Speech to text"
+                        >
+                            <Microphone />
                         </button>
                     )}
                     <button
