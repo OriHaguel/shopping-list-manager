@@ -5,16 +5,16 @@ import styles from './ListDetailPage.module.scss';
 import { Item } from '@/types';
 import { AddProducts } from '../AddProducts/AddProducts';
 import { ItemInputs } from '../ItemInputs/ItemInputs';
-import ItemDrawer, { ItemData } from '../ItemDrawer/ItemDrawer';
+import { ItemData, ItemDrawer } from '../ItemDrawer/ItemDrawer';
 import { useListItems } from '@/hooks/useListItems';
 import { CategoryIcon } from '../CategoryIcon/CategoryIcon';
-import ProductivityLoader from '../Loader/Loader';
+import { ProductivityLoader } from '../Loader/Loader';
 
 interface ListDetailPageProps {
     listId: string;
 }
 
-export default function ListDetailPage({ listId }: ListDetailPageProps) {
+export function ListDetailPage({ listId }: ListDetailPageProps) {
     const [itemName, setItemName] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);

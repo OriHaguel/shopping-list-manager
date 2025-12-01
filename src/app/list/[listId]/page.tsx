@@ -1,8 +1,8 @@
 // app/[listId]/page.tsx
 'use client';
 
+import { ListDetailPage } from '@/components/ListDetailPage/ListDetailPage';
 import { useParams } from 'next/navigation';
-import ListDetailPage from '@/components/ListDetailPage/ListDetailPage';
 
 export default function ListDetail() {
     const params = useParams();

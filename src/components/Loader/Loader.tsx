@@ -1,6 +1,6 @@
 import styles from './Loader.module.scss';
 
-const ProductivityLoader: React.FC = () => {
+export const ProductivityLoader: React.FC = () => {
     return (
         <div className={styles.loaderOverlay}>
             <div className={styles.loaderContainer}>
@@ -30,4 +30,3 @@ const ProductivityLoader: React.FC = () => {
     );
 };
 
-export default ProductivityLoader;

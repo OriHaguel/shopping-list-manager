@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { initializeCsrf } from '@/lib/csrf';
 import { refreshAccessToken, setupAxiosInterceptors } from '@/lib/setup-interceptors';
-import ProductivityLoader from '@/components/Loader/Loader';
+import { ProductivityLoader } from '@/components/Loader/Loader';
 
 export function Providers({ children }: { children: React.ReactNode }) {
     const [isInitialized, setIsInitialized] = useState(false);

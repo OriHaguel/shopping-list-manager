@@ -4,17 +4,16 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import CreateListModal from '../CreateListModal/CreateListModal';
-import ListCard from '../ListCard/ListCard';
-import FAB from '../FAB/FAB';
 import styles from './ListsPage.module.scss';
 import { List } from '@/types';
 import { Button } from '../ui/button';
 import { logout } from '@/services/user/user.service';
 import { createList, getLists, deleteList, updateList } from '@/services/list/list.service';
-import ProductivityLoader from '../Loader/Loader';
-
-export default function ListsPage() {
+import { CreateListModal } from '../CreateListModal/CreateListModal';
+import { FAB } from '../FAB/FAB';
+import { ListCard } from '../ListCard/ListCard';
+import { ProductivityLoader } from '../Loader/Loader';
+export function ListsPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [listToRename, setListToRename] = useState<List | null>(null);
     const router = useRouter();

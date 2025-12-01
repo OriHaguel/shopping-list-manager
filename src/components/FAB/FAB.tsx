@@ -7,7 +7,7 @@ interface FABProps {
     onClick: () => void;
 }
 
-export default function FAB({ onClick }: FABProps) {
+export function FAB({ onClick }: FABProps) {
     return (
         <button className={styles.fab} onClick={onClick} aria-label="Create new list">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">

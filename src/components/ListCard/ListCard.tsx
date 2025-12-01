@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import styles from './ListCard.module.scss';
 import { List } from '@/types';
-import DeleteConfirmationModal from '../DeleteConfirmationModal/DeleteConfirmationModal';
+import { DeleteConfirmationModal } from '../DeleteConfirmationModal/DeleteConfirmationModal';
 
 interface ListCardProps {
     list: List;
@@ -14,7 +14,7 @@ interface ListCardProps {
     onCopy?: () => void;
 }
 
-export default function ListCard({ list, onClick, onDelete, onRename, onShare, onCopy }: ListCardProps) {
+export function ListCard({ list, onClick, onDelete, onRename, onShare, onCopy }: ListCardProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);

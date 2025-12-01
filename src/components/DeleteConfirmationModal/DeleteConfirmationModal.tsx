@@ -7,7 +7,7 @@ interface DeleteConfirmationModalProps {
     listName: string;
 }
 
-export default function DeleteConfirmationModal({
+export function DeleteConfirmationModal({
     isOpen,
     onClose,
     onConfirm,

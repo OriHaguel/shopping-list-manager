@@ -13,7 +13,7 @@ interface CreateListModalProps {
     listToRename?: List | null;
 }
 
-export default function CreateListModal({ isOpen, onClose, onSave, listToRename }: CreateListModalProps) {
+export function CreateListModal({ isOpen, onClose, onSave, listToRename }: CreateListModalProps) {
     const [listName, setListName] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
 

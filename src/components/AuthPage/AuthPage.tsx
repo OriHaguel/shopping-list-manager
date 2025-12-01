@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styles from './AuthPage.module.scss';
 import { login, signup } from '@/services/user/user.service';
 import { useRouter } from 'next/navigation';
-const AuthPage: React.FC = () => {
+export const AuthPage: React.FC = () => {
     const router = useRouter();
     const [isSignUp, setIsSignUp] = useState(false);
     const [formData, setFormData] = useState({
@@ -283,4 +283,3 @@ const AuthPage: React.FC = () => {
     );
 };
 
-export default AuthPage;
