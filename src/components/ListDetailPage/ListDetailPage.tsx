@@ -38,6 +38,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
         getItemQuantity,
         deleteItemMutation,
         isCreating,
+        handleAddItemsWithVoice
     } = useListItems(listId);
 
     const checkedCount = items.filter(item => item.checked).length;
@@ -341,6 +342,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                         onClose={() => setIsAddProductOpen(false)}
                         getItemQuantity={getItemQuantity}
                         handleRemoveItem={handleRemoveItem}
+                        handleAddItemsWithVoice={handleAddItemsWithVoice}
                     />
                 }
             </div>

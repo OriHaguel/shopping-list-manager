@@ -122,6 +122,23 @@ export function useListItems(listId: string) {
         }
     };
 
+    async function handleAddItemsWithVoice(itemName: string) {
+        const emptyItem = createEmptyItem();
+        const category = getCategoryForItem(itemName); // Get category here
+        const existingItem = items.find(
+            item => item.name.toLowerCase() === itemName.toLowerCase()
+        );
+        if (existingItem) { return }
+        console.log('see here')
+        await createItemMutation.mutateAsync({
+            ...emptyItem,
+            listId,
+            name: itemName,
+            category, // Assign the category
+        });
+
+    }
+
     const handleRemoveItem = (name: string) => {
         const trimmedName = name.trim();
         const existingItem = items.find(
@@ -178,9 +195,8 @@ export function useListItems(listId: string) {
         handleUpdateItem,
         handleUncheckAll,
         getItemQuantity,
-
         deleteItemMutation,
-
+        handleAddItemsWithVoice,
         // Mutation Status Flags (if needed for disabling buttons, etc.)
         isUpdating: updateItemMutation.isPending,
         isCreating: createItemMutation.isPending,

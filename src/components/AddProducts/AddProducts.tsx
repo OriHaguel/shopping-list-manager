@@ -5,6 +5,7 @@ import { CircleClose } from '../svg/CircleClose/CircleClose'
 import { CloseIcon } from '../svg/CloseIcon/CloseIcon';
 import { RemoveIcon } from '../svg/RemoveIcon/RemoveIcon';
 import { Microphone } from '../svg/Microphone/Microphone';
+import { useSpeechToText } from '@/hooks/useSpeechToText';
 type AddProductsProps = {
     itemName: string;
     handleAddItem: (name: string) => void;
@@ -13,6 +14,7 @@ type AddProductsProps = {
     onClose: () => void;
     getItemQuantity?: (itemName: string) => number;
     handleRemoveItem: (itemName: string) => void;
+    handleAddItemsWithVoice: (itemName: string) => Promise<void>;
 };
 
 const POPULAR_ITEMS = [
@@ -28,12 +30,19 @@ export function AddProducts({
     onClose,
     getItemQuantity,
     handleRemoveItem,
-    isCreating
+    isCreating,
+    handleAddItemsWithVoice
 
 }: AddProductsProps) {
     const [activeTab, setActiveTab] = useState<'popular' | 'recent'>('popular');
     const [recentItems, setRecentItems] = useState<string[]>([]);
-
+    const {
+        transcript,
+        isListening,
+        startListening,
+        stopListening
+    } = useSpeechToText();
+    console.log("🚀 ~ AddProducts ~ transcript:", transcript)
     const handleKeyPress = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') handleAddItemWithRecent();
     };
@@ -65,6 +74,26 @@ export function AddProducts({
         }
     };
 
+    function splitByAnd(input: string): string[] {
+        return input
+            .split(/\band\b/i)      // split on the word "and"
+            .map(s => s.trim())     // remove spaces
+            .filter(s => s.length); // remove empty parts
+    }
+
+    async function onStopListening() {
+        stopListening();
+        const splitItems = splitByAnd(transcript);
+        console.log("🚀 ~ onStopListening ~ splitItems:", splitItems)
+
+        await Promise.all(
+            splitItems.map(item => handleAddItemsWithVoice(item))
+        );
+
+        console.log('All items added!');
+    }
+
+
     return (
         <div className={styles.addItemContainer}>
             <div className={styles.addItem}>
@@ -95,7 +124,8 @@ export function AddProducts({
                         </button>
                     ) : (
                         <button
-                            onClick={() => console.log('Microphone clicked')} // Placeholder for speech-to-text
+                            onClick={isListening ? onStopListening : startListening}
+                            // onClick={startListening} // Placeholder for speech-to-text
                             className={styles.clearInputButton} // Re-use the same styling for now
                             type="button"
                             aria-label="Speech to text"
