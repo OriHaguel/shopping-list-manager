@@ -129,7 +129,6 @@ export function useListItems(listId: string) {
             item => item.name.toLowerCase() === itemName.toLowerCase()
         );
         if (existingItem) { return }
-        console.log('see here')
         await createItemMutation.mutateAsync({
             ...emptyItem,
             listId,

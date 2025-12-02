@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './AddProducts.module.scss';
 import { AddCircle } from '../svg/AddCircle/AddCircle'
 import { CircleClose } from '../svg/CircleClose/CircleClose'
@@ -6,6 +6,7 @@ import { CloseIcon } from '../svg/CloseIcon/CloseIcon';
 import { RemoveIcon } from '../svg/RemoveIcon/RemoveIcon';
 import { Microphone } from '../svg/Microphone/Microphone';
 import { useSpeechToText } from '@/hooks/useSpeechToText';
+
 type AddProductsProps = {
     itemName: string;
     handleAddItem: (name: string) => void;
@@ -22,6 +23,21 @@ const POPULAR_ITEMS = [
     'Chicken', 'Rice', 'Pasta', 'Tomatoes', 'Onions',
     'Apples', 'Bananas', 'Yogurt', 'Coffee', 'Sugar'
 ];
+
+function usePrevious<T>(value: T): T | undefined {
+    const ref = useRef<T | undefined>(undefined);
+    useEffect(() => {
+        ref.current = value;
+    });
+    return ref.current;
+}
+
+function splitByAnd(input: string): string[] {
+    return input
+        .split(/\band\b/i)      // split on the word "and"
+        .map(s => s.trim())     // remove spaces
+        .filter(s => s.length); // remove empty parts
+}
 
 export function AddProducts({
     itemName,
@@ -42,7 +58,26 @@ export function AddProducts({
         startListening,
         stopListening
     } = useSpeechToText();
-    console.log("🚀 ~ AddProducts ~ transcript:", transcript)
+
+    const wasListening = usePrevious(isListening);
+
+    useEffect(() => {
+        if (wasListening && !isListening && transcript) {
+            const processTranscript = async () => {
+                const splitItems = splitByAnd(transcript);
+                console.log("🚀 ~ processing transcript ~ splitItems:", splitItems);
+
+                await Promise.all(
+                    splitItems.map(item => handleAddItemsWithVoice(item))
+                );
+
+                console.log('All items added!');
+            };
+
+            processTranscript();
+        }
+    }, [wasListening, isListening, transcript, handleAddItemsWithVoice]);
+
     const handleKeyPress = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') handleAddItemWithRecent();
     };
@@ -74,23 +109,8 @@ export function AddProducts({
         }
     };
 
-    function splitByAnd(input: string): string[] {
-        return input
-            .split(/\band\b/i)      // split on the word "and"
-            .map(s => s.trim())     // remove spaces
-            .filter(s => s.length); // remove empty parts
-    }
-
-    async function onStopListening() {
+    function onStopListening() {
         stopListening();
-        const splitItems = splitByAnd(transcript);
-        console.log("🚀 ~ onStopListening ~ splitItems:", splitItems)
-
-        await Promise.all(
-            splitItems.map(item => handleAddItemsWithVoice(item))
-        );
-
-        console.log('All items added!');
     }
 
 
