@@ -11,6 +11,8 @@
 
     font-family: $font-family;
     overflow-y: auto;
+    position: sticky;
+    top: 0px;
 
     &__logo {
         display: flex;

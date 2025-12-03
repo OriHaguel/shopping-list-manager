@@ -4,19 +4,21 @@ import { useState, useRef, useEffect } from 'react';
 import styles from './ListCard.module.scss';
 import { List } from '@/types';
 import { DeleteConfirmationModal } from '../DeleteConfirmationModal/DeleteConfirmationModal';
+import { EmailShareModal } from '../EmailShareModal/EmailShareModal';
+import { shareList } from '@/services/list/list.service';
 
 interface ListCardProps {
     list: List;
     onClick: () => void;
     onDelete: () => void;
     onRename: () => void;
-    onShare?: () => void;
     onCopy?: () => void;
 }
 
-export function ListCard({ list, onClick, onDelete, onRename, onShare, onCopy }: ListCardProps) {
+export function ListCard({ list, onClick, onDelete, onRename, onCopy }: ListCardProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isShareModalOpen, setIsShareModalOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -55,6 +57,15 @@ export function ListCard({ list, onClick, onDelete, onRename, onShare, onCopy }:
         setIsDeleteModalOpen(false);
     };
 
+    const handleShare = () => {
+        setIsShareModalOpen(true);
+    };
+
+    const handleShareSubmit = (email: string) => {
+        shareList(list._id, email);
+        setIsShareModalOpen(false);
+    };
+
     return (
         <>
             <div className={styles.card} onClick={onClick}>
@@ -84,20 +95,20 @@ export function ListCard({ list, onClick, onDelete, onRename, onShare, onCopy }:
                                 </svg>
                                 <span>Rename</span>
                             </button>
-                            {onShare && (
-                                <button
-                                    className={styles.menuList}
-                                    onClick={(e) => handleMenuAction(e, onShare)}
-                                >
-                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
-                                        <circle cx="12" cy="4" r="2" strokeWidth="1.5" />
-                                        <circle cx="4" cy="8" r="2" strokeWidth="1.5" />
-                                        <circle cx="12" cy="12" r="2" strokeWidth="1.5" />
-                                        <path d="M5.5 9L10.5 11.5M10.5 4.5L5.5 7" strokeWidth="1.5" strokeLinecap="round" />
-                                    </svg>
-                                    <span>Share</span>
-                                </button>
-                            )}
+
+                            <button
+                                className={styles.menuList}
+                                onClick={(e) => handleMenuAction(e, handleShare)}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
+                                    <circle cx="12" cy="4" r="2" strokeWidth="1.5" />
+                                    <circle cx="4" cy="8" r="2" strokeWidth="1.5" />
+                                    <circle cx="12" cy="12" r="2" strokeWidth="1.5" />
+                                    <path d="M5.5 9L10.5 11.5M10.5 4.5L5.5 7" strokeWidth="1.5" strokeLinecap="round" />
+                                </svg>
+                                <span>Share</span>
+                            </button>
+
                             {onCopy && (
                                 <button
                                     className={styles.menuList}
@@ -127,6 +138,12 @@ export function ListCard({ list, onClick, onDelete, onRename, onShare, onCopy }:
                 isOpen={isDeleteModalOpen}
                 onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={handleConfirmDelete}
+                listName={list.name}
+            />
+            <EmailShareModal
+                isOpen={isShareModalOpen}
+                onClose={() => setIsShareModalOpen(false)}
+                onSubmit={handleShareSubmit}
                 listName={list.name}
             />
         </>

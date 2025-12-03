@@ -1,0 +1,183 @@
+// components/EmailShareModal/EmailShareModal.module.scss
+@use '../../styles/setup/variables' as *;
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.modal {
+    background: #FFFFFF;
+    border-radius: 16px;
+    padding: 24px;
+    width: 90%;
+    max-width: 440px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $neutral-text;
+    margin: 0;
+}
+
+.closeButton {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: $neutral-dark-gray;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: $neutral-light-gray;
+        color: $neutral-text;
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.description {
+    font-size: 14px;
+    color: $neutral-dark-gray;
+    margin: 0 0 24px 0;
+    line-height: 1.5;
+}
+
+.form {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.inputWrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid $neutral-medium-gray;
+    background: #FFFFFF;
+    font-size: 14px;
+    color: $neutral-text;
+    transition: all 0.2s ease;
+
+    &::placeholder {
+        color: $neutral-dark-gray;
+    }
+
+    &:focus {
+        outline: none;
+        border: 1px solid $primary-blue;
+        box-shadow: 0 0 0 3px rgba(91, 140, 168, 0.1);
+    }
+
+    &.inputError {
+        border-color: $accent-coral;
+    }
+}
+
+.errorText {
+    font-size: 12px;
+    color: $accent-coral;
+    margin-top: 4px;
+}
+
+.inviteButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 20px;
+    border: none;
+    background: $accent-coral;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+
+    svg {
+        flex-shrink: 0;
+    }
+
+    &:hover {
+        background: $accent-peach;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(255, 139, 107, 0.3);
+    }
+
+    &:active {
+        transform: translateY(0) scale(0.98);
+    }
+}
+
+@media (max-width: 640px) {
+    .modal {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    .form {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .inviteButton {
+        width: 100%;
+        justify-content: center;
+    }
+}
