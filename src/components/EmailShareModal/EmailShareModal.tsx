@@ -84,7 +84,7 @@ export function EmailShareModal({ isOpen, onClose, onSubmit, listName }: EmailSh
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor">
                             <path d="M8 2L14 8L8 14M14 8H2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        <span>Send Invite</span>
+                        <span>Invite</span>
                     </button>
                 </form>
             </div>
