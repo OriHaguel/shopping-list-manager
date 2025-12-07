@@ -1,12 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { initializeCsrf } from '@/lib/csrf';
-import { refreshAccessToken, setupAxiosInterceptors } from '@/lib/setup-interceptors';
+import { setupAxiosInterceptors, refreshAccessToken } from '@/lib/setup-interceptors';
 import { ProductivityLoader } from '@/components/Loader/Loader';
+import { wait } from '@/lib/utils';
 
 export function Providers({ children }: { children: React.ReactNode }) {
     const [isInitialized, setIsInitialized] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         async function initialize() {
@@ -14,25 +17,24 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 setupAxiosInterceptors();
                 await initializeCsrf();
 
-                // Remove this line - let interceptors handle refresh when needed
-                await refreshAccessToken(0)
+                await refreshAccessToken(); // refresh token only
+                const currentPath = window.location.pathname;
+                if (currentPath === '/' || currentPath === '/auth') {
+                    router.push('/list'); // ✅ SPA navigation — no refresh
+                    await wait(60);
+                }
 
                 setIsInitialized(true);
             } catch (error) {
                 console.error('Failed to initialize:', error);
                 setIsInitialized(true);
             }
-        }
 
+        }
         initialize();
     }, []);
 
-    // Don't render children until initialization is complete
-    if (!isInitialized) {
-        return (
-            <ProductivityLoader />
-        );
-    }
+    if (!isInitialized) return <ProductivityLoader />;
 
     return <>{children}</>;
 }

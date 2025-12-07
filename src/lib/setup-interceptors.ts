@@ -25,11 +25,12 @@ export async function refreshAccessToken(retryCount = 0): Promise<string> {
         tokenService.setAccessToken(accessToken);
 
         // If refresh was successful and user is on auth pages, redirect to /list
-        const currentPath = window.location.pathname;
-        if (currentPath === '/' || currentPath === '/auth') {
-            window.location.assign('/list');
-        }
-
+        // const currentPath = window.location.pathname;
+        // if (currentPath === '/' || currentPath === '/auth') {
+        //     window.location.replace('/list');
+        //     await wait(50);
+        //     return ''
+        // }
         return accessToken;
     } catch (error) {
         const axiosError = error as AxiosError;
