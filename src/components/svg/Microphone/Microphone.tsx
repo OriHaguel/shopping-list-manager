@@ -1,6 +1,6 @@
 import styles from './Microphone.module.scss';
 
-export function Microphone(props: React.SVGProps<SVGSVGElement>) {
+export function Microphone() {
     return (
         <svg width="20px" height="20px" viewBox="0 0 32 32" enableBackground="new 0 0 32 32" id="Stock_cut" version="1.1" xmlns="http://www.w3.org/2000/svg" className={styles.microphoneIcon}>
 
