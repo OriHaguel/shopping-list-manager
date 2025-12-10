@@ -65,13 +65,10 @@ export function AddProducts({
         if (wasListening && !isListening && transcript) {
             const processTranscript = async () => {
                 const splitItems = splitByAnd(transcript);
-                console.log("🚀 ~ processing transcript ~ splitItems:", splitItems);
 
                 await Promise.all(
                     splitItems.map(item => handleAddItemsWithVoice(item))
                 );
-
-                console.log('All items added!');
             };
 
             processTranscript();

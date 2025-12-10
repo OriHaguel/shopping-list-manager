@@ -7,7 +7,6 @@ const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser';
 export async function signup(userCred: UserSignupLogin): Promise<SavedUser> {
     try {
         const response = await httpService.post('users/signup', userCred);
-        console.log('user signup!!!!');
 
         // Store access token if provided
         if (response.accessToken) {
@@ -25,7 +24,6 @@ export async function signup(userCred: UserSignupLogin): Promise<SavedUser> {
 export async function login(userCred: UserSignupLogin): Promise<SavedUser> {
     try {
         const response = await httpService.post('users/login', userCred);
-        console.log('user loggedin!!!!');
         // Store access token if provided
         if (response.accessToken) {
             tokenService.setAccessToken(response.accessToken);
@@ -42,7 +40,6 @@ export async function login(userCred: UserSignupLogin): Promise<SavedUser> {
 export async function logout() {
     try {
         await httpService.post('users/logout');
-        console.log('user logout!!!!');
 
         // Clear tokens on logout
         tokenService.clearTokens();
@@ -58,16 +55,6 @@ export async function logout() {
     }
 }
 
-export async function test() {
-    try {
-        const what = await httpService.get('users');
-        console.log(what);
-    } catch (err) {
-        throw new AuthenticationError(
-            err instanceof Error ? err.message : 'An error occurred during the test request'
-        );
-    }
-}
 
 export function getLoggedinUser(): SavedUser | null {
     try {

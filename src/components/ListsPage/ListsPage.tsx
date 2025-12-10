@@ -59,7 +59,6 @@ export function ListsPage() {
             setIsModalOpen(false);
             setListToRename(null);
 
-            console.log("🚀 ~ ListsPage ~ listToRename:", listToRename)
             queryClient.invalidateQueries({ queryKey: ['list', listToRename?._id] });
         },
         onError: (error) => {
