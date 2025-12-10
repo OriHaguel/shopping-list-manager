@@ -48,7 +48,7 @@ export function EmailShareModal({ isOpen, onClose, onSubmit, listName, listId }:
 
     const handleCopyLink = () => {
         // Add your copy link logic here
-        const link = `${window.location.origin}/lists/join/${listId}`;
+        const link = `${window.location.origin}/list/join/${listId}`;
         navigator.clipboard.writeText(link);
     };
 

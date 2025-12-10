@@ -6,7 +6,7 @@ import { initializeCsrf } from '@/lib/csrf';
 import { setupAxiosInterceptors, refreshAccessToken } from '@/lib/setup-interceptors';
 import { ProductivityLoader } from '@/components/Loader/Loader';
 import { wait } from '@/lib/utils';
-
+// might not work properly on dev but its fine thsu far on prod fixc later if needed
 export function Providers({ children }: { children: React.ReactNode }) {
     const [isInitialized, setIsInitialized] = useState(false);
     const router = useRouter();
@@ -16,7 +16,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
             try {
                 setupAxiosInterceptors();
                 await initializeCsrf();
-
                 await refreshAccessToken(); // refresh token only
                 const currentPath = window.location.pathname;
                 if (currentPath === '/' || currentPath === '/auth') {
@@ -27,6 +26,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 setIsInitialized(true);
             } catch (error) {
                 console.error('Failed to initialize:', error);
+                // router.push('/')
+                // await wait(60);
                 setIsInitialized(true);
             }
 
