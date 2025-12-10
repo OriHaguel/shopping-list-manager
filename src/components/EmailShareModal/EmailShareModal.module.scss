@@ -165,6 +165,49 @@
     }
 }
 
+.divider {
+    height: 1px;
+    background: $neutral-medium-gray;
+    margin: 20px 0;
+}
+
+.shareActions {
+    display: flex;
+    gap: 12px;
+}
+
+.shareButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex: 1;
+    height: 44px;
+    padding: 0 16px;
+    border-radius: 12px;
+    border: 1px solid $neutral-medium-gray;
+    background: #FFFFFF;
+    color: $neutral-text;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    svg {
+        flex-shrink: 0;
+    }
+
+    &:hover {
+        background: $neutral-light-gray;
+        border-color: $primary-blue;
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0) scale(0.98);
+    }
+}
+
 @media (max-width: 640px) {
     .modal {
         padding: 20px;
@@ -179,5 +222,13 @@
     .inviteButton {
         width: 100%;
         justify-content: center;
+    }
+
+    .shareActions {
+        flex-direction: column;
+    }
+
+    .shareButton {
+        width: 100%;
     }
 }

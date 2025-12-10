@@ -52,3 +52,12 @@ export async function shareList(listId: string, email: string) {
         console.error('Error fetching lists:', err);
     }
 }
+
+export async function linkList(listId: string) {
+    try {
+        await httpService.post('lists' + `/${listId}/join`);
+
+    } catch (err) {
+        console.error('Error fetching lists:', err);
+    }
+}

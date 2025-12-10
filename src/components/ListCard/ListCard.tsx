@@ -145,6 +145,7 @@ export function ListCard({ list, onClick, onDelete, onRename, onCopy }: ListCard
                 onClose={() => setIsShareModalOpen(false)}
                 onSubmit={handleShareSubmit}
                 listName={list.name}
+                listId={list._id}
             />
         </>
     );
