@@ -5,7 +5,7 @@ import { AxiosError, InternalAxiosRequestConfig } from 'axios';
 
 let isSetup = false;
 
-export async function refreshAccessToken(retryCount = 0): Promise<string> {
+export async function refreshAccessToken(): Promise<string> {
     try {
         const csrfToken = getCsrfToken();
 
@@ -44,17 +44,6 @@ export async function refreshAccessToken(retryCount = 0): Promise<string> {
                 window.location.assign('/');
             }
             throw error;
-        }
-
-        // Retry on network errors or server errors (5xx), max 2 retries
-        const isNetworkError = !axiosError.response;
-        const isServerError = axiosError.response && axiosError.response.status >= 500;
-
-        if (retryCount < 2 && (isNetworkError || isServerError)) {
-            const delay = 1000 * (retryCount + 1); // Exponential backoff: 1s, 2s
-            console.warn(`Refresh token request failed (attempt ${retryCount + 1}/3), retrying in ${delay}ms...`);
-            await new Promise(resolve => setTimeout(resolve, delay));
-            return refreshAccessToken(retryCount + 1);
         }
 
         // All retries exhausted or non-retryable error
