@@ -98,9 +98,9 @@ export const AuthPage: React.FC = () => {
         // Only submit if no errors
         if (!emailError && !passwordError) {
             if (isSignUp) {
-                signup(formData).then(() => router.push('list'));
+                signup(formData).then(() => router.push('/list'));
             } else {
-                login(formData).then(() => router.push('list'));
+                login(formData).then(() => router.push('/list'));
             }
         }
 

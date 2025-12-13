@@ -1,10 +1,10 @@
-import '../../styles/globals.css'
-import '../../styles/globals.scss'
+import '../styles/globals.css'
+import '../styles/globals.scss'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { ReactQueryClientProvider } from './react-query-provider'
+import { Providers } from './providers';
 import { SidebarWrapper } from '@/components/Sidebar/SidebarWrapper'
-import { Providers } from '../providers'
-import { ReactQueryClientProvider } from '../react-query-provider'
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',

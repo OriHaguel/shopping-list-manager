@@ -40,8 +40,8 @@ export async function refreshAccessToken(): Promise<string> {
         if (axiosError.response?.status === 401 || axiosError.response?.status === 403) {
             console.warn('Refresh token authentication failed, redirecting to login');
             tokenService.clearTokens();
-            if (currentPath != '/en' && currentPath != '/en/auth') {
-                window.location.assign('/en');
+            if (currentPath != '/' && currentPath != '/auth') {
+                window.location.assign('/');
             }
             throw error;
         }
@@ -49,7 +49,7 @@ export async function refreshAccessToken(): Promise<string> {
         // All retries exhausted or non-retryable error
         console.error('Refresh token request failed after all retries, redirecting to login');
         tokenService.clearTokens();
-        window.location.assign('/en');
+        window.location.assign('/');
         throw error;
     }
 }

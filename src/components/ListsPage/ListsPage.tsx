@@ -21,7 +21,7 @@ export function ListsPage() {
 
     async function logoutCheck() {
         await logout()
-        router.push('auth');
+        router.push('/auth');
     }
     // Fetch lists with React Query
     const {
@@ -42,7 +42,7 @@ export function ListsPage() {
         onSuccess: (newList) => {
             // Optimistically update the cache
             queryClient.setQueryData<List[]>(['lists'], (old: any = []) => [...old, newList]);
-            router.push(`list/${newList?._id}`);
+            router.push(`/list/${newList?._id}`);
             setIsModalOpen(false);
         },
         onError: (error) => {
@@ -106,7 +106,7 @@ export function ListsPage() {
     };
 
     const handleListClick = (listId: string) => {
-        router.push(`list/${listId}`);
+        router.push(`/list/${listId}`);
     };
 
     const handleDeleteList = (listId: string) => {

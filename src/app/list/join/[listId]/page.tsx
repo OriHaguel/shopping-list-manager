@@ -18,7 +18,7 @@ export default function ListJoin() {
         const run = async () => {
             try {
                 await linkList(listId);
-                router.push(`en/list`);
+                router.push(`/list`);
             } catch (err) {
                 console.error(err);
             }

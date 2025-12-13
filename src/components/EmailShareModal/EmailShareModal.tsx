@@ -50,13 +50,13 @@ export function EmailShareModal({ isOpen, onClose, onSubmit, listName, listId }:
 
     const handleCopyLink = () => {
         // Add your copy link logic here
-        const link = `${window.location.origin}en/list/join/${listId}`;
+        const link = `${window.location.origin}/list/join/${listId}`;
         navigator.clipboard.writeText(link);
     };
 
     const handleWhatsAppShare = () => {
         // Add your WhatsApp share logic here
-        const link = `${window.location.origin}en/list/join/${listId}`;
+        const link = `${window.location.origin}/list/join/${listId}`;
         const text = `Check out this list: ${listName}`;
         window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + link)}`, '_blank');
     };
