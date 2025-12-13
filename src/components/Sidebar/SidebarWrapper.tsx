@@ -4,9 +4,9 @@ import { usePathname } from "next/navigation";
 import { Sidebar } from "./Sidebar";
 
 export function SidebarWrapper() {
-    // const pathname = usePathname();
-    // const hideNavbar = pathname === "/" || pathname.startsWith("/auth") || pathname.startsWith("/list/join");
+    const pathname = usePathname();
+    const hideNavbar = pathname === "/" || pathname.startsWith("/auth") || pathname.startsWith("/list/join");
 
-    // if (hideNavbar) return null;
+    if (hideNavbar) return null;
     return <Sidebar />;
 }
