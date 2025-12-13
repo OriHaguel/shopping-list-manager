@@ -18,8 +18,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 await initializeCsrf();
                 await refreshAccessToken(); // refresh token only
                 const currentPath = window.location.pathname;
-                if (currentPath === '/' || currentPath === '/auth') {
-                    router.push('/list'); // ✅ SPA navigation — no refresh
+                if (currentPath === '/en' || currentPath === '/en/auth') {
+                    router.push('en/list'); // ✅ SPA navigation — no refresh
                     await wait(60);
                 }
 
