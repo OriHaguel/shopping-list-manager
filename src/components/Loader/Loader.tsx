@@ -1,6 +1,8 @@
+import { getMessages } from '@/lib/getMessages';
 import styles from './Loader.module.scss';
 
 export const ProductivityLoader: React.FC = () => {
+    const t = getMessages();
     return (
         <div className={styles.loaderOverlay}>
             <div className={styles.loaderContainer}>
@@ -12,9 +14,9 @@ export const ProductivityLoader: React.FC = () => {
                     </div>
                 </div>
 
-                <div className={styles.loaderText}>Loading</div>
+                <div className={styles.loaderText}>{t.loading}</div>
 
-                <div className={styles.loaderSubtext}>Preparing your lists...</div>
+                <div className={styles.loaderSubtext}>{t.preparingYourLists}</div>
 
                 <div className={styles.loaderDots}>
                     {[0, 1, 2].map((i) => (

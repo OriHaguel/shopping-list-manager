@@ -93,5 +93,10 @@ export const en = {
     language: 'Language',
     privacyPolicy: 'Privacy Policy',
     termsOfService: 'Terms of Service',
-    logout: 'Logout'
+    logout: 'Logout',
+    english: 'English',
+    spanish: 'Español',
+    french: 'Français',
+    german: 'Deutsch',
+    clickMeBiatch: 'Click Me Biatch'
 };

@@ -1,3 +1,4 @@
+import { getMessages } from '@/lib/getMessages';
 import styles from './DeleteConfirmationModal.module.scss';
 
 interface DeleteConfirmationModalProps {
@@ -13,6 +14,7 @@ export function DeleteConfirmationModal({
     onConfirm,
     listName
 }: DeleteConfirmationModalProps) {
+    const t = getMessages();
     if (!isOpen) return null;
 
     const handleConfirm = () => {
@@ -50,11 +52,10 @@ export function DeleteConfirmationModal({
                     </svg>
                 </div>
 
-                <h2 className={styles.title}>Delete List?</h2>
+                <h2 className={styles.title}>{t.deleteList}</h2>
 
                 <p className={styles.message}>
-                    Are you sure you want to delete <strong>&quot;{listName}&quot;</strong>?
-                    This action cannot be undone.
+                    {t.areYouSureYouWantToDelete} <strong>&quot;{listName}&quot;</strong>? {t.thisActionCannotBeUndone}
                 </p>
 
 
@@ -63,13 +64,13 @@ export function DeleteConfirmationModal({
                         className={styles.cancelButton}
                         onClick={onClose}
                     >
-                        Cancel
+                        {t.cancel}
                     </button>
                     <button
                         className={styles.deleteButton}
                         onClick={handleConfirm}
                     >
-                        Delete
+                        {t.delete}
                     </button>
                 </div>
             </div>

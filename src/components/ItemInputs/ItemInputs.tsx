@@ -1,3 +1,4 @@
+import { getMessages } from '@/lib/getMessages';
 import { List } from '@/types';
 import styles from './ItemInputs.module.scss';
 import { RefObject, useState, useEffect, useRef } from 'react';
@@ -21,6 +22,7 @@ export function ItemInputs({
     onSearch,
     onSort
 }: ItemInputsProps) {
+    const t = getMessages();
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
@@ -77,13 +79,13 @@ export function ItemInputs({
                         type="text"
                         value={searchQuery}
                         onChange={(e) => handleSearchChange(e.target.value)}
-                        placeholder="Search items..."
+                        placeholder={t.searchItems}
                         className={styles.searchInput}
                     />
                     <button
                         onClick={handleSearchToggle}
                         className={styles.closeSearchButton}
-                        aria-label="Close search"
+                        aria-label={t.closeSearch}
                     >
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -97,7 +99,7 @@ export function ItemInputs({
                     <div className={styles.iconGroup}>
                         <button
                             className={styles.iconButton}
-                            aria-label="Search"
+                            aria-label={t.search}
                             onClick={handleSearchToggle}
                         >
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -105,7 +107,7 @@ export function ItemInputs({
                                 <path d="m21 21-4.35-4.35"></path>
                             </svg>
                         </button>
-                        <button className={styles.iconButton} aria-label="Share">
+                        <button className={styles.iconButton} aria-label={t.share}>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <circle cx="18" cy="5" r="3"></circle>
                                 <circle cx="6" cy="12" r="3"></circle>
@@ -117,7 +119,7 @@ export function ItemInputs({
                         <div className={styles.menuContainer} ref={menuRef}>
                             <button
                                 className={styles.iconButton}
-                                aria-label="Menu"
+                                aria-label={t.menu}
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                             >
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -136,7 +138,7 @@ export function ItemInputs({
                                             <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
                                             <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
                                         </svg>
-                                        Share
+                                        {t.share}
                                     </button>
                                     <div className={styles.sortContainer} ref={sortMenuRef}>
                                         <button
@@ -148,7 +150,7 @@ export function ItemInputs({
                                                 <line x1="3" y1="12" x2="21" y2="12"></line>
                                                 <line x1="3" y1="18" x2="21" y2="18"></line>
                                             </svg>
-                                            Sort by
+                                            {t.sortBy}
                                             <svg
                                                 width="12"
                                                 height="12"
@@ -176,7 +178,7 @@ export function ItemInputs({
                                                         <path d="M3 3v18"></path>
                                                         <path d="m7 17-4 4-4-4"></path>
                                                     </svg>
-                                                    A-Z
+                                                    {t.aZ}
                                                 </button>
                                                 <button
                                                     className={styles.sortMenuItem}
@@ -188,7 +190,7 @@ export function ItemInputs({
                                                         <rect x="14" y="14" width="7" height="7"></rect>
                                                         <rect x="3" y="14" width="7" height="7"></rect>
                                                     </svg>
-                                                    Category
+                                                    {t.category}
                                                 </button>
                                             </div>
                                         )}
@@ -197,7 +199,7 @@ export function ItemInputs({
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                                         </svg>
-                                        Uncheck all
+                                        {t.uncheckAll}
                                     </button>
                                 </div>
                             )}

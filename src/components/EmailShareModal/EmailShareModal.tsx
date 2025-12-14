@@ -1,5 +1,6 @@
 // components/EmailShareModal/EmailShareModal.tsx
 'use client';
+import { getMessages } from '@/lib/getMessages';
 import { useState } from 'react';
 import styles from './EmailShareModal.module.scss';
 import { WhatsAppIcon } from '../svg/Whatsapp/Whatsapp';
@@ -14,6 +15,7 @@ interface EmailShareModalProps {
 }
 
 export function EmailShareModal({ isOpen, onClose, onSubmit, listName, listId }: EmailShareModalProps) {
+    const t = getMessages();
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
 
@@ -28,12 +30,12 @@ export function EmailShareModal({ isOpen, onClose, onSubmit, listName, listId }:
         e.preventDefault();
 
         if (!email.trim()) {
-            setError('Please enter an email address');
+            setError(t.pleaseEnterAnEmailAddress);
             return;
         }
 
         if (!validateEmail(email)) {
-            setError('Please enter a valid email address');
+            setError(t.pleaseEnterAValidEmailAddress);
             return;
         }
 
@@ -57,7 +59,7 @@ export function EmailShareModal({ isOpen, onClose, onSubmit, listName, listId }:
     const handleWhatsAppShare = () => {
         // Add your WhatsApp share logic here
         const link = `${window.location.origin}/list/join/${listId}`;
-        const text = `Check out this list: ${listName}`;
+        const text = `${t.checkOutThisList}${listName}`;
         window.open(`https://wa.me/?text=${encodeURIComponent(text + ' ' + link)}`, '_blank');
     };
 
@@ -65,11 +67,11 @@ export function EmailShareModal({ isOpen, onClose, onSubmit, listName, listId }:
         <div className={styles.overlay} onClick={handleClose}>
             <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
-                    <h2 className={styles.title}>Share List</h2>
+                    <h2 className={styles.title}>{t.shareList}</h2>
                     <button
                         className={styles.closeButton}
                         onClick={handleClose}
-                        aria-label="Close modal"
+                        aria-label={t.closeModal}
                     >
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
                             <path d="M5 5L15 15M15 5L5 15" strokeWidth="2" strokeLinecap="round" />
@@ -83,7 +85,7 @@ export function EmailShareModal({ isOpen, onClose, onSubmit, listName, listId }:
                         <input
                             type="email"
                             className={`${styles.input} ${error ? styles.inputError : ''}`}
-                            placeholder="Enter email address"
+                            placeholder={t.enterEmailAddress}
                             value={email}
                             onChange={(e) => {
                                 setEmail(e.target.value);
@@ -94,7 +96,7 @@ export function EmailShareModal({ isOpen, onClose, onSubmit, listName, listId }:
                     </div>
 
                     <button type="submit" className={styles.inviteButton}>
-                        <span>Invite</span>
+                        <span>{t.invite}</span>
                     </button>
                 </form>
 
@@ -103,11 +105,11 @@ export function EmailShareModal({ isOpen, onClose, onSubmit, listName, listId }:
                 <div className={styles.shareActions}>
                     <button className={styles.shareButton} onClick={handleCopyLink}>
                         <LinkIcon />
-                        <span>Copy Link</span>
+                        <span>{t.copyLink}</span>
                     </button>
                     <button className={styles.shareButton} onClick={handleWhatsAppShare}>
                         <WhatsAppIcon />
-                        <span>WhatsApp</span>
+                        <span>{t.whatsApp}</span>
                     </button>
                 </div>
             </div>

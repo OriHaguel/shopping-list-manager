@@ -6,14 +6,15 @@ import { useRouter } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './ListsPage.module.scss';
 import { List } from '@/types';
-import { Button } from '../ui/button';
 import { logout } from '@/services/user/user.service';
 import { createList, getLists, deleteList, updateList } from '@/services/list/list.service';
 import { CreateListModal } from '../CreateListModal/CreateListModal';
 import { FAB } from '../FAB/FAB';
 import { ListCard } from '../ListCard/ListCard';
 import { ProductivityLoader } from '../Loader/Loader';
+import { getMessages } from '@/lib/getMessages';
 export function ListsPage() {
+    const t = getMessages();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [listToRename, setListToRename] = useState<List | null>(null);
     const router = useRouter();
@@ -34,6 +35,8 @@ export function ListsPage() {
         queryFn: getLists,
         // staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
     });
+
+
 
 
     // Create list mutation
@@ -125,8 +128,8 @@ export function ListsPage() {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <h1 className={styles.title}>Your shopping lists</h1>
-                <Button onClick={() => logoutCheck()}>Log out</Button>
+                <h1 className={styles.title}>{t.yourShoppingLists}</h1>
+                <button onClick={() => logoutCheck()}>{t.logOut}</button>
                 <FAB onClick={() => setIsModalOpen(true)} />
             </div>
 
@@ -135,16 +138,16 @@ export function ListsPage() {
                     <ProductivityLoader />
                 ) : isError ? (
                     <div className={styles.emptyState}>
-                        <p className={styles.emptyText}>Failed to load lists</p>
+                        <p className={styles.emptyText}>{t.failedToLoadLists}</p>
                         <p className={styles.emptySubtext}>
-                            {error instanceof Error ? error.message : 'Please try again'}
+                            {error instanceof Error ? error.message : t.pleaseTryAgain}
                         </p>
                     </div>
                 ) : lists.length === 0 ? (
                     <div className={styles.emptyState}>
                         <div className={styles.emptyIcon}>📋</div>
-                        <p className={styles.emptyText}>No lists yet</p>
-                        <p className={styles.emptySubtext}>Create your first list to get started</p>
+                        <p className={styles.emptyText}>{t.noListsYet}</p>
+                        <p className={styles.emptySubtext}>{t.createYourFirstListToGetStarted}</p>
                     </div>
                 ) : (
                     lists.map((list) => (

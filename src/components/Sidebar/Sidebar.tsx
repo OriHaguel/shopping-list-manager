@@ -1,15 +1,17 @@
+import { getMessages } from '@/lib/getMessages';
 import { useState } from 'react';
 import styles from './Sidebar.module.scss';
 
 export const Sidebar: React.FC = () => {
+    const t = getMessages();
     const [currentLanguage, setCurrentLanguage] = useState('EN');
     const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
 
     const languages = [
-        { code: 'EN', name: 'English' },
-        { code: 'ES', name: 'Español' },
-        { code: 'FR', name: 'Français' },
-        { code: 'DE', name: 'Deutsch' },
+        { code: 'EN', name: t.english },
+        { code: 'ES', name: t.spanish },
+        { code: 'FR', name: t.french },
+        { code: 'DE', name: t.german },
     ];
 
     const handleLanguageChange = (langCode: string) => {
@@ -51,7 +53,7 @@ export const Sidebar: React.FC = () => {
                     <button
                         className={styles.sidebar__languageButton}
                         onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
-                        aria-label="Change language"
+                        aria-label={t.language}
                     >
                         <svg
                             width="20"
@@ -67,7 +69,7 @@ export const Sidebar: React.FC = () => {
                             <line x1="2" y1="12" x2="22" y2="12" />
                             <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                         </svg>
-                        <span className={styles.sidebar__languageText}>Language</span>
+                        <span>{t.language}</span>
                         <span className={styles.sidebar__languageCode}>{currentLanguage}</span>
                     </button>
 
@@ -102,7 +104,7 @@ export const Sidebar: React.FC = () => {
                     >
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                     </svg>
-                    <span>Privacy Policy</span>
+                    <span>{t.privacyPolicy}</span>
                 </a>
 
                 {/* Terms of Service Link */}
@@ -123,7 +125,7 @@ export const Sidebar: React.FC = () => {
                         <line x1="16" y1="17" x2="8" y2="17" />
                         <polyline points="10 9 9 9 8 9" />
                     </svg>
-                    <span>Terms of Service</span>
+                    <span>{t.termsOfService}</span>
                 </a>
             </nav>
 
@@ -131,7 +133,7 @@ export const Sidebar: React.FC = () => {
             <button
                 className={styles.sidebar__logoutButton}
                 onClick={handleLogout}
-                aria-label="Logout"
+                aria-label={t.logout}
             >
                 <svg
                     width="20"
@@ -147,7 +149,7 @@ export const Sidebar: React.FC = () => {
                     <polyline points="16 17 21 12 16 7" />
                     <line x1="21" y1="12" x2="9" y2="12" />
                 </svg>
-                <span>Logout</span>
+                <span>{t.logout}</span>
             </button>
         </aside>
     );

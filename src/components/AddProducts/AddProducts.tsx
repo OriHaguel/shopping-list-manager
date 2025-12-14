@@ -1,3 +1,4 @@
+import { getMessages } from '@/lib/getMessages';
 import { useState, useEffect, useRef } from 'react';
 import styles from './AddProducts.module.scss';
 import { AddCircle } from '../svg/AddCircle/AddCircle'
@@ -50,6 +51,7 @@ export function AddProducts({
     handleAddItemsWithVoice
 
 }: AddProductsProps) {
+    const t = getMessages();
     const [activeTab, setActiveTab] = useState<'popular' | 'recent'>('popular');
     const [recentItems, setRecentItems] = useState<string[]>([]);
     const {
@@ -115,7 +117,7 @@ export function AddProducts({
         <div className={styles.addItemContainer}>
             <div className={styles.addItem}>
                 <div className={styles.addItemHeader}>
-                    <h2 className={styles.addItemTitle}>Add products</h2>
+                    <h2 className={styles.addItemTitle}>{t.addProducts}</h2>
                     <button onClick={onClose} className={styles.closeButton} type="button">
                         &times;
                     </button>
@@ -124,7 +126,7 @@ export function AddProducts({
                 <div className={styles.inputWithButton}>
                     <input
                         type="text"
-                        placeholder="e.g. milk"
+                        placeholder={t.egMilk}
                         value={itemName}
                         onChange={(e) => setItemName(e.target.value)}
                         onKeyDown={handleKeyPress}
@@ -135,7 +137,7 @@ export function AddProducts({
                             onClick={() => setItemName('')}
                             className={styles.clearInputButton}
                             type="button"
-                            aria-label="Clear input"
+                            aria-label={t.clearInput}
                         >
                             <CircleClose />
                         </button>
@@ -145,7 +147,7 @@ export function AddProducts({
                             // onClick={startListening} // Placeholder for speech-to-text
                             className={styles.clearInputButton} // Re-use the same styling for now
                             type="button"
-                            aria-label="Speech to text"
+                            aria-label={t.speechToText}
                         >
                             <Microphone />
                         </button>
@@ -166,14 +168,14 @@ export function AddProducts({
                         onClick={() => setActiveTab('popular')}
                         type="button"
                     >
-                        Popular
+                        {t.popular}
                     </button>
                     <button
                         className={`${styles.tab} ${activeTab === 'recent' ? styles.activeTab : ''}`}
                         onClick={() => setActiveTab('recent')}
                         type="button"
                     >
-                        Recent
+                        {t.recent}
                     </button>
                 </div>
 
@@ -205,7 +207,7 @@ export function AddProducts({
                                                 handleRemove(item, e);
                                             }}
                                             role="button"
-                                            aria-label={showMinus ? 'Decrease quantity' : 'Remove item'}
+                                            aria-label={showMinus ? t.decreaseQuantity : t.removeItem}
                                         >
                                             {showMinus ? <RemoveIcon /> : <CloseIcon />}
                                         </span>
@@ -239,7 +241,7 @@ export function AddProducts({
                                                 className={styles.removeButton}
                                                 onClick={(e) => handleRemove(item, e)}
                                                 type="button"
-                                                aria-label={showMinus ? 'Decrease quantity' : 'Remove item'}
+                                                aria-label={showMinus ? t.decreaseQuantity : t.removeItem}
                                             >
                                                 {showMinus ? <RemoveIcon /> : <CloseIcon />}
                                             </button>
@@ -249,7 +251,7 @@ export function AddProducts({
                             })
                         ) : (
                             <div className={styles.emptyState}>
-                                No recent items yet
+                                {t.noRecentItemsYet}
                             </div>
                         )
                     )}

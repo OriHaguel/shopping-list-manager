@@ -1,6 +1,7 @@
 // components/ItemDrawer/ItemDrawer.tsx
 'use client';
 
+import { getMessages } from '@/lib/getMessages';
 import { useState, useEffect } from 'react';
 import styles from './ItemDrawer.module.scss';
 import { UseMutationResult } from '@tanstack/react-query';
@@ -24,9 +25,10 @@ export interface ItemData {
     description: string;
 }
 
-const categories = ['Vegetables', 'Fruits', 'Dairy', 'Meat', 'Frozen', 'Fish', 'Bakery', 'Beverages', 'Alcohol', 'Snacks', 'Cleaning', 'Pets', 'Electronics', 'Health', 'Clothing', 'Baby', 'Other'];
 
 export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMutation }: ItemDrawerProps) {
+    const t = getMessages();
+    const categories = [t.vegetables, t.fruits, t.dairy, t.meat, t.frozen, t.fish, t.bakery, t.beverages, t.alcohol, t.snacks, t.cleaning, t.pets, t.electronics, t.health, t.clothing, t.baby, t.other];
     const [formData, setFormData] = useState<ItemData>({
         _id: '',
         name: '',
@@ -106,7 +108,7 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
                             type="button"
                             onClick={handleClose}
                             className={styles.closeButton}
-                            aria-label="Close drawer"
+                            aria-label={t.closeDrawer}
                         >
                             <svg width="24" height="24" viewBox="0 0 20 20" fill="none">
                                 <path
@@ -119,15 +121,13 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
                         </button>
                         {/* Name */}
                         <div className={styles.formGroup}>
-                            <label htmlFor="itemName" className={styles.label}>
-                                Name
-                            </label>
+                            <label htmlFor="itemName" className={styles.label}>{t.name}</label>
                             <input
                                 id="itemName"
                                 type="text"
                                 value={formData.name}
                                 onChange={(e) => handleChange('name', e.target.value)}
-                                placeholder="Enter item name"
+                                placeholder={t.enterItemName}
                                 className={styles.input}
                                 required
                             />
@@ -135,9 +135,7 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
 
                         {/* Category */}
                         <div className={styles.formGroup}>
-                            <label htmlFor="itemCategory" className={styles.label}>
-                                Category
-                            </label>
+                            <label htmlFor="itemCategory" className={styles.label}>{t.category}</label>
                             <select
                                 id="itemCategory"
                                 value={formData.category}
@@ -153,9 +151,7 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
                         {/* Quantity and Unit */}
                         <div className={styles.formRow}>
                             <div className={styles.formGroup}>
-                                <label htmlFor="itemQuantity" className={styles.label}>
-                                    Quantity
-                                </label>
+                                <label htmlFor="itemQuantity" className={styles.label}>{t.quantity}</label>
                                 <input
                                     id="itemQuantity"
                                     type="number"
@@ -168,9 +164,7 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
                                 />
                             </div>
                             <div className={styles.formGroup}>
-                                <label htmlFor="itemUnit" className={styles.label}>
-                                    Unit
-                                </label>
+                                <label htmlFor="itemUnit" className={styles.label}>{t.unit}</label>
                                 <select
                                     id="itemUnit"
                                     value={formData.unit}
@@ -190,9 +184,7 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
 
                         {/* Price */}
                         <div className={styles.formGroup}>
-                            <label htmlFor="itemPrice" className={styles.label}>
-                                Price
-                            </label>
+                            <label htmlFor="itemPrice" className={styles.label}>{t.price}</label>
                             <div className={styles.priceInput}>
                                 <span className={styles.currency}>$</span>
                                 <input
@@ -210,14 +202,12 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
 
                         {/* Description */}
                         <div className={styles.formGroup}>
-                            <label htmlFor="itemDescription" className={styles.label}>
-                                Description
-                            </label>
+                            <label htmlFor="itemDescription" className={styles.label}>{t.description}</label>
                             <textarea
                                 id="itemDescription"
                                 value={formData.description}
                                 onChange={(e) => handleChange('description', e.target.value)}
-                                placeholder="Add notes or details..."
+                                placeholder={t.addNotesOrDetails}
                                 className={styles.textarea}
                                 rows={4}
                             />
@@ -236,7 +226,7 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
                                     strokeLinejoin="round"
                                 />
                             </svg>
-                            Delete Item
+                            {t.deleteItem}
                         </button>
                     </div>
 
@@ -245,7 +235,7 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
                     {/* Done Button */}
                     <div className={styles.footer}>
                         <button type="submit" className={styles.doneButton}>
-                            Done
+                            {t.done}
                         </button>
                     </div>
                 </form>

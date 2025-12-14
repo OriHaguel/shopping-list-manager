@@ -2,6 +2,7 @@
 'use client';
 
 
+import { getMessages } from '@/lib/getMessages';
 import { useState, useEffect, useRef } from 'react';
 import styles from './CreateListModal.module.scss';
 import { List } from '@/types';
@@ -14,6 +15,7 @@ interface CreateListModalProps {
 }
 
 export function CreateListModal({ isOpen, onClose, onSave, listToRename }: CreateListModalProps) {
+    const t = getMessages();
     const [listName, setListName] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -45,14 +47,14 @@ export function CreateListModal({ isOpen, onClose, onSave, listToRename }: Creat
     return (
         <div className={styles.backdrop} onClick={handleBackdropClick}>
             <div className={styles.modal}>
-                <h2 className={styles.title}>{isRenameMode ? 'Rename List' : 'Create New List'}</h2>
+                <h2 className={styles.title}>{isRenameMode ? t.renameList : t.createNewList}</h2>
 
                 <form onSubmit={handleSubmit}>
                     <input
                         ref={inputRef}
                         type="text"
                         className={styles.input}
-                        placeholder="Enter list name"
+                        placeholder={t.enterListName}
                         value={listName}
                         onChange={(e) => setListName(e.target.value)}
                         maxLength={50}
@@ -64,14 +66,14 @@ export function CreateListModal({ isOpen, onClose, onSave, listToRename }: Creat
                             className={`${styles.button} ${styles.cancelButton}`}
                             onClick={onClose}
                         >
-                            Cancel
+                            {t.cancel}
                         </button>
                         <button
                             type="submit"
                             className={`${styles.button} ${styles.createButton}`}
                             disabled={!listName.trim()}
                         >
-                            {isRenameMode ? 'Rename' : 'Create List'}
+                            {isRenameMode ? t.rename : t.createList}
                         </button>
                     </div>
                 </form>

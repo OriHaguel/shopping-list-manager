@@ -1,9 +1,11 @@
 'use client'
+import { getMessages } from '@/lib/getMessages';
 import { useState } from 'react';
 import styles from './AuthPage.module.scss';
 import { login, signup } from '@/services/user/user.service';
 import { useRouter } from 'next/navigation';
 export const AuthPage: React.FC = () => {
+    const t = getMessages();
     const router = useRouter();
     const [isSignUp, setIsSignUp] = useState(false);
     const [formData, setFormData] = useState({
@@ -55,17 +57,17 @@ export const AuthPage: React.FC = () => {
 
         if (fieldName === 'email') {
             if (!value) {
-                error = 'Email is required';
+                error = t.emailIsRequired;
             } else if (!validateEmail(value)) {
-                error = 'Please enter a valid email address';
+                error = t.pleaseEnterAValidEmailAddress;
             }
         }
 
         if (fieldName === 'password') {
             if (!value) {
-                error = 'Password is required';
+                error = t.passwordIsRequired;
             } else if (!validatePassword(value)) {
-                error = 'Password must be at least 6 characters long';
+                error = t.passwordMustBeAtLeast6CharactersLong;
             }
         }
 
@@ -85,10 +87,10 @@ export const AuthPage: React.FC = () => {
         });
 
         // Validate all fields
-        const emailError = !formData.email ? 'Email is required' :
-            !validateEmail(formData.email) ? 'Please enter a valid email address' : '';
-        const passwordError = !formData.password ? 'Password is required' :
-            !validatePassword(formData.password) ? 'Password must be at least 6 characters long' : '';
+        const emailError = !formData.email ? t.emailIsRequired :
+            !validateEmail(formData.email) ? t.pleaseEnterAValidEmailAddress : '';
+        const passwordError = !formData.password ? t.passwordIsRequired :
+            !validatePassword(formData.password) ? t.passwordMustBeAtLeast6CharactersLong : '';
 
         setErrors({
             email: emailError,
@@ -115,14 +117,14 @@ export const AuthPage: React.FC = () => {
             <div className={styles.authFormSide}>
                 <div className={styles.formContainer}>
                     <div className={styles.formHeader}>
-                        <h2>{isSignUp ? 'Create Account' : 'Welcome Back'}</h2>
-                        <p>{isSignUp ? 'Sign up to get started with ProductivityHub' : 'Sign in to continue to your dashboard'}</p>
+                        <h2>{isSignUp ? t.createAccount : t.welcomeBack}</h2>
+                        <p>{isSignUp ? t.signUpToGetStartedWithProductivityHub : t.signInToContinueToYourDashboard}</p>
                     </div>
 
                     <div className={styles.authForm}>
 
                         <div className={styles.formGroup}>
-                            <label htmlFor="email">Email Address</label>
+                            <label htmlFor="email">{t.emailAddress}</label>
                             <input
                                 type="email"
                                 id="email"
@@ -130,7 +132,7 @@ export const AuthPage: React.FC = () => {
                                 value={formData.email}
                                 onChange={handleInputChange}
                                 onBlur={() => handleBlur('email')}
-                                placeholder="Enter your email"
+                                placeholder={t.enterYourEmail}
                                 className={`${styles.input} ${errors.email && touched.email ? styles.inputError : ''}`}
                             />
                             {errors.email && touched.email && (
@@ -139,7 +141,7 @@ export const AuthPage: React.FC = () => {
                         </div>
 
                         <div className={styles.formGroup}>
-                            <label htmlFor="password">Password</label>
+                            <label htmlFor="password">{t.password}</label>
                             <input
                                 type="password"
                                 id="password"
@@ -147,7 +149,7 @@ export const AuthPage: React.FC = () => {
                                 value={formData.password}
                                 onChange={handleInputChange}
                                 onBlur={() => handleBlur('password')}
-                                placeholder="Enter your password"
+                                placeholder={t.enterYourPassword}
                                 className={`${styles.input} ${errors.password && touched.password ? styles.inputError : ''}`}
                             />
                             {errors.password && touched.password && (
@@ -156,12 +158,12 @@ export const AuthPage: React.FC = () => {
                         </div>
 
                         <button onClick={handleSubmit} className={styles.submitBtn}>
-                            {isSignUp ? 'Create Account' : 'Sign In'}
+                            {isSignUp ? t.createAccount : t.signIn}
                         </button>
                     </div>
 
                     <div className={styles.divider}>
-                        <span>or continue with</span>
+                        <span>{t.orContinueWith}</span>
                     </div>
 
                     <div className={styles.socialAuth}>
@@ -172,7 +174,7 @@ export const AuthPage: React.FC = () => {
                                 <path d="M4.8 11.3c-.4-1.2-.4-2.4 0-3.6V5.1H1.3c-1.3 2.6-1.3 5.6 0 8.2l3.5-2z" fill="#FBBC04" />
                                 <path d="M10 3.9c1.3 0 2.5.5 3.4 1.3l2.5-2.5C14.4.9 12.2 0 10 0 6.2 0 2.9 2.2 1.3 5.1l3.5 2.6C5.6 5.5 7.6 3.9 10 3.9z" fill="#EA4335" />
                             </svg>
-                            <span>Continue with Google</span>
+                            <span>{t.continueWithGoogle}</span>
                         </button>
                         {/* <button className={styles.socialBtn}>
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="#1877F2">
@@ -184,9 +186,9 @@ export const AuthPage: React.FC = () => {
 
                     <div className={styles.toggleAuth}>
                         <p>
-                            {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
+                            {isSignUp ? t.alreadyHaveAnAccount : t.dontHaveAnAccount}{' '}
                             <button type="button" onClick={() => setIsSignUp(!isSignUp)}>
-                                {isSignUp ? 'Sign In' : 'Sign Up'}
+                                {isSignUp ? t.signIn : t.signUp}
                             </button>
                         </p>
                     </div>
@@ -209,8 +211,8 @@ export const AuthPage: React.FC = () => {
                     </div>
 
                     <div className={styles.visualMessage}>
-                        <h2>Sign In to Smarter Shopping</h2>
-                        <p>Track tasks, manage time, and achieve your goals with our intuitive dashboard designed for modern professionals.</p>
+                        <h2>{t.signInToSmarterShopping}</h2>
+                        <p>{t.trackTasksManageTimeAndAchieveYourGoalsWithOurIntuitiveDashboardDesignedForModernProfessionals}</p>
                     </div>
 
                     <div className={styles.featureBadges}>
@@ -219,7 +221,7 @@ export const AuthPage: React.FC = () => {
                                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                                 <polyline points="22 4 12 14.01 9 11.01" />
                             </svg>
-                            <span>Manage Your Lists</span>
+                            <span>{t.manageYourLists}</span>
                         </div>
                         <div className={styles.badge}>
                             <svg fill="#ffffffff" version="1.1" id="Layer_1" width="24px" height="24px" viewBox="0 0 24 24">
@@ -257,7 +259,7 @@ export const AuthPage: React.FC = () => {
                                     </g>
                                 </g>
                             </svg>
-                            <span>Track Your Expenses</span>
+                            <span>{t.trackYourExpenses}</span>
                         </div>
                         <div className={styles.badge}>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -265,7 +267,7 @@ export const AuthPage: React.FC = () => {
                                 <line x1="12" y1="20" x2="12" y2="4" />
                                 <line x1="6" y1="20" x2="6" y2="14" />
                             </svg>
-                            <span>Shop Smarter</span>
+                            <span>{t.shopSmarter}</span>
                         </div>
                     </div>
 

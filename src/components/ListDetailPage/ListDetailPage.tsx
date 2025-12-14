@@ -1,5 +1,6 @@
 // components/ListDetailPage/ListDetailPage.tsx
 'use client';
+import { getMessages } from '@/lib/getMessages';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import styles from './ListDetailPage.module.scss';
 import { Item } from '@/types';
@@ -15,6 +16,7 @@ interface ListDetailPageProps {
 }
 
 export function ListDetailPage({ listId }: ListDetailPageProps) {
+    const t = getMessages();
     const [itemName, setItemName] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -62,8 +64,8 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
             result.sort((a, b) => a.name.localeCompare(b.name));
         } else if (sortType === 'category') {
             result.sort((a, b) => {
-                const categoryA = a.category || 'Other';
-                const categoryB = b.category || 'Other';
+                const categoryA = a.category || t.other;
+                const categoryB = b.category || t.other;
                 return categoryA.localeCompare(categoryB);
             });
         }
@@ -148,7 +150,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                         <ProductivityLoader />
                     ) : isError ? (
                         <div className={styles.error}>
-                            <p>Failed to load items. Please try again.</p>
+                            <p>{t.failedToLoadItemsPleaseTryAgain}</p>
                             {error instanceof Error && <p className={styles.errorDetail}>{error.message}</p>}
                         </div>
                     ) : items.length === 0 ? (
@@ -189,14 +191,12 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                         </div>
                                     </div>
                                 </div>
-                                <h3 className={styles.emptyTitle}>No items yet</h3>
-                                <p className={styles.emptyMessage}>
-                                    Your list is ready and waiting. Add your first item to get started!
-                                </p>
+                                <h3 className={styles.emptyTitle}>{t.noItemsYet}</h3>
+                                <p className={styles.emptyMessage}>{t.yourListIsReadyAndWaitingAddYourFirstItemToGetStarted}</p>
                                 {!isAddProductOpen &&
                                     <div className={styles.addProductButtonContainer}>
                                         <button onClick={() => setIsAddProductOpen(true)} className={styles.addProductButton}>
-                                            Add Products
+                                            {t.addProducts}
                                         </button>
                                     </div>
                                 }
@@ -227,7 +227,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                             </div>
                             {filteredAndSortedItems.length === 0 ? (
                                 <div className={styles.empty}>
-                                    <p>No items match your search.</p>
+                                    <p>{t.noItemsMatchYourSearch}</p>
                                 </div>
                             ) : (
                                 <div className={styles.itemsList}>
@@ -265,7 +265,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                                 {item.price + '$'}
                                             </span>
                                             <CategoryIcon
-                                                category={item.category || 'Other'}
+                                                category={item.category || t.other}
                                                 size={20}
                                             />
                                         </div>
@@ -275,15 +275,15 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                             {/* item's price */}
                             <div className={styles.totalsContainer}>
                                 <div className={styles.totalRow}>
-                                    <span>Unchecked</span>
+                                    <span>{t.unchecked}</span>
                                     <span>{totalUncheckedPrice.toFixed(2)}$</span>
                                 </div>
                                 <div className={styles.totalRow}>
-                                    <span>Checked</span>
+                                    <span>{t.checked}</span>
                                     <span>{totalCheckedPrice.toFixed(2)}$</span>
                                 </div>
                                 <div className={styles.totalRow}>
-                                    <span>Total</span>
+                                    <span>{t.total}</span>
                                     <span>{totalPrice.toFixed(2)}$</span>
                                 </div>
                             </div>
@@ -322,7 +322,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                                 </span>
 
                                                 <CategoryIcon
-                                                    category={item.category || 'Other'}
+                                                    category={item.category || t.other}
                                                     size={20}
                                                 />
                                             </div>
@@ -354,7 +354,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                 initialData={selectedItem ? {
                     _id: selectedItem._id,
                     name: selectedItem.name,
-                    category: selectedItem.category || 'Other',
+                    category: selectedItem.category || t.other,
                     quantity: selectedItem.quantity || 0,
                     unit: selectedItem.unit || '',
                     price: selectedItem.price || 0,
@@ -365,7 +365,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
             {!isAddProductOpen && items.length > 0 &&
                 <div className={styles.addProductButtonContainer}>
                     <button onClick={() => setIsAddProductOpen(true)} className={styles.addProductButton}>
-                        Add Products
+                        {t.addProducts}
                     </button>
                 </div>
             }
