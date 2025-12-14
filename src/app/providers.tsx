@@ -6,6 +6,7 @@ import { initializeCsrf } from '@/lib/csrf';
 import { setupAxiosInterceptors, refreshAccessToken } from '@/lib/setup-interceptors';
 import { ProductivityLoader } from '@/components/Loader/Loader';
 import { wait } from '@/lib/utils';
+import { getItem, setItem } from '@/utils/localStorage';
 // might not work properly on dev but its fine thsu far on prod fixc later if needed
 export function Providers({ children }: { children: React.ReactNode }) {
     const [isInitialized, setIsInitialized] = useState(false);
@@ -14,6 +15,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         async function initialize() {
             try {
+                const lan = getItem<string>('lan', '');
+                if (!lan) {
+                    const userLang = (navigator.language || 'en').split('-')[0];
+                    setItem('lan', userLang);
+                }
                 setupAxiosInterceptors();
                 await initializeCsrf();
                 await refreshAccessToken(); // refresh token only
