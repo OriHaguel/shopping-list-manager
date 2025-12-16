@@ -5,6 +5,7 @@ import { getMessages } from '@/lib/getMessages';
 import { useState, useEffect } from 'react';
 import styles from './ItemDrawer.module.scss';
 import { UseMutationResult } from '@tanstack/react-query';
+import { getItem } from '@/utils/localStorage';
 
 
 interface ItemDrawerProps {
@@ -28,6 +29,8 @@ export interface ItemData {
 
 export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMutation }: ItemDrawerProps) {
     const t = getMessages();
+    const lan = getItem<string>('lan', '');
+
     const categories = [t.vegetables, t.fruits, t.dairy, t.meat, t.frozen, t.fish, t.bakery, t.beverages, t.alcohol, t.snacks, t.cleaning, t.pets, t.electronics, t.health, t.clothing, t.baby, t.other];
     const [formData, setFormData] = useState<ItemData>({
         _id: '',
@@ -103,11 +106,11 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
 
 
                     {/* Form Fields */}
-                    <div className={styles.formContent}>
+                    <div className={`${styles.formContent} ${lan === 'he-IL' ? styles.rtl : ''}`}>
                         <button
                             type="button"
                             onClick={handleClose}
-                            className={styles.closeButton}
+                            className={`${styles.closeButton} ${lan === 'he-IL' ? styles.rtl : ''}`}
                             aria-label={t.closeDrawer}
                         >
                             <svg width="24" height="24" viewBox="0 0 20 20" fill="none">

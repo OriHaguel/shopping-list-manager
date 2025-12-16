@@ -70,6 +70,10 @@
     cursor: pointer;
     transition: all 0.2s ease;
 
+    &.rtl {
+        margin-left: unset;
+    }
+
     &:hover {
         background: $neutral-medium-gray;
         transform: scale(1.05);
@@ -87,6 +91,10 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+
+    &.rtl {
+        text-align: right;
+    }
 
     /* Custom scrollbar */
     &::-webkit-scrollbar {
