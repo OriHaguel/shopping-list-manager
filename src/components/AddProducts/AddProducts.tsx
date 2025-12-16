@@ -130,19 +130,20 @@ export function AddProducts({
                     </button>
                 </div>
 
-                <div className={styles.inputWithButton}>
+                <div className={`${styles.inputWithButton} ${lan === 'he-IL' ? styles.rtl : ''}`}>
                     <input
                         type="text"
                         placeholder={t.egMilk}
                         value={itemName}
                         onChange={(e) => setItemName(e.target.value)}
                         onKeyDown={handleKeyPress}
-                        className={styles.input}
+                        className={`${styles.input} ${lan === 'he-IL' ? styles.rtl : ''}`}
                     />
                     {itemName.trim() ? (
                         <button
                             onClick={() => setItemName('')}
-                            className={styles.clearInputButton}
+                            className={`${styles.clearInputButton} ${lan === 'he-IL' ? styles.rtl : ''}`}
+
                             type="button"
                             aria-label={t.clearInput}
                         >
@@ -152,7 +153,7 @@ export function AddProducts({
                         <button
                             onClick={isListening ? onStopListening : startListening}
                             // onClick={startListening} // Placeholder for speech-to-text
-                            className={styles.clearInputButton} // Re-use the same styling for now
+                            className={`${styles.clearInputButton} ${lan === 'he-IL' ? styles.rtl : ''}`}
                             type="button"
                             aria-label={t.speechToText}
                         >

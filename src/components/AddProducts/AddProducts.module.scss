@@ -59,6 +59,11 @@
             align-items: center;
             position: relative; // Added for positioning the clear button
 
+            &.rtl {
+                flex-direction: row-reverse;
+                text-align: right;
+            }
+
             .input {
                 flex: 1;
                 padding: 12px;
@@ -69,6 +74,11 @@
                 color: $neutral-text;
                 -family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
                 transition: all 0.2s ease;
+
+                &.rtl {
+                    flex-direction: row-reverse;
+                    text-align: right;
+                }
 
                 &::placeholder {
                     color: $neutral-dark-gray;
@@ -99,6 +109,11 @@
                 align-items: center;
                 justify-content: center;
                 border-radius: 50%;
+
+                &.rtl {
+                    right: unset;
+                    left: 65px; // Adjust for RTL layout
+                }
             }
 
             .addButton {
