@@ -58,6 +58,7 @@ export function AddProducts({
 
 }: AddProductsProps) {
     const t = getMessages();
+    const lan = getItem<string>('lan', '');
     const [activeTab, setActiveTab] = useState<'popular' | 'recent'>('popular');
     const [recentItems, setRecentItems] = useState<string[]>([]);
     const {
@@ -195,7 +196,7 @@ export function AddProducts({
                             return (
                                 <button
                                     key={index}
-                                    className={styles.quickAddItem}
+                                    className={`${styles.quickAddItem} ${lan === 'he-IL' ? styles.rtl : ''}`}
                                     onClick={() => handleQuickAdd(item)}
                                     disabled={isCreating}
                                     type="button"
@@ -232,13 +233,12 @@ export function AddProducts({
                                 return (
                                     <button
                                         key={index}
-                                        className={styles.quickAddItem}
+                                        className={`${styles.quickAddItem} ${lan === 'he-IL' ? styles.rtl : ''}`}
                                         onClick={() => handleQuickAdd(item)}
                                         disabled={isCreating}
                                         type="button"
                                     >
                                         <AddCircle className='w-[24px] h-[24px]' />
-
                                         <span className={styles.itemName}>{item}</span>
                                         <span >{quantity === 0 ? '' : quantity}</span>
 

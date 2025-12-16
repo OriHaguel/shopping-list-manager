@@ -213,6 +213,16 @@
                     background: $neutral-light-gray;
                 }
 
+                &.rtl {
+                    flex-direction: row-reverse;
+                    text-align: right;
+
+                    > :nth-child(3) {
+                        margin-left: -7px;
+                        margin-right: unset; // Remove the default margin-right
+                    }
+                }
+
                 .itemName {
                     flex: 1;
                 }
