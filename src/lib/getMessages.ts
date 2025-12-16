@@ -6,5 +6,6 @@ const locales: Record<string, Record<string, string>> = { en, he };
 
 export function getMessages() {
     const lan = getItem<string>('lan', '');
-    return locales[lan] || locales['en'];
+    const userLang = (lan || 'en').split('-')[0];
+    return locales[userLang] || locales['en'];
 }

@@ -7,6 +7,7 @@ import { CloseIcon } from '../svg/CloseIcon/CloseIcon';
 import { RemoveIcon } from '../svg/RemoveIcon/RemoveIcon';
 import { Microphone } from '../svg/Microphone/Microphone';
 import { useSpeechToText } from '@/hooks/useSpeechToText';
+import { getItem } from '@/utils/localStorage';
 
 type AddProductsProps = {
     itemName: string;
@@ -34,6 +35,14 @@ function usePrevious<T>(value: T): T | undefined {
 }
 
 function splitByAnd(input: string): string[] {
+    const lan = getItem<string>('lan', '');
+
+    if (lan === 'he-IL') {
+        return input
+            .split(/\s+ו(?=[\u0590-\u05FF])/)     // split on the word "and"
+            .map(s => s.trim())     // remove spaces
+            .filter(s => s.length); // remove empty parts
+    }
     return input
         .split(/\band\b/i)      // split on the word "and"
         .map(s => s.trim())     // remove spaces

@@ -1,4 +1,5 @@
 'use client';
+import { getItem } from '@/utils/localStorage';
 import { useState, useEffect } from 'react';
 
 // Type definitions for the Web Speech API
@@ -45,6 +46,7 @@ export function useSpeechToText() {
     const [isListening, setIsListening] = useState(false);
     const [transcript, setTranscript] = useState('');
     const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
+    const lan = getItem<string>('lan', '');
 
     useEffect(() => {
         if (typeof window !== 'undefined' && ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
@@ -52,7 +54,7 @@ export function useSpeechToText() {
             const sr = new SpeechRecognition();
             sr.continuous = true;
             sr.interimResults = true;
-            sr.lang = 'en-US';
+            sr.lang = lan || 'en-US';
             // sr.lang = 'he-IL';
 
             sr.onstart = () => {
