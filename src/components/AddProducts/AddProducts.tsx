@@ -8,6 +8,7 @@ import { RemoveIcon } from '../svg/RemoveIcon/RemoveIcon';
 import { Microphone } from '../svg/Microphone/Microphone';
 import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { getItem } from '@/utils/localStorage';
+import { popularItems } from '@/lib/popularItems';
 
 type AddProductsProps = {
     itemName: string;
@@ -20,11 +21,7 @@ type AddProductsProps = {
     handleAddItemsWithVoice: (itemName: string) => Promise<void>;
 };
 
-const POPULAR_ITEMS = [
-    'Milk', 'Bread', 'Eggs', 'Butter', 'Cheese',
-    'Chicken', 'Rice', 'Pasta', 'Tomatoes', 'Onions',
-    'Apples', 'Bananas', 'Yogurt', 'Coffee', 'Sugar'
-];
+const POPULAR_ITEMS = popularItems()
 
 function usePrevious<T>(value: T): T | undefined {
     const ref = useRef<T | undefined>(undefined);
