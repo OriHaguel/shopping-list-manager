@@ -1,6 +1,7 @@
 // components/ListCard/ListCard.tsx
 'use client';
 import { getMessages } from '@/lib/getMessages';
+import { getItem } from '@/utils/localStorage';
 import { useState, useRef, useEffect } from 'react';
 import styles from './ListCard.module.scss';
 import { List } from '@/types';
@@ -18,6 +19,7 @@ interface ListCardProps {
 
 export function ListCard({ list, onClick, onDelete, onRename, onCopy }: ListCardProps) {
     const t = getMessages();
+    const lan = getItem<string>('lan', '');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -70,7 +72,7 @@ export function ListCard({ list, onClick, onDelete, onRename, onCopy }: ListCard
 
     return (
         <>
-            <div className={styles.card} onClick={onClick}>
+            <div className={`${styles.card} ${lan === 'he-IL' ? styles.rtl : ''}`} onClick={onClick}>
                 <div className={styles.content}>
                     <h3 className={styles.name}>{list.name}</h3>
                 </div>

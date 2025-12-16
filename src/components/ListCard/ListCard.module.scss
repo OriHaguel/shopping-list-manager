@@ -9,9 +9,26 @@
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     &:hover {
         box-shadow: 0 4px 20px rgba(91, 140, 168, 0.2);
+    }
+
+    &.rtl {
+        flex-direction: row-reverse;
+
+        .menuContainer {
+            left: 20px;
+            right: unset;
+        }
+
+        .content {
+            padding-right: 0;
+            padding-left: 32px;
+        }
     }
 }
 
