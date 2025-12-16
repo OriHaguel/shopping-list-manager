@@ -45,6 +45,10 @@
             align-items: center;
             justify-content: space-between;
 
+            &.rtl {
+                flex-direction: row-reverse;
+            }
+
             .addItemTitle {
                 font-size: 18px;
                 font-weight: 500;

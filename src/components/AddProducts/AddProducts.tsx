@@ -123,7 +123,7 @@ export function AddProducts({
     return (
         <div className={styles.addItemContainer}>
             <div className={styles.addItem}>
-                <div className={styles.addItemHeader}>
+                <div className={`${styles.addItemHeader} ${lan === 'he-IL' ? styles.rtl : ''}`}>
                     <h2 className={styles.addItemTitle}>{t.addProducts}</h2>
                     <button onClick={onClose} className={styles.closeButton} type="button">
                         &times;

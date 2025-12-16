@@ -1,6 +1,7 @@
 // components/ListDetailPage/ListDetailPage.tsx
 'use client';
 import { getMessages } from '@/lib/getMessages';
+import { getItem } from '@/utils/localStorage';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import styles from './ListDetailPage.module.scss';
 import { Item } from '@/types';
@@ -17,6 +18,7 @@ interface ListDetailPageProps {
 
 export function ListDetailPage({ listId }: ListDetailPageProps) {
     const t = getMessages();
+    const lan = getItem<string>('lan', '');
     const [itemName, setItemName] = useState('');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -234,7 +236,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                     {filteredAndSortedItems.filter((item) => item.checked === false).map((item) => (
                                         <div
                                             key={item._id}
-                                            className={styles.itemRow}
+                                            className={`${styles.itemRow} ${lan === 'he-IL' ? styles.rtl : ''}`}
                                             onClick={() => handleItemClick(item)}
                                         >
                                             <label
@@ -293,7 +295,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                         {filteredAndSortedItems.filter((item) => item.checked === true).map((item) => (
                                             <div
                                                 key={item._id}
-                                                className={styles.checkedItemRow}
+                                                className={`${styles.checkedItemRow} ${lan === 'he-IL' ? styles.rtl : ''}`}
                                                 onClick={() => handleItemClick(item)}
                                             >
                                                 <label

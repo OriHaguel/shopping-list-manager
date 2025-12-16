@@ -1,4 +1,5 @@
 import { getMessages } from '@/lib/getMessages';
+import { getItem } from '@/utils/localStorage';
 import { List } from '@/types';
 import styles from './ItemInputs.module.scss';
 import { RefObject, useState, useEffect, useRef } from 'react';
@@ -23,6 +24,7 @@ export function ItemInputs({
     onSort
 }: ItemInputsProps) {
     const t = getMessages();
+    const lan = getItem<string>('lan', '');
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
@@ -71,7 +73,7 @@ export function ItemInputs({
     };
 
     return (
-        <div className={styles.itemInputs}>
+        <div className={`${styles.itemInputs} ${lan === 'he-IL' ? styles.rtl : ''}`}>
             {isSearchOpen ? (
                 <div className={styles.searchContainer}>
                     <input
@@ -96,7 +98,7 @@ export function ItemInputs({
             ) : (
                 <>
                     <span className={styles.itemlistName}>{list?.name}</span>
-                    <div className={styles.iconGroup}>
+                    <div className={`${styles.iconGroup} ${lan === 'he-IL' ? styles.rtl : ''}`}>
                         <button
                             className={styles.iconButton}
                             aria-label={t.search}

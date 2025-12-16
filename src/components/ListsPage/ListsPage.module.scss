@@ -17,6 +17,10 @@
     margin-bottom: 32px;
     display: flex;
     justify-content: space-between;
+
+    &.rtl {
+        flex-direction: row-reverse;
+    }
 }
 
 .title {

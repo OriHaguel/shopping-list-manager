@@ -13,8 +13,11 @@ import { FAB } from '../FAB/FAB';
 import { ListCard } from '../ListCard/ListCard';
 import { ProductivityLoader } from '../Loader/Loader';
 import { getMessages } from '@/lib/getMessages';
+import { getItem } from '@/utils/localStorage';
 export function ListsPage() {
     const t = getMessages();
+    const lan = getItem<string>('lan', '');
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [listToRename, setListToRename] = useState<List | null>(null);
     const router = useRouter();
@@ -127,7 +130,7 @@ export function ListsPage() {
 
     return (
         <div className={styles.container}>
-            <div className={styles.header}>
+            <div className={`${styles.header} ${lan === 'he-IL' ? styles.rtl : ''}`}>
                 <h1 className={styles.title}>{t.yourShoppingLists}</h1>
                 <button onClick={() => logoutCheck()}>{t.logOut}</button>
                 <FAB onClick={() => setIsModalOpen(true)} />
