@@ -138,7 +138,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow-y: auto;
+    max-height: 100vh;
 }
 
 .formContainer {

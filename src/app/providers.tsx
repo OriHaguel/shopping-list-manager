@@ -26,7 +26,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
                 const currentPath = window.location.pathname;
                 if (currentPath === '/' || currentPath === '/auth') {
                     router.push('/list'); // ✅ SPA navigation — no refresh
-                    await wait(60);
+                    await wait(200);
+                    // await wait(60);
                 }
 
                 setIsInitialized(true);
