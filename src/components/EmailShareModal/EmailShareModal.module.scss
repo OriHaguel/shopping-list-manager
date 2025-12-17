@@ -3,16 +3,18 @@
 
 .overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: rgba(0, 0, 0, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
+    padding: 16px;
     animation: fadeIn 0.2s ease;
+
+    @media (max-width: $screen-sm) {
+        align-items: unset;
+    }
 }
 
 @keyframes fadeIn {
@@ -26,13 +28,18 @@
 }
 
 .modal {
-    background: #FFFFFF;
-    border-radius: 16px;
-    padding: 24px;
-    width: 90%;
-    max-width: 440px;
+    background: white;
+    border-radius: $radius-xl;
+    padding: 32px;
+    width: 100%;
+    max-width: 400px;
+    max-height: 240px;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
     animation: slideUp 0.3s ease;
+
+    @media (max-width: $screen-sm) {
+        margin-top: 2.25rem;
+    }
 }
 
 @keyframes slideUp {
