@@ -13,6 +13,11 @@
     z-index: 1000;
     padding: $spacing-xl;
     animation: fadeIn 0.2s ease;
+
+    @media (max-width: $screen-sm) {
+        overscroll-behavior: contain;
+        touch-action: none;
+    }
 }
 
 .modal {

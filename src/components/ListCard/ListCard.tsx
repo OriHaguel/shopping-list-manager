@@ -34,6 +34,10 @@ export function ListCard({ list, onClick, onDelete, onRename, onCopy }: ListCard
 
         if (isMenuOpen) {
             document.addEventListener('mousedown', handleClickOutside);
+            document.body.style.overflow = 'hidden';
+
+        } else {
+            document.body.style.overflow = '';
         }
 
         return () => {
