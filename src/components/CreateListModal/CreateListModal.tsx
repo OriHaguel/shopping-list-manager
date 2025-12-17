@@ -25,6 +25,9 @@ export function CreateListModal({ isOpen, onClose, onSave, listToRename }: Creat
         if (isOpen) {
             setListName(isRenameMode ? listToRename.name : '');
             setTimeout(() => inputRef.current?.focus(), 100);
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
         }
     }, [isOpen, isRenameMode, listToRename]);
 
