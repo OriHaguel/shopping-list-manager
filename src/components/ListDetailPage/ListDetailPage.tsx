@@ -11,6 +11,8 @@ import { ItemData, ItemDrawer } from '../ItemDrawer/ItemDrawer';
 import { useListItems } from '@/hooks/useListItems';
 import { CategoryIcon } from '../CategoryIcon/CategoryIcon';
 import { ProductivityLoader } from '../Loader/Loader';
+import { EmailShareModal } from '../EmailShareModal/EmailShareModal';
+import { shareList } from '@/services/list/list.service';
 
 interface ListDetailPageProps {
     listId: string;
@@ -26,6 +28,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
     const [isAddProductOpen, setIsAddProductOpen] = useState(window.innerWidth <= 768 ? false : true);
     const [searchQuery, setSearchQuery] = useState('');
     const [sortType, setSortType] = useState<'a-z' | 'category' | null>(null);
+    const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
     const menuRef = useRef<HTMLDivElement>(null);
     const {
@@ -129,6 +132,15 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
     };
 
     useEffect(() => {
+        if (isShareModalOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+
+    }, [isShareModalOpen]);
+
+    useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
                 setIsMenuOpen(false);
@@ -144,6 +156,11 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
         };
     }, [isMenuOpen]);
 
+
+    const handleShareSubmit = (email: string) => {
+        shareList(listId, email);
+        setIsShareModalOpen(false);
+    };
     return (
         <div className={styles.container}>
             <div className={styles.listDetailContainer}>
@@ -167,6 +184,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                         handleUncheckAll={handleUncheckAll}
                                         onSearch={handleSearch}
                                         onSort={handleSort}
+                                        onShare={() => setIsShareModalOpen(true)}
                                     />
                                     <div className={styles.progressBarContainer}>
                                         <div
@@ -217,6 +235,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                         handleUncheckAll={handleUncheckAll}
                                         onSearch={handleSearch}
                                         onSort={handleSort}
+                                        onShare={() => setIsShareModalOpen(true)}
                                     />
                                     <div className={styles.progressBarContainer}>
                                         <div
@@ -363,6 +382,13 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                     description: selectedItem.description || '',
                 } : undefined}
                 deleteItemMutation={deleteItemMutation}
+            />
+            <EmailShareModal
+                isOpen={isShareModalOpen}
+                onClose={() => setIsShareModalOpen(false)}
+                onSubmit={handleShareSubmit}
+                listName={list?.name || ''}
+                listId={listId}
             />
             {!isAddProductOpen && items.length > 0 &&
                 <div className={styles.addProductButtonContainer}>

@@ -12,6 +12,7 @@ interface ItemInputsProps {
     handleUncheckAll: () => void;
     onSearch: (query: string) => void;
     onSort: (sortType: 'a-z' | 'category') => void;
+    onShare: () => void;
 }
 
 export function ItemInputs({
@@ -21,7 +22,8 @@ export function ItemInputs({
     isMenuOpen,
     handleUncheckAll,
     onSearch,
-    onSort
+    onSort,
+    onShare
 }: ItemInputsProps) {
     const t = getMessages();
     const lan = getItem<string>('lan', '');
@@ -92,7 +94,7 @@ export function ItemInputs({
                                 <path d="m21 21-4.35-4.35"></path>
                             </svg>
                         </button>
-                        <button className={styles.iconButton} aria-label={t.share}>
+                        <button className={styles.iconButton} aria-label={t.share} onClick={onShare}>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <circle cx="18" cy="5" r="3"></circle>
                                 <circle cx="6" cy="12" r="3"></circle>
@@ -115,7 +117,7 @@ export function ItemInputs({
                             </button>
                             {isMenuOpen && (
                                 <div className={styles.dropdown}>
-                                    <button className={styles.dropdownItem} onClick={() => setIsMenuOpen(false)}>
+                                    <button className={styles.dropdownItem} onClick={() => { onShare(); setIsMenuOpen(false); }}>
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <circle cx="18" cy="5" r="3"></circle>
                                             <circle cx="6" cy="12" r="3"></circle>
