@@ -29,29 +29,12 @@ export function ItemInputs({
     const [searchQuery, setSearchQuery] = useState('');
     const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
     const searchInputRef = useRef<HTMLInputElement>(null);
-    const sortMenuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (isSearchOpen && searchInputRef.current) {
             searchInputRef.current.focus();
         }
     }, [isSearchOpen]);
-
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (sortMenuRef.current && !sortMenuRef.current.contains(event.target as Node)) {
-                setIsSortMenuOpen(false);
-            }
-        };
-
-        if (isSortMenuOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
-        }
-
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [isSortMenuOpen]);
 
     const handleSearchToggle = () => {
         if (isSearchOpen) {
@@ -142,7 +125,7 @@ export function ItemInputs({
                                         </svg>
                                         {t.share}
                                     </button>
-                                    <div className={styles.sortContainer} ref={sortMenuRef}>
+                                    <div className={styles.sortContainer}>
                                         <button
                                             className={styles.dropdownItem}
                                             onClick={() => setIsSortMenuOpen(!isSortMenuOpen)}
@@ -162,13 +145,13 @@ export function ItemInputs({
                                                 strokeWidth="2"
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
-                                                style={{ marginLeft: 'auto' }}
+                                                style={{ marginLeft: 'auto', transform: isSortMenuOpen ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }}
                                             >
                                                 <polyline points="9 18 15 12 9 6"></polyline>
                                             </svg>
                                         </button>
                                         {isSortMenuOpen && (
-                                            <div className={styles.sortMenu}>
+                                            <div className={styles.accordionContent}>
                                                 <button
                                                     className={styles.sortMenuItem}
                                                     onClick={() => handleSortSelect('a-z')}

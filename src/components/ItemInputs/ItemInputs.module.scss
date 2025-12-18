@@ -21,21 +21,9 @@
             padding: 0 12px; // Keep symmetrical padding
         }
 
-        .iconGroup {
-            padding-left: 12px;
-            padding-right: 0;
-        }
-
         .dropdown {
             right: unset;
             left: 0;
-        }
-
-        .sortContainer {
-            .sortMenu {
-                left: unset;
-                right: calc(100% + 8px);
-            }
         }
 
         .itemlistName {
@@ -178,17 +166,10 @@
                 position: relative;
                 width: 100%;
 
-                .sortMenu {
-                    position: absolute;
-                    top: 0;
-                    left: calc(100% + 8px);
-                    background: #FFFFFF;
-                    border-radius: 12px;
-                    box-shadow: $shadow-lg;
-                    min-width: 160px;
-                    padding: 8px;
-                    z-index: 1001;
-                    animation: slideIn 0.2s ease;
+                .accordionContent {
+                    padding-left: 1.5rem;
+                    overflow: hidden;
+                    transition: max-height 0.2s ease-out;
 
                     .sortMenuItem {
                         width: 100%;
@@ -241,26 +222,9 @@
             padding: 0 12px; // Keep symmetrical padding
         }
 
-        .iconGroup {
-            padding-left: 12px;
-            padding-right: 0;
-            display: flex;
-
-            &.rtl {
-                flex-direction: row-reverse;
-            }
-        }
-
         .dropdown {
             right: unset;
             left: 0;
-        }
-
-        .sortContainer {
-            .sortMenu {
-                left: unset;
-                right: calc(100% + 8px);
-            }
         }
 
         .itemlistName {
