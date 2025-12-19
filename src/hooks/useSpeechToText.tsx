@@ -1,6 +1,6 @@
 'use client';
 import { getItem } from '@/utils/localStorage';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 // Type definitions for the Web Speech API
 interface SpeechRecognitionResult {
@@ -47,6 +47,7 @@ export function useSpeechToText() {
     const [transcript, setTranscript] = useState('');
     const [recognition, setRecognition] = useState<SpeechRecognition | null>(null);
     const lan = getItem<string>('lan', '');
+    const shouldBeListening = useRef(false);
 
     useEffect(() => {
         if (typeof window !== 'undefined' && ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
@@ -73,25 +74,32 @@ export function useSpeechToText() {
 
             sr.onerror = (event) => {
                 console.error('Speech recognition error', event.error);
+                shouldBeListening.current = false;
                 setIsListening(false);
             };
 
             sr.onend = () => {
-                setIsListening(false);
+                if (shouldBeListening.current) {
+                    sr.start();
+                } else {
+                    setIsListening(false);
+                }
             };
 
             setRecognition(sr);
 
             return () => {
+                shouldBeListening.current = false;
                 sr.stop();
             };
         } else {
             console.warn('Speech Recognition API not supported in this browser.');
         }
-    }, []);
+    }, [lan]);
 
     const startListening = () => {
         if (recognition && !isListening) {
+            shouldBeListening.current = true;
             setTranscript('')
             recognition.start();
         }
@@ -99,6 +107,7 @@ export function useSpeechToText() {
 
     const stopListening = () => {
         if (recognition && isListening) {
+            shouldBeListening.current = false;
             recognition.stop();
         }
     };
