@@ -53,8 +53,8 @@ export function useSpeechToText() {
         if (typeof window !== 'undefined' && ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
             const sr = new SpeechRecognition();
-            sr.continuous = true;
-            sr.interimResults = true;
+            sr.continuous = false;
+            sr.interimResults = false;
             sr.lang = lan || 'en-US';
             // sr.lang = 'he-IL';
 
@@ -63,11 +63,8 @@ export function useSpeechToText() {
             };
 
             sr.onresult = (event) => {
-                let transcriptSoFar = '';
-                for (let i = 0; i < event.results.length; i++) {
-                    transcriptSoFar += event.results[i][0].transcript;
-                }
-                setTranscript(transcriptSoFar);
+                const newTranscript = event.results[0][0].transcript;
+                setTranscript(prev => (prev ? prev + ' ' + newTranscript : newTranscript));
             };
 
             sr.onerror = (event) => {
