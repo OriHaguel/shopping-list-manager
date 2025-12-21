@@ -5,6 +5,7 @@
     margin-top: 32px;
     top: 32px;
     flex-shrink: 0;
+    z-index: 1000;
 
     @media (max-width: $screen-md) {
         position: fixed;
@@ -309,5 +310,157 @@
 
     &:hover {
         color: $primary-blue;
+    }
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: $neutral-dark-gray;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: $primary-blue;
+    }
+}
+
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .modalContent {
+        background: $neutral-white;
+        border-radius: $radius-lg;
+        padding: $spacing-2xl;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: $shadow-lg;
+        animation: scaleIn 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-xl;
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        h2 {
+            font-size: $font-size-xl;
+            font-weight: 600;
+            color: $neutral-text;
+            margin: 0;
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-sm;
+            max-height: 300px;
+            overflow-y: auto;
+
+            &::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: $neutral-medium-gray;
+                border-radius: $radius-full;
+            }
+
+            li {
+                padding: $spacing-md;
+                background: $neutral-light-gray;
+                border-radius: $radius-md;
+                font-size: $font-size-base;
+                color: $neutral-text;
+                font-weight: 500;
+            }
+        }
+
+        >div {
+            display: flex;
+            gap: $spacing-md;
+            justify-content: center;
+
+            button {
+                flex: 1;
+                padding: $spacing-md $spacing-lg;
+                border-radius: $radius-xl;
+                border: none;
+                font-size: $font-size-base;
+                font-weight: 600;
+                cursor: pointer;
+                transition: $transition;
+                font-family: $font-family;
+
+                &:first-child {
+                    background: $neutral-light-gray;
+                    color: $neutral-text;
+
+                    box-shadow: $shadow-base;
+
+                    &:hover {
+                        background: $neutral-medium-gray;
+                        box-shadow: $shadow-md;
+
+                    }
+
+                    &:active {
+                        transform: scale(0.95);
+                    }
+                }
+
+                &:last-child {
+                    background: $accent-coral;
+                    color: $neutral-white;
+
+                    &:hover {
+                        background: darken($accent-coral, 8%);
+                        transform: translateY(-1px);
+                    }
+
+                    &:active {
+                        transform: scale(0.95);
+                    }
+                }
+            }
+        }
     }
 }

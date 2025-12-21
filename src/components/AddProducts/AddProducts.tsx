@@ -61,6 +61,9 @@ export function AddProducts({
     const lan = getItem<string>('lan', '');
     const [activeTab, setActiveTab] = useState<'popular' | 'recent'>('popular');
     const [recentItems, setRecentItems] = useState<string[]>([]);
+    const [isRecordingModalOpen, setIsRecordingModalOpen] = useState(false);
+    const [isConfirmingModalOpen, setIsConfirmingModalOpen] = useState(false);
+    const [itemsToConfirm, setItemsToConfirm] = useState<string[]>([]);
     const {
         transcript,
         isListening,
@@ -72,17 +75,13 @@ export function AddProducts({
 
     useEffect(() => {
         if (wasListening && !isListening && transcript) {
-            const processTranscript = async () => {
-                const splitItems = splitByAnd(transcript);
-
-                await Promise.all(
-                    splitItems.map(item => handleAddItemsWithVoice(item))
-                );
-            };
-
-            processTranscript();
+            const items = splitByAnd(transcript);
+            if (items.length > 0) {
+                setItemsToConfirm(items);
+                setIsConfirmingModalOpen(true);
+            }
         }
-    }, [wasListening, isListening, transcript, handleAddItemsWithVoice]);
+    }, [wasListening, isListening, transcript]);
 
     const handleKeyPress = (e: React.KeyboardEvent) => {
         if (e.key === 'Enter') handleAddItemWithRecent();
@@ -115,9 +114,28 @@ export function AddProducts({
         }
     };
 
-    function onStopListening() {
+    const handleMicrophoneClick = () => {
+        startListening();
+        setIsRecordingModalOpen(true);
+    };
+
+    const handleStopRecording = () => {
         stopListening();
-    }
+        setIsRecordingModalOpen(false);
+    };
+
+    const handleConfirmItems = async () => {
+        await Promise.all(
+            itemsToConfirm.map(item => handleAddItemsWithVoice(item))
+        );
+        setIsConfirmingModalOpen(false);
+        setItemsToConfirm([]);
+    };
+
+    const handleCancelConfirm = () => {
+        setIsConfirmingModalOpen(false);
+        setItemsToConfirm([]);
+    };
 
 
     return (
@@ -151,8 +169,7 @@ export function AddProducts({
                         </button>
                     ) : (
                         <button
-                            onClick={isListening ? onStopListening : startListening}
-                            // onClick={startListening} // Placeholder for speech-to-text
+                            onClick={handleMicrophoneClick}
                             className={`${styles.clearInputButton} ${lan === 'he-IL' ? styles.rtl : ''}`}
                             type="button"
                             aria-label={t.speechToText}
@@ -264,6 +281,35 @@ export function AddProducts({
                     )}
                 </div>
             </div>
+            {isRecordingModalOpen && (
+                <div className={styles.modalBackdrop}>
+                    <div className={styles.modalContent}>
+                        <h2>Recording...</h2>
+                        <button onClick={handleStopRecording}>
+                            Stop Recording
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {isConfirmingModalOpen && (
+                <div className={styles.modalBackdrop}>
+                    <div className={styles.modalContent}>
+                        <h2>Add these items?</h2>
+                        <ul>
+                            {itemsToConfirm.map((item, index) => <li key={index}>{item}</li>)}
+                        </ul>
+                        <div>
+                            <button onClick={handleCancelConfirm}>
+                                Cancel
+                            </button>
+                            <button onClick={handleConfirmItems}>
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
