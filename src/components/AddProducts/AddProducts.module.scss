@@ -326,6 +326,11 @@
     z-index: 2000;
     animation: fadeIn 0.3s ease;
 
+    @media (max-width: $screen-sm) {
+        overscroll-behavior: contain;
+        touch-action: none;
+    }
+
     @keyframes fadeIn {
         from {
             opacity: 0;
