@@ -300,9 +300,17 @@ export function AddProducts({
             </div>
             {isRecordingModalOpen && (
                 <div className={styles.modalBackdrop} onClick={() => setIsRecordingModalOpen(false)}>
-                    <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-                        <h2>Recording...</h2>
-                        <button onClick={handleStopRecording}>
+                    <div className={styles.recordingModal} onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.microphoneContainer}>
+                            <div className={styles.microphoneCircle}>
+                                <Microphone />
+                            </div>
+                            <div className={styles.pulseRing}></div>
+                            <div className={styles.pulseRing} style={{ animationDelay: '0.5s' }}></div>
+                        </div>
+                        <h2 className={styles.recordingTitle}>Listening...</h2>
+                        <p className={styles.recordingSubtitle}>Speak clearly to add items</p>
+                        <button onClick={handleStopRecording} className={styles.stopRecordingButton}>
                             Stop Recording
                         </button>
                     </div>

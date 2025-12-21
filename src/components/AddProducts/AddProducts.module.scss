@@ -501,3 +501,135 @@
         }
     }
 }
+
+// Add these styles to your AddProducts.module.scss file
+
+.recordingModal {
+    background: $neutral-white;
+    border-radius: $radius-2xl;
+    padding: $spacing-4xl $spacing-3xl;
+    width: 90%;
+    max-width: 380px;
+    box-shadow: $shadow-lg;
+    animation: scaleIn 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-lg;
+
+    @keyframes scaleIn {
+        from {
+            transform: scale(0.9);
+            opacity: 0;
+        }
+
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .microphoneContainer {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: $spacing-md;
+
+        .microphoneCircle {
+            width: 80px;
+            height: 80px;
+            border-radius: $radius-full;
+            background: linear-gradient(135deg, $accent-coral 0%, $accent-peach 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: $shadow-md;
+            z-index: 2;
+            animation: micPulse 2s ease-in-out infinite;
+
+            svg {
+                width: 36px;
+                height: 36px;
+                color: $neutral-white;
+            }
+
+            @keyframes micPulse {
+
+                0%,
+                100% {
+                    transform: scale(1);
+                }
+
+                50% {
+                    transform: scale(1.05);
+                }
+            }
+        }
+
+        .pulseRing {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: $radius-full;
+            border: 3px solid $accent-coral;
+            opacity: 0;
+            animation: pulse 2s ease-out infinite;
+
+            @keyframes pulse {
+                0% {
+                    transform: scale(1);
+                    opacity: 0.8;
+                }
+
+                100% {
+                    transform: scale(1.5);
+                    opacity: 0;
+                }
+            }
+        }
+    }
+
+    .recordingTitle {
+        font-size: $font-size-xl;
+        font-weight: 600;
+        color: $neutral-text;
+        margin: 0;
+        text-align: center;
+    }
+
+    .recordingSubtitle {
+        font-size: $font-size-base;
+        color: $neutral-dark-gray;
+        margin: 0;
+        text-align: center;
+    }
+
+    .stopRecordingButton {
+        width: 100%;
+        padding: $spacing-lg $spacing-2xl;
+        border-radius: $radius-xl;
+        border: none;
+        background: $accent-coral;
+        color: $neutral-white;
+        font-size: $font-size-lg;
+        font-weight: 600;
+        cursor: pointer;
+        transition: $transition;
+        font-family: $font-family;
+        margin-top: $spacing-md;
+        box-shadow: $shadow-base;
+
+        &:hover {
+            background: darken($accent-coral, 8%);
+            transform: translateY(-2px);
+            box-shadow: $shadow-md;
+        }
+
+        &:active {
+            transform: translateY(0) scale(0.98);
+        }
+    }
+}
