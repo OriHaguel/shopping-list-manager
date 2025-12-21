@@ -114,5 +114,7 @@ export const en = {
     spanish: 'Español',
     french: 'Français',
     german: 'Deutsch',
+    addVoiceItemsTitle: 'Add items from voice?',
+    addSelected: 'Add selected',
     clickMeBiatch: 'Click Me Biatch'
 };

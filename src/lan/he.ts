@@ -114,5 +114,7 @@ export const he = {
     spanish: 'ספרדית',
     french: 'צרפתית',
     german: 'גרמנית',
+    addVoiceItemsTitle: 'להוסיף פריטים מהקלטה?',
+    addSelected: 'הוסף נבחרים',
     clickMeBiatch: 'לחץ עליי יא מניאק'
 };

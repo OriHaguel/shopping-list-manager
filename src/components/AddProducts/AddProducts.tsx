@@ -64,6 +64,7 @@ export function AddProducts({
     const [isRecordingModalOpen, setIsRecordingModalOpen] = useState(false);
     const [isConfirmingModalOpen, setIsConfirmingModalOpen] = useState(false);
     const [itemsToConfirm, setItemsToConfirm] = useState<string[]>([]);
+    const [removedItems, setRemovedItems] = useState<Set<string>>(new Set());
     const {
         transcript,
         isListening,
@@ -78,6 +79,7 @@ export function AddProducts({
             const items = splitByAnd(transcript);
             if (items.length > 0) {
                 setItemsToConfirm(items);
+                setRemovedItems(new Set());
                 setIsConfirmingModalOpen(true);
             }
         }
@@ -124,17 +126,32 @@ export function AddProducts({
         setIsRecordingModalOpen(false);
     };
 
+    const handleRemoveFromConfirm = (item: string) => {
+        setRemovedItems(prev => new Set(prev).add(item));
+    };
+
+    const handleAddBackToConfirm = (item: string) => {
+        setRemovedItems(prev => {
+            const newSet = new Set(prev);
+            newSet.delete(item);
+            return newSet;
+        });
+    };
+
     const handleConfirmItems = async () => {
+        const itemsToAdd = itemsToConfirm.filter(item => !removedItems.has(item));
         await Promise.all(
-            itemsToConfirm.map(item => handleAddItemsWithVoice(item))
+            itemsToAdd.map(item => handleAddItemsWithVoice(item))
         );
         setIsConfirmingModalOpen(false);
         setItemsToConfirm([]);
+        setRemovedItems(new Set());
     };
 
     const handleCancelConfirm = () => {
         setIsConfirmingModalOpen(false);
         setItemsToConfirm([]);
+        setRemovedItems(new Set());
     };
 
 
@@ -296,8 +313,32 @@ export function AddProducts({
                 <div className={styles.modalBackdrop} onClick={() => setIsConfirmingModalOpen(false)}>
                     <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
                         <h2>Add these items?</h2>
-                        <ul>
-                            {itemsToConfirm.map((item, index) => <li key={index}>{item}</li>)}
+                        <ul className={styles.confirmList}>
+                            {itemsToConfirm.map((item, index) => {
+                                const isRemoved = removedItems.has(item);
+                                return (
+                                    <li key={index} className={`${styles.confirmItem} ${isRemoved ? styles.removed : ''}`}>
+                                        <span className={styles.confirmItemName}>{item}</span>
+                                        {isRemoved ? (
+                                            <button
+                                                onClick={() => handleAddBackToConfirm(item)}
+                                                className={styles.addBackButton}
+                                                type="button"
+                                            >
+                                                <AddCircle className='w-[20px] h-[20px]' />
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={() => handleRemoveFromConfirm(item)}
+                                                className={styles.removeConfirmButton}
+                                                type="button"
+                                            >
+                                                <RemoveIcon />
+                                            </button>
+                                        )}
+                                    </li>
+                                );
+                            })}
                         </ul>
                         <div>
                             <button onClick={handleCancelConfirm}>

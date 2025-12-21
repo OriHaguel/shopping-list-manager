@@ -313,19 +313,6 @@
     }
 }
 
-.closeButton {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: $neutral-dark-gray;
-    transition: color 0.2s ease;
-
-    &:hover {
-        color: $primary-blue;
-    }
-}
-
 .modalBackdrop {
     position: fixed;
     top: 0;
@@ -381,7 +368,7 @@
             text-align: center;
         }
 
-        ul {
+        .confirmList {
             list-style: none;
             padding: 0;
             margin: 0;
@@ -404,13 +391,65 @@
                 border-radius: $radius-full;
             }
 
-            li {
+            .confirmItem {
                 padding: $spacing-md;
                 background: $neutral-light-gray;
                 border-radius: $radius-md;
                 font-size: $font-size-base;
                 color: $neutral-text;
                 font-weight: 500;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                transition: $transition;
+
+                &.removed {
+                    opacity: 0.5;
+                    text-decoration: line-through;
+                }
+
+                .confirmItemName {
+                    flex: 1;
+                }
+
+                .removeConfirmButton,
+                .addBackButton {
+                    background: none;
+                    border: none;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 28px;
+                    height: 28px;
+                    border-radius: 50%;
+                    transition: $transition;
+                    padding: 0;
+
+                    &:hover {
+                        background: rgba(0, 0, 0, 0.1);
+                    }
+
+                    &:active {
+                        transform: scale(0.9);
+                    }
+                }
+
+                .removeConfirmButton {
+                    color: #DC2626;
+
+                    &:hover {
+                        background: rgba(220, 38, 38, 0.1);
+                    }
+                }
+
+                .addBackButton {
+                    color: $primary-blue;
+
+                    &:hover {
+                        background: rgba(91, 140, 168, 0.1);
+                    }
+                }
             }
         }
 
@@ -433,13 +472,11 @@
                 &:first-child {
                     background: $neutral-light-gray;
                     color: $neutral-text;
-
                     box-shadow: $shadow-base;
 
                     &:hover {
                         background: $neutral-medium-gray;
                         box-shadow: $shadow-md;
-
                     }
 
                     &:active {
