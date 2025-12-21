@@ -282,8 +282,8 @@ export function AddProducts({
                 </div>
             </div>
             {isRecordingModalOpen && (
-                <div className={styles.modalBackdrop}>
-                    <div className={styles.modalContent}>
+                <div className={styles.modalBackdrop} onClick={() => setIsRecordingModalOpen(false)}>
+                    <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
                         <h2>Recording...</h2>
                         <button onClick={handleStopRecording}>
                             Stop Recording
@@ -293,8 +293,8 @@ export function AddProducts({
             )}
 
             {isConfirmingModalOpen && (
-                <div className={styles.modalBackdrop}>
-                    <div className={styles.modalContent}>
+                <div className={styles.modalBackdrop} onClick={() => setIsConfirmingModalOpen(false)}>
+                    <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
                         <h2>Add these items?</h2>
                         <ul>
                             {itemsToConfirm.map((item, index) => <li key={index}>{item}</li>)}
