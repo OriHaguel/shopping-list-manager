@@ -67,7 +67,7 @@ export function ItemInputs({
                         value={searchQuery}
                         onChange={(e) => handleSearchChange(e.target.value)}
                         placeholder={t.searchItems}
-                        className={styles.searchInput}
+                        className={`${styles.searchInput} ${lan === 'he-IL' ? styles.rtl : ''}`}
                     />
                     <button
                         onClick={handleSearchToggle}
@@ -117,7 +117,7 @@ export function ItemInputs({
                             </button>
                             {isMenuOpen && (
                                 <div className={styles.dropdown}>
-                                    <button className={styles.dropdownItem} onClick={() => { onShare(); setIsMenuOpen(false); }}>
+                                    <button className={`${styles.dropdownItem} ${lan === 'he-IL' ? styles.rtl : ''}`} onClick={() => { onShare(); setIsMenuOpen(false); }}>
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <circle cx="18" cy="5" r="3"></circle>
                                             <circle cx="6" cy="12" r="3"></circle>
@@ -129,7 +129,7 @@ export function ItemInputs({
                                     </button>
                                     <div className={styles.sortContainer}>
                                         <button
-                                            className={styles.dropdownItem}
+                                            className={`${styles.dropdownItem} ${lan === 'he-IL' ? styles.rtl : ''}`}
                                             onClick={() => setIsSortMenuOpen(!isSortMenuOpen)}
                                         >
                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -147,15 +147,23 @@ export function ItemInputs({
                                                 strokeWidth="2"
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
-                                                style={{ marginLeft: 'auto', transform: isSortMenuOpen ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }}
+                                                style={{
+                                                    marginLeft: lan === 'he-IL' ? undefined : 'auto',
+                                                    marginRight: lan === 'he-IL' ? 'auto' : undefined,
+                                                    transform: isSortMenuOpen
+                                                        ? `rotate(${lan === 'he-IL' ? 90 : 90}deg)`
+                                                        : 'none',
+                                                    transition: 'transform 0.2s',
+                                                }}
                                             >
-                                                <polyline points="9 18 15 12 9 6"></polyline>
+                                                <polyline points="9 18 15 12 9 6" />
                                             </svg>
+
                                         </button>
                                         {isSortMenuOpen && (
                                             <div className={styles.accordionContent}>
                                                 <button
-                                                    className={styles.sortMenuItem}
+                                                    className={`${styles.sortMenuItem} ${lan === 'he-IL' ? styles.rtl : ''}`}
                                                     onClick={() => handleSortSelect('a-z')}
                                                 >
                                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -168,7 +176,7 @@ export function ItemInputs({
                                                     {t.aZ}
                                                 </button>
                                                 <button
-                                                    className={styles.sortMenuItem}
+                                                    className={`${styles.sortMenuItem} ${lan === 'he-IL' ? styles.rtl : ''}`}
                                                     onClick={() => handleSortSelect('category')}
                                                 >
                                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -182,7 +190,7 @@ export function ItemInputs({
                                             </div>
                                         )}
                                     </div>
-                                    <button className={styles.dropdownItem} onClick={handleUncheckAll}>
+                                    <button className={`${styles.dropdownItem} ${lan === 'he-IL' ? styles.rtl : ''}`} onClick={handleUncheckAll}>
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                                         </svg>

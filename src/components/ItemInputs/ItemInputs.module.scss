@@ -148,6 +148,11 @@
                 text-align: left;
                 position: relative;
 
+                &.rtl {
+                    text-align: right;
+                    flex-direction: row-reverse;
+                }
+
                 &:hover {
                     background: $neutral-light-gray;
                 }
@@ -160,6 +165,7 @@
                     color: $neutral-dark-gray;
                     flex-shrink: 0;
                 }
+
             }
 
             .sortContainer {
