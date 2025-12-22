@@ -3,6 +3,7 @@
 
 
 import { getMessages } from '@/lib/getMessages';
+import { getItem } from '@/utils/localStorage';
 import { useState, useEffect, useRef } from 'react';
 import styles from './CreateListModal.module.scss';
 import { List } from '@/types';
@@ -16,6 +17,7 @@ interface CreateListModalProps {
 
 export function CreateListModal({ isOpen, onClose, onSave, listToRename }: CreateListModalProps) {
     const t = getMessages();
+    const lan = getItem<string>('lan', '');
     const [listName, setListName] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -49,7 +51,7 @@ export function CreateListModal({ isOpen, onClose, onSave, listToRename }: Creat
 
     return (
         <div className={styles.backdrop} onClick={handleBackdropClick}>
-            <div className={styles.modal}>
+            <div className={`${styles.modal} ${lan === 'he-IL' ? styles.rtl : ''}`}>
                 <h2 className={styles.title}>{isRenameMode ? t.renameList : t.createNewList}</h2>
 
                 <form onSubmit={handleSubmit}>

@@ -42,6 +42,31 @@
     @media (max-width: $screen-sm) {
         margin-top: 2.25rem;
     }
+
+    &.rtl {
+        direction: rtl;
+        text-align: right;
+
+        .title {
+            text-align: right;
+        }
+
+        .input {
+            text-align: right;
+
+            &::placeholder {
+                text-align: right;
+            }
+        }
+
+        .actions {
+            flex-direction: row-reverse;
+        }
+
+        .button {
+            text-align: center; // Ensure button text is centered even with RTL
+        }
+    }
 }
 
 @keyframes slideUp {

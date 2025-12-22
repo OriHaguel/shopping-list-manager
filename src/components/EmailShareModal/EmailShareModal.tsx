@@ -1,6 +1,7 @@
 // components/EmailShareModal/EmailShareModal.tsx
 'use client';
 import { getMessages } from '@/lib/getMessages';
+import { getItem } from '@/utils/localStorage';
 import { useState } from 'react';
 import styles from './EmailShareModal.module.scss';
 import { WhatsAppIcon } from '../svg/Whatsapp/Whatsapp';
@@ -16,6 +17,7 @@ interface EmailShareModalProps {
 
 export function EmailShareModal({ isOpen, onClose, onSubmit, listName, listId }: EmailShareModalProps) {
     const t = getMessages();
+    const lan = getItem<string>('lan', '');
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
 
@@ -65,7 +67,7 @@ export function EmailShareModal({ isOpen, onClose, onSubmit, listName, listId }:
 
     return (
         <div className={styles.overlay} onClick={handleClose}>
-            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div className={`${styles.modal} ${lan === 'he-IL' ? styles.rtl : ''}`} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.header}>
                     <h2 className={styles.title}>{t.shareList}</h2>
                     <button

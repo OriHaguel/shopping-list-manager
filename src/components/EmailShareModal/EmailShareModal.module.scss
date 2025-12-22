@@ -42,6 +42,41 @@
     @media (max-width: $screen-sm) {
         margin-top: 2.25rem;
     }
+
+    &.rtl {
+        text-align: right;
+
+        .header {
+            flex-direction: row-reverse;
+
+        }
+
+        .title {
+            text-align: right;
+        }
+
+        .form {
+            flex-direction: row-reverse;
+        }
+
+        .inputWrapper {
+            .input {
+                text-align: right;
+            }
+        }
+
+        .errorText {
+            text-align: right;
+        }
+
+        .shareActions {
+            flex-direction: row-reverse;
+        }
+
+        .shareButton {
+            flex-direction: row-reverse;
+        }
+    }
 }
 
 @keyframes slideUp {
