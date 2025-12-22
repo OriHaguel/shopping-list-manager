@@ -213,6 +213,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+
+        &.rtl {
+            text-align: right;
+        }
     }
 
     &.rtl {

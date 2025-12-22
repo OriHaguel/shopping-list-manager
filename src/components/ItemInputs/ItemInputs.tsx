@@ -82,7 +82,7 @@ export function ItemInputs({
                 </div>
             ) : (
                 <>
-                    <span className={styles.itemlistName}>{list?.name}</span>
+                    <span className={`${styles.itemlistName} ${lan === 'he-IL' ? styles.rtl : ''}`}>{list?.name}</span>
                     <div className={`${styles.iconGroup} ${lan === 'he-IL' ? styles.rtl : ''}`}>
                         <button
                             className={styles.iconButton}

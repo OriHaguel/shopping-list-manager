@@ -191,7 +191,7 @@ export function AddProducts({
                             type="button"
                             aria-label={t.speechToText}
                         >
-                            <Microphone />
+                            <Microphone color='#6b7280' />
                         </button>
                     )}
                     <button
@@ -303,13 +303,13 @@ export function AddProducts({
                     <div className={styles.recordingModal} onClick={(e) => e.stopPropagation()}>
                         <div className={styles.microphoneContainer}>
                             <div className={styles.microphoneCircle}>
-                                <Microphone />
+                                <Microphone color='#393939ff' />
                             </div>
                             <div className={styles.pulseRing}></div>
                             <div className={styles.pulseRing} style={{ animationDelay: '0.5s' }}></div>
                         </div>
                         <h2 className={styles.recordingTitle}>Listening...</h2>
-                        <p className={styles.recordingSubtitle}>Speak clearly to add items</p>
+                        <p className={styles.recordingSubtitle}>List your items, separated by the word ‘and’</p>
                         <button onClick={handleStopRecording} className={styles.stopRecordingButton}>
                             Stop Recording
                         </button>
