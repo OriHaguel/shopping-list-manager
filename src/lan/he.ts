@@ -91,7 +91,7 @@ export const he = {
     unit: 'יחידה',
     price: 'מחיר',
     description: 'תיאור',
-    addNotesOrDetails: 'הוסף הערות או פרטים...',
+    addNotesOrDetails: 'הוסף הערות או פרטים',
     deleteItem: 'מחק פריט',
     done: 'בוצע',
     searchItems: 'חפש פריטים...',

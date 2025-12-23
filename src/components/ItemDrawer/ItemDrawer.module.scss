@@ -94,6 +94,16 @@
 
     &.rtl {
         text-align: right;
+
+        input,
+        textarea,
+        select {
+            text-align: right;
+        }
+
+        // textarea {
+        //     text-align: right;
+        // }
     }
 
     /* Custom scrollbar */
