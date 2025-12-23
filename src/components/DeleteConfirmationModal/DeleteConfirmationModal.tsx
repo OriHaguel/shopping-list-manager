@@ -1,5 +1,6 @@
 import { getMessages } from '@/lib/getMessages';
 import styles from './DeleteConfirmationModal.module.scss';
+import { getItem } from '@/utils/localStorage';
 
 interface DeleteConfirmationModalProps {
     isOpen: boolean;
@@ -14,7 +15,9 @@ export function DeleteConfirmationModal({
     onConfirm,
     listName
 }: DeleteConfirmationModalProps) {
-    const t = getMessages();
+    const t = getMessages()
+    const lan = getItem<string>('lan', '');
+    ;
     if (!isOpen) return null;
 
     const handleConfirm = () => {
@@ -24,7 +27,7 @@ export function DeleteConfirmationModal({
 
     return (
         <div className={styles.overlay} onClick={onClose}>
-            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div className={`${styles.modal} ${lan === 'he-IL' ? styles.rtl : ''}`} onClick={(e) => e.stopPropagation()}>
                 <button
                     className={styles.closeButton}
                     onClick={onClose}

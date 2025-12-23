@@ -230,6 +230,11 @@
 
         .searchContainer {
             padding: 0 12px; // Keep symmetrical padding
+            flex-direction: row-reverse;
+
+            input {
+                text-align: right;
+            }
         }
 
         .dropdown {

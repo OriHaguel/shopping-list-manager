@@ -30,6 +30,16 @@
     position: relative;
     animation: scaleIn 0.2s ease;
     text-align: center;
+
+    &.rtl {
+        button {
+            right: unset;
+        }
+
+        > :last-child {
+            flex-direction: row-reverse;
+        }
+    }
 }
 
 .closeButton {
