@@ -65,6 +65,8 @@ export function AddProducts({
     const [isConfirmingModalOpen, setIsConfirmingModalOpen] = useState(false);
     const [itemsToConfirm, setItemsToConfirm] = useState<string[]>([]);
     const [removedItems, setRemovedItems] = useState<Set<string>>(new Set());
+    const [minTimeDisabledActive, setMinTimeDisabledActive] = useState(false);
+    const minTimeDisableTimeoutRef = useRef<any>(null);
     const {
         transcript,
         isListening,
@@ -73,6 +75,23 @@ export function AddProducts({
     } = useSpeechToText();
 
     const wasListening = usePrevious(isListening);
+
+    // Unmount cleanup
+    useEffect(() => {
+        return () => {
+            clearTimeout(minTimeDisableTimeoutRef.current);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (isCreating) {
+            setMinTimeDisabledActive(true);
+            clearTimeout(minTimeDisableTimeoutRef.current); // Clear previous timer
+            minTimeDisableTimeoutRef.current = setTimeout(() => {
+                setMinTimeDisabledActive(false);
+            }, 500);
+        }
+    }, [isCreating]);
 
     useEffect(() => {
         if (wasListening && !isListening && transcript) {
@@ -233,7 +252,7 @@ export function AddProducts({
                                     key={index}
                                     className={`${styles.quickAddItem} ${lan === 'he-IL' ? styles.rtl : ''}`}
                                     onClick={() => handleQuickAdd(item)}
-                                    disabled={isCreating}
+                                    disabled={isCreating || minTimeDisabledActive}
                                     type="button"
                                 >
                                     <AddCircle className='w-[24px] h-[24px]' />
@@ -270,7 +289,7 @@ export function AddProducts({
                                         key={index}
                                         className={`${styles.quickAddItem} ${lan === 'he-IL' ? styles.rtl : ''}`}
                                         onClick={() => handleQuickAdd(item)}
-                                        disabled={isCreating}
+                                        disabled={isCreating || minTimeDisabledActive}
                                         type="button"
                                     >
                                         <AddCircle className='w-[24px] h-[24px]' />

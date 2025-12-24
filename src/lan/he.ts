@@ -79,7 +79,7 @@ export const he = {
     cancel: 'בטל',
     rename: 'שנה שם',
     createList: 'צור רשימה',
-    deleteList: 'למחוק רשימה?',
+    deleteList: 'מחק רשימה',
     areYouSureYouWantToDelete: 'האם אתה בטוח שברצונך למחוק',
     thisActionCannotBeUndone: 'פעולה זו בלתי הפיכה.',
     createNewList: 'צור רשימה חדשה',
