@@ -327,10 +327,10 @@ export function AddProducts({
                             <div className={styles.pulseRing}></div>
                             <div className={styles.pulseRing} style={{ animationDelay: '0.5s' }}></div>
                         </div>
-                        <h2 className={styles.recordingTitle}>Listening...</h2>
-                        <p className={styles.recordingSubtitle}>List your items, separated by the word ‘and’</p>
+                        <h2 className={styles.recordingTitle}>{t.voiceRecordingTitle}</h2>
+                        <p className={styles.recordingSubtitle}>{t.voiceRecordingSubtitle}</p>
                         <button onClick={handleStopRecording} className={styles.stopRecordingButton}>
-                            Stop Recording
+                            {t.stopRecording}
                         </button>
                     </div>
                 </div>
@@ -338,8 +338,8 @@ export function AddProducts({
 
             {isConfirmingModalOpen && (
                 <div className={styles.modalBackdrop} onClick={() => setIsConfirmingModalOpen(false)}>
-                    <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-                        <h2>Add these items?</h2>
+                    <div className={`${styles.modalContent} ${lan === 'he-IL' ? styles.rtl : ''}`} onClick={(e) => e.stopPropagation()}>
+                        <h2>{t.confirmVoiceItemsTitle}</h2>
                         <ul className={styles.confirmList}>
                             {itemsToConfirm.map((item, index) => {
                                 const isRemoved = removedItems.has(item);
@@ -369,10 +369,10 @@ export function AddProducts({
                         </ul>
                         <div>
                             <button onClick={handleCancelConfirm}>
-                                Cancel
+                                {t.cancel}
                             </button>
                             <button onClick={handleConfirmItems}>
-                                Confirm
+                                {t.confirm}
                             </button>
                         </div>
                     </div>

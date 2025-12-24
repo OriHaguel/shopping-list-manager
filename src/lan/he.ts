@@ -116,5 +116,10 @@ export const he = {
     german: 'גרמנית',
     addVoiceItemsTitle: 'להוסיף פריטים מהקלטה?',
     addSelected: 'הוסף נבחרים',
-    clickMeBiatch: 'לחץ עליי יא מניאק'
+    clickMeBiatch: 'לחץ עליי יא מניאק',
+    voiceRecordingTitle: '...מאזין',
+    voiceRecordingSubtitle: 'רשום את הפריטים שלך, מופרדים ב ״ו״',
+    stopRecording: 'הפסק הקלטה',
+    confirmVoiceItemsTitle: '?להוסיף את הפריטים האלה',
+    confirm: 'אשר'
 };

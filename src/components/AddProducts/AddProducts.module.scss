@@ -353,6 +353,17 @@
         flex-direction: column;
         gap: $spacing-xl;
 
+        &.rtl {
+            ul li {
+                flex-direction: row-reverse;
+                text-align: right;
+            }
+
+            div {
+                flex-direction: row-reverse;
+            }
+        }
+
         @keyframes scaleIn {
             from {
                 transform: scale(0.95);

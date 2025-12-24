@@ -116,5 +116,10 @@ export const en = {
     german: 'Deutsch',
     addVoiceItemsTitle: 'Add items from voice?',
     addSelected: 'Add selected',
-    clickMeBiatch: 'Click Me Biatch'
+    clickMeBiatch: 'Click Me Biatch',
+    voiceRecordingTitle: 'Listening...',
+    voiceRecordingSubtitle: 'List your items, separated by the word ‘and’',
+    stopRecording: 'Stop Recording',
+    confirmVoiceItemsTitle: 'Add these items?',
+    confirm: 'Confirm'
 };
