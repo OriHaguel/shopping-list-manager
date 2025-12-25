@@ -7,6 +7,7 @@ import { getItem } from '@/utils/localStorage';
 import { useState, useEffect, useRef } from 'react';
 import styles from './CreateListModal.module.scss';
 import { List } from '@/types';
+import { useModalScrollLock } from '@/hooks/useModalScrollLock';
 
 interface CreateListModalProps {
     isOpen: boolean;
@@ -21,15 +22,14 @@ export function CreateListModal({ isOpen, onClose, onSave, listToRename }: Creat
     const [listName, setListName] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
 
+    useModalScrollLock(isOpen);
+
     const isRenameMode = !!listToRename;
 
     useEffect(() => {
         if (isOpen) {
             setListName(isRenameMode ? listToRename.name : '');
             setTimeout(() => inputRef.current?.focus(), 100);
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
         }
     }, [isOpen, isRenameMode, listToRename]);
 

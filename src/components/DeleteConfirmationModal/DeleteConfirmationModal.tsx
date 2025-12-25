@@ -1,6 +1,7 @@
 import { getMessages } from '@/lib/getMessages';
 import styles from './DeleteConfirmationModal.module.scss';
 import { getItem } from '@/utils/localStorage';
+import { useModalScrollLock } from '@/hooks/useModalScrollLock';
 
 interface DeleteConfirmationModalProps {
     isOpen: boolean;
@@ -17,7 +18,9 @@ export function DeleteConfirmationModal({
 }: DeleteConfirmationModalProps) {
     const t = getMessages()
     const lan = getItem<string>('lan', '');
-    ;
+    
+    useModalScrollLock(isOpen);
+    
     if (!isOpen) return null;
 
     const handleConfirm = () => {

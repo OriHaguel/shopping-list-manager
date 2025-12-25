@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import styles from './ItemDrawer.module.scss';
 import { UseMutationResult } from '@tanstack/react-query';
 import { getItem } from '@/utils/localStorage';
+import { useModalScrollLock } from '@/hooks/useModalScrollLock';
 
 
 interface ItemDrawerProps {
@@ -48,17 +49,17 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
         }
     }, [initialData]);
 
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'unset';
-        }
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
-    }, [isOpen]);
-
+    // useEffect(() => {
+    //     if (isOpen) {
+    //         document.body.style.overflow = 'hidden';
+    //     } else {
+    //         document.body.style.overflow = 'unset';
+    //     }
+    //     return () => {
+    //         document.body.style.overflow = 'unset';
+    //     };
+    // }, [isOpen]);
+    useModalScrollLock(isOpen);
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onSave(formData);

@@ -197,63 +197,40 @@
 }
 
 .itemRow {
-
     display: flex;
-
     align-items: center;
-
     gap: 12px;
-
     padding: 0.5625rem 0.725rem;
-
     border-radius: 12px;
-
     transition: all 0.2s ease;
-
     cursor: pointer;
-
     margin: .25rem 0;
 
-
-
     &:hover {
-
         background: $neutral-light-gray;
-
     }
 
-
-
     &.rtl {
-
         flex-direction: row-reverse;
-
         text-align: right;
 
+        div {
+            flex-direction: row-reverse;
 
+        }
 
         .itemQuantity,
 
         .itemPrice {
 
             margin-left: unset;
-
             margin-right: auto;
-
-        }
-
-
-
-        .checkboxWrapper {
-
-            order: 1; /* Move checkbox to the end */
 
         }
 
     }
 
 }
-
 
 
 .checkboxWrapper {
@@ -493,7 +470,8 @@
         }
 
         .checkboxWrapper {
-            order: 1; /* Move checkbox to the end */
+            order: 1;
+            /* Move checkbox to the end */
         }
     }
 }

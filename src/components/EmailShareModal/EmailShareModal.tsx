@@ -6,6 +6,7 @@ import { useState } from 'react';
 import styles from './EmailShareModal.module.scss';
 import { WhatsAppIcon } from '../svg/Whatsapp/Whatsapp';
 import { LinkIcon } from '../svg/LinkIcon/LinkIcon';
+import { useModalScrollLock } from '@/hooks/useModalScrollLock';
 
 interface EmailShareModalProps {
     isOpen: boolean;
@@ -20,6 +21,8 @@ export function EmailShareModal({ isOpen, onClose, onSubmit, listName, listId }:
     const lan = getItem<string>('lan', '');
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
+
+    useModalScrollLock(isOpen);
 
     if (!isOpen) return null;
 
