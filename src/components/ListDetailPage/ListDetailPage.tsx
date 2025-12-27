@@ -334,7 +334,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                                         {item.name}
                                                     </span>
                                                     <span className={styles.itemQuantity}>
-                                                        {item.quantity}
+                                                        {item.quantity > 1 ? item.quantity : ''}
                                                     </span>
                                                 </div>
 

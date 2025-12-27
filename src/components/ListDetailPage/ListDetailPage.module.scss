@@ -464,16 +464,20 @@
         flex-direction: row-reverse;
         text-align: right;
 
-        .itemQuantity,
-        .itemPrice {
-            margin-left: unset;
-            margin-right: auto;
+        div {
+            flex-direction: row-reverse;
+
         }
 
-        .checkboxWrapper {
-            order: 1;
-            /* Move checkbox to the end */
+        .itemQuantity,
+
+        .itemPrice {
+
+            margin-left: unset;
+            margin-right: auto;
+
         }
+
     }
 }
 
