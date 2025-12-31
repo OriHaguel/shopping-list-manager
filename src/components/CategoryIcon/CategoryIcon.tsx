@@ -57,25 +57,16 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         // Beverages
         if (categoryLower.includes('beverage') || categoryLower.includes('drink') || categoryLower.includes('juice') || categoryLower.includes('soda')) {
             return (
-                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M6 8v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8" />
-                    <path d="M5 8h14" />
-                    <path d="M7 8V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4" />
-                    <path d="M10 12h4" />
-                </svg>
+                <Image src="/icons/water.png" alt="" width={37.5} height={37.5} className={styles.iconImg} />
+
             );
         }
 
         // Snacks
         if (categoryLower.includes('snack') || categoryLower.includes('chip') || categoryLower.includes('candy')) {
             return (
-                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M7 10h10" />
-                    <path d="M7 14h10" />
-                    <path d="M10 2v20" />
-                    <path d="M14 2v20" />
-                    <rect x="3" y="2" width="18" height="20" rx="2" />
-                </svg>
+                <Image src="/icons/candy.png" alt="" width={37.5} height={37.5} />
+
             );
         }
 
@@ -83,14 +74,8 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         // Household / Cleaning
         if (categoryLower.includes('household') || categoryLower.includes('cleaning') || categoryLower.includes('detergent')) {
             return (
-                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <path d="M4 12h16" />
-                    <path d="M4 18V6" />
-                    <path d="M8 18V6" />
-                    <path d="M12 18V6" />
-                    <path d="M16 18V6" />
-                    <path d="M20 18V6" />
-                </svg>
+                <Image src="/icons/clean.png" alt="" width={27.5} height={37.5} />
+
             );
         }
 
@@ -138,12 +123,8 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         // Pets
         if (categoryLower.includes('pet') || categoryLower.includes('dog') || categoryLower.includes('cat') || categoryLower.includes('animal')) {
             return (
-                <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-                    <circle cx="11" cy="4" r="2" />
-                    <circle cx="18" cy="8" r="2" />
-                    <circle cx="20" cy="16" r="2" />
-                    <path d="M9 10a5 5 0 0 1 5 5v3.5a3.5 3.5 0 0 1-6.84 1.045Q6.52 17.48 4.46 16.84A3.5 3.5 0 0 1 5.5 10Z" />
-                </svg>
+                <Image src="/icons/dogpaw.png" alt="" width={27.5} height={37.5} />
+
             );
         }
 
