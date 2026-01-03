@@ -4,7 +4,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ReactQueryClientProvider } from './react-query-provider'
 import { Providers } from './providers';
-import { SidebarWrapper } from '@/components/Sidebar/SidebarWrapper'
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -26,7 +25,6 @@ export default function RootLayout({
       <body className={`${inter.variable} antialiased`}>
         <ReactQueryClientProvider>
           <Providers>
-            <SidebarWrapper />
             {children}
           </Providers>
         </ReactQueryClientProvider>

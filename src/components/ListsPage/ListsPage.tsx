@@ -14,6 +14,7 @@ import { ListCard } from '../ListCard/ListCard';
 import { ProductivityLoader } from '../Loader/Loader';
 import { getMessages } from '@/lib/getMessages';
 import { getItem } from '@/utils/localStorage';
+import { Header } from '../Header/Header';
 export function ListsPage() {
     const t = getMessages();
     const lan = getItem<string>('lan', '');
@@ -129,48 +130,52 @@ export function ListsPage() {
     };
 
     return (
-        <div className={styles.container}>
-            <div className={`${styles.header} ${lan === 'he-IL' ? styles.rtl : ''}`}>
-                <h1 className={styles.title}>{t.yourShoppingLists}</h1>
-                <button onClick={() => logoutCheck()}>{t.logOut}</button>
-                <FAB onClick={() => setIsModalOpen(true)} />
-            </div>
+        <div className={styles.listsPage}>
+            <Header />
+            <div className={styles.container}>
+                <div className={`${styles.header} ${lan === 'he-IL' ? styles.rtl : ''}`}>
+                    <h1 className={styles.title}>{t.yourShoppingLists}</h1>
+                    <button onClick={() => logoutCheck()}>{t.logOut}</button>
+                    <FAB onClick={() => setIsModalOpen(true)} />
+                </div>
 
-            <div className={styles.listsGrid}>
-                {isLoading ? (
-                    <ProductivityLoader />
-                ) : isError ? (
-                    <div className={styles.emptyState}>
-                        <p className={styles.emptyText}>{t.failedToLoadLists}</p>
-                        <p className={styles.emptySubtext}>
-                            {error instanceof Error ? error.message : t.pleaseTryAgain}
-                        </p>
-                    </div>
-                ) : lists.length === 0 ? (
-                    <div className={styles.emptyState}>
-                        <div className={styles.emptyIcon}>📋</div>
-                        <p className={styles.emptyText}>{t.noListsYet}</p>
-                        <p className={styles.emptySubtext}>{t.createYourFirstListToGetStarted}</p>
-                    </div>
-                ) : (
-                    lists.map((list) => (
-                        <ListCard
-                            key={list._id}
-                            list={list}
-                            onClick={() => handleListClick(list._id)}
-                            onDelete={() => handleDeleteList(list._id)}
-                            onRename={() => handleRename(list)}
-                        />
-                    ))
-                )}
-            </div>
+                <div className={styles.listsGrid}>
+                    {isLoading ? (
+                        <ProductivityLoader />
+                    ) : isError ? (
+                        <div className={styles.emptyState}>
+                            <p className={styles.emptyText}>{t.failedToLoadLists}</p>
+                            <p className={styles.emptySubtext}>
+                                {error instanceof Error ? error.message : t.pleaseTryAgain}
+                            </p>
+                        </div>
+                    ) : lists.length === 0 ? (
+                        <div className={styles.emptyState}>
+                            <div className={styles.emptyIcon}>📋</div>
+                            <p className={styles.emptyText}>{t.noListsYet}</p>
+                            <p className={styles.emptySubtext}>{t.createYourFirstListToGetStarted}</p>
+                        </div>
+                    ) : (
+                        lists.map((list) => (
+                            <ListCard
+                                key={list._id}
+                                list={list}
+                                onClick={() => handleListClick(list._id)}
+                                onDelete={() => handleDeleteList(list._id)}
+                                onRename={() => handleRename(list)}
+                            />
+                        ))
+                    )}
+                </div>
 
-            <CreateListModal
-                isOpen={isModalOpen}
-                onClose={handleCloseModal}
-                onSave={handleSaveList}
-                listToRename={listToRename}
-            />
+                <CreateListModal
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
+                    onSave={handleSaveList}
+                    listToRename={listToRename}
+                />
+            </div>
         </div>
+
     );
 }

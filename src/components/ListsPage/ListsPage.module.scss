@@ -1,14 +1,23 @@
 // components/ListsPage/ListsPage.module.scss
 @use '../../styles/setup/variables' as *;
 
+.listsPage {
+    width: 100%;
+}
+
 .container {
     min-height: 100vh;
     margin: auto;
     padding-top: 32px;
     max-width: 625px;
 
+    @media (max-width: $screen-bg) {
+        max-width: 550px;
+    }
+
     @media (max-width: $screen-sm) {
         width: 100%;
+        max-width: 500px;
         padding: 24px 16px;
     }
 }
