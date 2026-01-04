@@ -2,6 +2,9 @@
 import { useState, useRef, useEffect } from 'react';
 import styles from './Header.module.scss';
 import { getItem, setItem } from '@/utils/localStorage';
+import { useRouter } from 'next/navigation';
+import { logout } from '@/services/user/user.service';
+import { getMessages } from '@/lib/getMessages';
 
 type Language = {
     code: string;
@@ -23,7 +26,9 @@ export const Header: React.FC = () => {
     const [currentLanguage, setCurrentLanguage] = useState<string>(languages[0].code);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const avatarRef = useRef<HTMLButtonElement>(null);
+    const router = useRouter();
     const lan = getItem<string>('lan', '');
+    const t = getMessages();
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
@@ -74,11 +79,11 @@ export const Header: React.FC = () => {
         window.location.reload()
     };
 
-    const handleLogout = () => {
-        console.log('Logging out...');
-        setIsDropdownOpen(false);
-    };
 
+    async function handleLogout() {
+        await logout()
+        router.push('/auth');
+    }
     return (
         <header className={styles.header}>
             <div className={styles.container}>
@@ -138,7 +143,7 @@ export const Header: React.FC = () => {
                             )}
 
                             <div className={styles.item} onClick={handleLogout}>
-                                <span className={styles.text}>Log out</span>
+                                <span className={styles.text}>{t.logOut}</span>
                             </div>
                         </div>
                     )}

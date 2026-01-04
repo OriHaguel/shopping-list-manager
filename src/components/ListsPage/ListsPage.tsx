@@ -23,11 +23,6 @@ export function ListsPage() {
     const [listToRename, setListToRename] = useState<List | null>(null);
     const router = useRouter();
     const queryClient = useQueryClient();
-
-    async function logoutCheck() {
-        await logout()
-        router.push('/auth');
-    }
     // Fetch lists with React Query
     const {
         data: lists = [],
@@ -135,7 +130,6 @@ export function ListsPage() {
             <div className={styles.container}>
                 <div className={`${styles.header} ${lan === 'he-IL' ? styles.rtl : ''}`}>
                     <h1 className={styles.title}>{t.yourShoppingLists}</h1>
-                    <button onClick={() => logoutCheck()}>{t.logOut}</button>
                     <FAB onClick={() => setIsModalOpen(true)} />
                 </div>
 
