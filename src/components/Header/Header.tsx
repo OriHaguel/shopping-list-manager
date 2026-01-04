@@ -1,6 +1,7 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import styles from './Header.module.scss';
+import { getItem, setItem } from '@/utils/localStorage';
 
 type Language = {
     code: string;
@@ -9,20 +10,20 @@ type Language = {
 };
 
 const languages: Language[] = [
-    { code: 'EN', name: 'English' },
-    { code: 'HE', name: 'עברית' },
-    { code: 'ES', name: 'Español' },
-    { code: 'FR', name: 'Français' },
-    { code: 'DE', name: 'Deutsch' },
+    { code: 'en-US', name: 'English' },
+    { code: 'he-IL', name: 'עברית' },
+    // { code: 'es', name: 'Español' },
+    // { code: 'fr', name: 'Français' },
+    // { code: 'de', name: 'Deutsch' },
 ];
 
 export const Header: React.FC = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isLanguageSubmenuOpen, setIsLanguageSubmenuOpen] = useState(false);
-    const [currentLanguage, setCurrentLanguage] = useState<Language>(languages[0]);
+    const [currentLanguage, setCurrentLanguage] = useState<string>(languages[0].code);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const avatarRef = useRef<HTMLButtonElement>(null);
-
+    const lan = getItem<string>('lan', '');
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (
@@ -47,13 +48,17 @@ export const Header: React.FC = () => {
             document.addEventListener('mousedown', handleClickOutside);
             document.addEventListener('keydown', handleEscape);
         }
-
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
             document.removeEventListener('keydown', handleEscape);
         };
     }, [isDropdownOpen]);
 
+
+    useEffect(() => {
+
+        setCurrentLanguage(lan || 'en');
+    }, []);
     const handleAvatarClick = () => {
         setIsDropdownOpen(!isDropdownOpen);
         setIsLanguageSubmenuOpen(false);
@@ -63,10 +68,10 @@ export const Header: React.FC = () => {
         setIsLanguageSubmenuOpen(!isLanguageSubmenuOpen);
     };
 
-    const handleLanguageSelect = (language: Language) => {
+    const handleLanguageSelect = (language: string) => {
         setCurrentLanguage(language);
-        setIsLanguageSubmenuOpen(false);
-        setIsDropdownOpen(false);
+        setItem('lan', language);
+        window.location.reload()
     };
 
     const handleLogout = () => {
@@ -112,7 +117,7 @@ export const Header: React.FC = () => {
                             <div className={styles.item} onClick={handleLanguageClick}>
                                 <span className={styles.text}>
                                     Language
-                                    <span className={styles.current}>{currentLanguage.code}</span>
+                                    <span className={styles.current}>{currentLanguage || 'en'}</span>
                                 </span>
                                 <span className={`${styles.chevron} ${isLanguageSubmenuOpen ? styles.chevronDown : ''}`}>›</span>
                             </div>
@@ -122,9 +127,9 @@ export const Header: React.FC = () => {
                                     {languages.map((lang) => (
                                         <div
                                             key={lang.code}
-                                            className={`${styles.submenuItem} ${currentLanguage.code === lang.code ? styles.active : ''
+                                            className={`${styles.submenuItem} ${currentLanguage === lang.code ? styles.active : ''
                                                 }`}
-                                            onClick={() => handleLanguageSelect(lang)}
+                                            onClick={() => handleLanguageSelect(lang.code)}
                                         >
                                             <span className={styles.langName}>{lang.name}</span>
                                         </div>
