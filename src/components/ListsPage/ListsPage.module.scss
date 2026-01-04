@@ -6,7 +6,7 @@
 }
 
 .container {
-    min-height: 100vh;
+    min-height: calc(100vh - 84px);
     margin: auto;
     max-width: 625px;
 
