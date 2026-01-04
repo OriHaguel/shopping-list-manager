@@ -133,7 +133,7 @@ export function ListsPage() {
                     <FAB onClick={() => setIsModalOpen(true)} />
                 </div>
 
-                <div className={styles.listsGrid}>
+                <div className={!isLoading ? styles.listsGrid : ''}>
                     {isLoading ? (
                         <ProductivityLoader />
                     ) : isError ? (
