@@ -11,5 +11,5 @@ export default function Home() {
     router.push(`/auth`);
   };
 
-  return <button onClick={() => handleListClick()}>{t.clickMeBiatch}</button>;
+  return <button onClick={() => handleListClick()}>{t.loginForNow}</button>;
 }
