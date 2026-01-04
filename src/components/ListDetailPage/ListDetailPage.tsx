@@ -13,6 +13,7 @@ import { CategoryIcon } from '../CategoryIcon/CategoryIcon';
 import { ProductivityLoader } from '../Loader/Loader';
 import { EmailShareModal } from '../EmailShareModal/EmailShareModal';
 import { shareList } from '@/services/list/list.service';
+import { Header } from '../Header/Header';
 
 interface ListDetailPageProps {
     listId: string;
@@ -162,159 +163,104 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
         setIsShareModalOpen(false);
     };
     return (
-        <div className={styles.container}>
-            <div className={styles.listDetailContainer}>
-                <main className={styles.content}>
-                    {isLoading ? (
-                        <ProductivityLoader />
-                    ) : isError ? (
-                        <div className={styles.error}>
-                            <p>{t.failedToLoadItemsPleaseTryAgain}</p>
-                            {error instanceof Error && <p className={styles.errorDetail}>{error.message}</p>}
-                        </div>
-                    ) : items.length === 0 ? (
-                        <div>
-                            <div className={styles.itemInputscontainer}>
-                                <div className={styles.headerRadius}>
-                                    <ItemInputs
-                                        list={list}
-                                        menuRef={menuRef}
-                                        setIsMenuOpen={setIsMenuOpen}
-                                        isMenuOpen={isMenuOpen}
-                                        handleUncheckAll={handleUncheckAll}
-                                        onSearch={handleSearch}
-                                        onSort={handleSort}
-                                        onShare={() => setIsShareModalOpen(true)}
-                                    />
-                                    <div className={styles.progressBarContainer}>
-                                        <div
-                                            className={styles.progressBarFill}
-                                            style={{ width: `${progressPercentage}%` }}
+        <div className={styles.listDetailPage}>
+            <Header />
+            <div className={styles.container}>
+
+
+                <div className={styles.listDetailContainer}>
+                    <main className={styles.content}>
+                        {isLoading ? (
+                            <ProductivityLoader />
+                        ) : isError ? (
+                            <div className={styles.error}>
+                                <p>{t.failedToLoadItemsPleaseTryAgain}</p>
+                                {error instanceof Error && <p className={styles.errorDetail}>{error.message}</p>}
+                            </div>
+                        ) : items.length === 0 ? (
+                            <div>
+                                <div className={styles.itemInputscontainer}>
+                                    <div className={styles.headerRadius}>
+                                        <ItemInputs
+                                            list={list}
+                                            menuRef={menuRef}
+                                            setIsMenuOpen={setIsMenuOpen}
+                                            isMenuOpen={isMenuOpen}
+                                            handleUncheckAll={handleUncheckAll}
+                                            onSearch={handleSearch}
+                                            onSort={handleSort}
+                                            onShare={() => setIsShareModalOpen(true)}
                                         />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.empty}>
-                                <div className={styles.emptyIllustration}>
-                                    <div className={styles.emptyCheckboxes}>
-                                        <div className={styles.emptyCheckboxRow}>
-                                            <div className={styles.emptyCheckbox}></div>
-                                            <div className={`${styles.emptyLine} ${styles.long}`}></div>
-                                        </div>
-                                        <div className={styles.emptyCheckboxRow}>
-                                            <div className={styles.emptyCheckbox}></div>
-                                            <div className={`${styles.emptyLine} ${styles.medium}`}></div>
-                                        </div>
-                                        <div className={styles.emptyCheckboxRow}>
-                                            <div className={styles.emptyCheckbox}></div>
-                                            <div className={`${styles.emptyLine} ${styles.short}`}></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h3 className={styles.emptyTitle}>{t.noItemsYet}</h3>
-                                <p className={styles.emptyMessage}>{t.yourListIsReadyAndWaitingAddYourFirstItemToGetStarted}</p>
-                                {!isAddProductOpen &&
-                                    <div className={styles.addProductButtonContainer}>
-                                        <button onClick={() => setIsAddProductOpen(true)} className={styles.addProductButton}>
-                                            {t.addProducts}
-                                        </button>
-                                    </div>
-                                }
-                            </div>
-
-                        </div>
-                    ) : (
-                        <div className='flex flex-col min-h-[90vh]'>
-                            <div className={styles.itemInputscontainer}>
-                                <div className={styles.headerRadius}>
-                                    <ItemInputs
-                                        list={list}
-                                        menuRef={menuRef}
-                                        setIsMenuOpen={setIsMenuOpen}
-                                        isMenuOpen={isMenuOpen}
-                                        handleUncheckAll={handleUncheckAll}
-                                        onSearch={handleSearch}
-                                        onSort={handleSort}
-                                        onShare={() => setIsShareModalOpen(true)}
-                                    />
-                                    <div className={styles.progressBarContainer}>
-                                        <div
-                                            className={styles.progressBarFill}
-                                            style={{ width: `${progressPercentage}%` }}
-                                        />
-                                    </div>
-                                </div>
-
-                            </div>
-                            {filteredAndSortedItems.length === 0 ? (
-                                <div className={styles.empty}>
-                                    <p>{t.noItemsMatchYourSearch}</p>
-                                </div>
-                            ) : (
-                                <div className={styles.itemsList}>
-                                    {filteredAndSortedItems.filter((item) => item.checked === false).map((item) => (
-                                        <div
-                                            key={item._id}
-                                            className={`${styles.itemRow} ${lan === 'he-IL' ? styles.rtl : ''}`}
-                                            onClick={() => handleItemClick(item)}
-                                        >
-                                            <label
-                                                className={styles.checkboxWrapper}
-                                                onClick={(e) => e.stopPropagation()}
-                                            >
-                                                <input
-                                                    type="checkbox"
-                                                    checked={item.checked || false}
-                                                    onChange={() => handleToggleItem(item._id, item.checked || false)}
-                                                    className={styles.checkbox}
-                                                />
-                                                <span className={styles.checkmark} />
-                                            </label>
-                                            <div className='flex gap-6'>
-                                                <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
-                                                    {item.name}
-                                                </span>
-                                                <span className={styles.itemQuantity}>
-                                                    {item.quantity > 1 ? item.quantity : ''}
-                                                </span>
-                                                <span className={`${styles.itemQuantity} ${styles.itemUnit}`}>
-                                                    {item.unit}
-                                                </span>
-                                            </div>
-
-                                            <span className={styles.itemPrice}>
-                                                {item.price + '$'}
-                                            </span>
-                                            <CategoryIcon
-                                                category={item.category || t.other}
-                                                size={20}
+                                        <div className={styles.progressBarContainer}>
+                                            <div
+                                                className={styles.progressBarFill}
+                                                style={{ width: `${progressPercentage}%` }}
                                             />
                                         </div>
-                                    ))}
+                                    </div>
                                 </div>
-                            )}
-                            {/* item's price */}
-                            <div className={styles.totalsContainer}>
-                                <div className={styles.totalRow}>
-                                    <span>{t.unchecked}</span>
-                                    <span>{totalUncheckedPrice.toFixed(2)}$</span>
+                                <div className={styles.empty}>
+                                    <div className={styles.emptyIllustration}>
+                                        <div className={styles.emptyCheckboxes}>
+                                            <div className={styles.emptyCheckboxRow}>
+                                                <div className={styles.emptyCheckbox}></div>
+                                                <div className={`${styles.emptyLine} ${styles.long}`}></div>
+                                            </div>
+                                            <div className={styles.emptyCheckboxRow}>
+                                                <div className={styles.emptyCheckbox}></div>
+                                                <div className={`${styles.emptyLine} ${styles.medium}`}></div>
+                                            </div>
+                                            <div className={styles.emptyCheckboxRow}>
+                                                <div className={styles.emptyCheckbox}></div>
+                                                <div className={`${styles.emptyLine} ${styles.short}`}></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h3 className={styles.emptyTitle}>{t.noItemsYet}</h3>
+                                    <p className={styles.emptyMessage}>{t.yourListIsReadyAndWaitingAddYourFirstItemToGetStarted}</p>
+                                    {!isAddProductOpen &&
+                                        <div className={styles.addProductButtonContainer}>
+                                            <button onClick={() => setIsAddProductOpen(true)} className={styles.addProductButton}>
+                                                {t.addProducts}
+                                            </button>
+                                        </div>
+                                    }
                                 </div>
-                                <div className={styles.totalRow}>
-                                    <span>{t.checked}</span>
-                                    <span>{totalCheckedPrice.toFixed(2)}$</span>
-                                </div>
-                                <div className={styles.totalRow}>
-                                    <span>{t.total}</span>
-                                    <span>{totalPrice.toFixed(2)}$</span>
-                                </div>
+
                             </div>
-                            {filteredAndSortedItems.filter((item) => item.checked === true).length > 0 && (
-                                <div className={styles.checkedSection}>
-                                    <div className={styles.checkedItemsList}>
-                                        {filteredAndSortedItems.filter((item) => item.checked === true).map((item) => (
+                        ) : (
+                            <div className='flex flex-col min-h-[90vh]'>
+                                <div className={styles.itemInputscontainer}>
+                                    <div className={styles.headerRadius}>
+                                        <ItemInputs
+                                            list={list}
+                                            menuRef={menuRef}
+                                            setIsMenuOpen={setIsMenuOpen}
+                                            isMenuOpen={isMenuOpen}
+                                            handleUncheckAll={handleUncheckAll}
+                                            onSearch={handleSearch}
+                                            onSort={handleSort}
+                                            onShare={() => setIsShareModalOpen(true)}
+                                        />
+                                        <div className={styles.progressBarContainer}>
+                                            <div
+                                                className={styles.progressBarFill}
+                                                style={{ width: `${progressPercentage}%` }}
+                                            />
+                                        </div>
+                                    </div>
+
+                                </div>
+                                {filteredAndSortedItems.length === 0 ? (
+                                    <div className={styles.empty}>
+                                        <p>{t.noItemsMatchYourSearch}</p>
+                                    </div>
+                                ) : (
+                                    <div className={styles.itemsList}>
+                                        {filteredAndSortedItems.filter((item) => item.checked === false).map((item) => (
                                             <div
                                                 key={item._id}
-                                                className={`${styles.checkedItemRow} ${lan === 'he-IL' ? styles.rtl : ''}`}
+                                                className={`${styles.itemRow} ${lan === 'he-IL' ? styles.rtl : ''}`}
                                                 onClick={() => handleItemClick(item)}
                                             >
                                                 <label
@@ -330,18 +276,20 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                                     <span className={styles.checkmark} />
                                                 </label>
                                                 <div className='flex gap-6'>
-                                                    <span className={`${styles.itemName} ${styles.completed}`}>
+                                                    <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
                                                         {item.name}
                                                     </span>
                                                     <span className={styles.itemQuantity}>
                                                         {item.quantity > 1 ? item.quantity : ''}
+                                                    </span>
+                                                    <span className={`${styles.itemQuantity} ${styles.itemUnit}`}>
+                                                        {item.unit}
                                                     </span>
                                                 </div>
 
                                                 <span className={styles.itemPrice}>
                                                     {item.price + '$'}
                                                 </span>
-
                                                 <CategoryIcon
                                                     category={item.category || t.other}
                                                     size={20}
@@ -349,54 +297,113 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                             </div>
                                         ))}
                                     </div>
+                                )}
+                                {/* item's price */}
+                                <div className={styles.totalsContainer}>
+                                    <div className={styles.totalRow}>
+                                        <span>{t.unchecked}</span>
+                                        <span>{totalUncheckedPrice.toFixed(2)}$</span>
+                                    </div>
+                                    <div className={styles.totalRow}>
+                                        <span>{t.checked}</span>
+                                        <span>{totalCheckedPrice.toFixed(2)}$</span>
+                                    </div>
+                                    <div className={styles.totalRow}>
+                                        <span>{t.total}</span>
+                                        <span>{totalPrice.toFixed(2)}$</span>
+                                    </div>
                                 </div>
-                            )}
-                        </div>
-                    )}
-                </main>
-                {isAddProductOpen &&
-                    <AddProducts
-                        itemName={itemName}
-                        handleAddItem={handleAddItem}
-                        setItemName={setItemName}
-                        isCreating={isCreating}
-                        onClose={() => setIsAddProductOpen(false)}
-                        getItemQuantity={getItemQuantity}
-                        handleRemoveItem={handleRemoveItem}
-                        handleAddItemsWithVoice={handleAddItemsWithVoice}
-                    />
+                                {filteredAndSortedItems.filter((item) => item.checked === true).length > 0 && (
+                                    <div className={styles.checkedSection}>
+                                        <div className={styles.checkedItemsList}>
+                                            {filteredAndSortedItems.filter((item) => item.checked === true).map((item) => (
+                                                <div
+                                                    key={item._id}
+                                                    className={`${styles.checkedItemRow} ${lan === 'he-IL' ? styles.rtl : ''}`}
+                                                    onClick={() => handleItemClick(item)}
+                                                >
+                                                    <label
+                                                        className={styles.checkboxWrapper}
+                                                        onClick={(e) => e.stopPropagation()}
+                                                    >
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={item.checked || false}
+                                                            onChange={() => handleToggleItem(item._id, item.checked || false)}
+                                                            className={styles.checkbox}
+                                                        />
+                                                        <span className={styles.checkmark} />
+                                                    </label>
+                                                    <div className='flex gap-6'>
+                                                        <span className={`${styles.itemName} ${styles.completed}`}>
+                                                            {item.name}
+                                                        </span>
+                                                        <span className={styles.itemQuantity}>
+                                                            {item.quantity > 1 ? item.quantity : ''}
+                                                        </span>
+                                                    </div>
+
+                                                    <span className={styles.itemPrice}>
+                                                        {item.price + '$'}
+                                                    </span>
+
+                                                    <CategoryIcon
+                                                        category={item.category || t.other}
+                                                        size={20}
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </main>
+                    {isAddProductOpen &&
+                        <AddProducts
+                            itemName={itemName}
+                            handleAddItem={handleAddItem}
+                            setItemName={setItemName}
+                            isCreating={isCreating}
+                            onClose={() => setIsAddProductOpen(false)}
+                            getItemQuantity={getItemQuantity}
+                            handleRemoveItem={handleRemoveItem}
+                            handleAddItemsWithVoice={handleAddItemsWithVoice}
+                        />
+                    }
+                </div>
+
+                <ItemDrawer
+                    isOpen={isDrawerOpen}
+                    onClose={handleDrawerClose}
+                    onSave={handleDrawerSave}
+                    initialData={selectedItem ? {
+                        _id: selectedItem._id,
+                        name: selectedItem.name,
+                        category: selectedItem.category || t.other,
+                        quantity: selectedItem.quantity || 0,
+                        unit: selectedItem.unit || '',
+                        price: selectedItem.price || 0,
+                        description: selectedItem.description || '',
+                    } : undefined}
+                    deleteItemMutation={deleteItemMutation}
+                />
+                <EmailShareModal
+                    isOpen={isShareModalOpen}
+                    onClose={() => setIsShareModalOpen(false)}
+                    onSubmit={handleShareSubmit}
+                    listName={list?.name || ''}
+                    listId={listId}
+                />
+                {!isAddProductOpen && items.length > 0 &&
+                    <div className={styles.addProductButtonContainer}>
+                        <button onClick={() => setIsAddProductOpen(true)} className={styles.addProductButton}>
+                            {t.addProducts}
+                        </button>
+                    </div>
                 }
             </div>
-
-            <ItemDrawer
-                isOpen={isDrawerOpen}
-                onClose={handleDrawerClose}
-                onSave={handleDrawerSave}
-                initialData={selectedItem ? {
-                    _id: selectedItem._id,
-                    name: selectedItem.name,
-                    category: selectedItem.category || t.other,
-                    quantity: selectedItem.quantity || 0,
-                    unit: selectedItem.unit || '',
-                    price: selectedItem.price || 0,
-                    description: selectedItem.description || '',
-                } : undefined}
-                deleteItemMutation={deleteItemMutation}
-            />
-            <EmailShareModal
-                isOpen={isShareModalOpen}
-                onClose={() => setIsShareModalOpen(false)}
-                onSubmit={handleShareSubmit}
-                listName={list?.name || ''}
-                listId={listId}
-            />
-            {!isAddProductOpen && items.length > 0 &&
-                <div className={styles.addProductButtonContainer}>
-                    <button onClick={() => setIsAddProductOpen(true)} className={styles.addProductButton}>
-                        {t.addProducts}
-                    </button>
-                </div>
-            }
         </div>
+
     );
 }

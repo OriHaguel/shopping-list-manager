@@ -5,15 +5,15 @@ import styles from './Header.module.scss';
 type Language = {
     code: string;
     name: string;
-    flag: string;
+
 };
 
 const languages: Language[] = [
-    { code: 'EN', name: 'English', flag: '🇺🇸' },
-    { code: 'HE', name: 'עברית', flag: '🇮🇱' },
-    { code: 'ES', name: 'Español', flag: '🇪🇸' },
-    { code: 'FR', name: 'Français', flag: '🇫🇷' },
-    { code: 'DE', name: 'Deutsch', flag: '🇩🇪' },
+    { code: 'EN', name: 'English' },
+    { code: 'HE', name: 'עברית' },
+    { code: 'ES', name: 'Español' },
+    { code: 'FR', name: 'Français' },
+    { code: 'DE', name: 'Deutsch' },
 ];
 
 export const Header: React.FC = () => {
@@ -110,7 +110,6 @@ export const Header: React.FC = () => {
                     {isDropdownOpen && (
                         <div ref={dropdownRef} className={styles.dropdown}>
                             <div className={styles.item} onClick={handleLanguageClick}>
-                                <span className={styles.icon}>🌐</span>
                                 <span className={styles.text}>
                                     Language
                                     <span className={styles.current}>{currentLanguage.code}</span>
@@ -127,16 +126,13 @@ export const Header: React.FC = () => {
                                                 }`}
                                             onClick={() => handleLanguageSelect(lang)}
                                         >
-                                            <span className={styles.flag}>{lang.flag}</span>
                                             <span className={styles.langName}>{lang.name}</span>
-                                            <span className={styles.langCode}>{lang.code}</span>
                                         </div>
                                     ))}
                                 </div>
                             )}
 
                             <div className={styles.item} onClick={handleLogout}>
-                                <span className={styles.icon}>🚪</span>
                                 <span className={styles.text}>Log out</span>
                             </div>
                         </div>

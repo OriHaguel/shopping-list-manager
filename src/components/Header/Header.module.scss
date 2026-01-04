@@ -10,7 +10,11 @@
     background: $neutral-white;
     border-bottom: 1px solid $neutral-medium-gray;
     font-family: $font-family;
+    margin-bottom: 32px;
 
+    @media (max-width: $screen-sm) {
+        margin-bottom: unset;
+    }
 
 }
 
@@ -105,11 +109,6 @@
     }
 }
 
-.icon {
-    font-size: 18px;
-    line-height: 1;
-    flex-shrink: 0;
-}
 
 .text {
     flex: 1;
@@ -174,22 +173,11 @@
     }
 }
 
-.flag {
-    font-size: 18px;
-    line-height: 1;
-    flex-shrink: 0;
-}
 
 .langName {
     flex: 1;
     font-size: $font-size-base;
     color: $neutral-text;
-    font-weight: 500;
-}
-
-.langCode {
-    font-size: $font-size-sm;
-    color: $neutral-dark-gray;
     font-weight: 500;
 }
 

@@ -1,6 +1,12 @@
 // components/ListDetailPage/ListDetailPage.module.scss
 @use '../../styles/setup/variables' as *;
 
+
+.listDetailPage {
+    margin: auto;
+    width: 100%;
+}
+
 .container {
     min-height: 100vh;
     margin: auto;
