@@ -62,7 +62,7 @@ export const Header: React.FC = () => {
 
     useEffect(() => {
 
-        setCurrentLanguage(lan || 'en');
+        setCurrentLanguage(lan || languages[0].code);
     }, []);
     const handleAvatarClick = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -74,7 +74,6 @@ export const Header: React.FC = () => {
     };
 
     const handleLanguageSelect = (language: string) => {
-        setCurrentLanguage(language);
         setItem('lan', language);
         window.location.reload()
     };
@@ -88,7 +87,7 @@ export const Header: React.FC = () => {
         <header className={styles.header}>
             <div className={styles.container}>
                 <div className={styles.logo}>
-                    <h1 className={styles.title}>ProductivePro</h1>
+                    <h1 className={styles.title}>{t.title || 'ProductivePro'}</h1>
                 </div>
 
                 <div className={styles.user}>
@@ -96,7 +95,7 @@ export const Header: React.FC = () => {
                         ref={avatarRef}
                         className={styles.avatar}
                         onClick={handleAvatarClick}
-                        aria-label="User menu"
+                        aria-label={t.userMenu || 'User menu'}
                         aria-expanded={isDropdownOpen}
                     >
                         <svg
@@ -118,13 +117,13 @@ export const Header: React.FC = () => {
                     </button>
 
                     {isDropdownOpen && (
-                        <div ref={dropdownRef} className={styles.dropdown}>
+                        <div ref={dropdownRef} className={styles.dropdown} dir={lan === 'he-IL' ? 'rtl' : 'ltr'}>
                             <div className={styles.item} onClick={handleLanguageClick}>
                                 <span className={styles.text}>
-                                    Language
-                                    <span className={styles.current}>{currentLanguage || 'en'}</span>
+                                    {t.language || 'Language'}
+                                    <span className={styles.current}>{currentLanguage.split('-')[0] || 'en'}</span>
                                 </span>
-                                <span className={`${styles.chevron} ${isLanguageSubmenuOpen ? styles.chevronDown : ''}`}>›</span>
+                                <span className={` ${styles.chevron} ${lan === 'he-IL' ? styles.rtl : ''} ${isLanguageSubmenuOpen ? styles.chevronDown : ''}`}>›</span>
                             </div>
 
                             {isLanguageSubmenuOpen && (
@@ -152,4 +151,3 @@ export const Header: React.FC = () => {
         </header>
     );
 };
-

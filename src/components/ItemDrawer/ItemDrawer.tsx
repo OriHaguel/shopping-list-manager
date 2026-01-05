@@ -49,16 +49,6 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
         }
     }, [initialData]);
 
-    // useEffect(() => {
-    //     if (isOpen) {
-    //         document.body.style.overflow = 'hidden';
-    //     } else {
-    //         document.body.style.overflow = 'unset';
-    //     }
-    //     return () => {
-    //         document.body.style.overflow = 'unset';
-    //     };
-    // }, [isOpen]);
     useModalScrollLock(isOpen);
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();

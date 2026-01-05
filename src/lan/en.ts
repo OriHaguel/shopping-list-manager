@@ -121,5 +121,7 @@ export const en = {
     voiceRecordingSubtitle: 'List your items, separated by the word ‘and’',
     stopRecording: 'Stop Recording',
     confirmVoiceItemsTitle: 'Add these items?',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    title: 'ProductivePro',
+    userMenu: 'User menu'
 };

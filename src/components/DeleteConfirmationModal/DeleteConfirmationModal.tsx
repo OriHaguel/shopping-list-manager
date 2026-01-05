@@ -60,9 +60,6 @@ export function DeleteConfirmationModal({
 
                 <h2 className={styles.title}>{t.deleteList}</h2>
 
-
-
-
                 {lan === 'he-IL' ? <p className={styles.message}>
                     ?<strong>&quot;{listName}&quot;</strong>  {t.areYouSureYouWantToDelete}
                 </p> :

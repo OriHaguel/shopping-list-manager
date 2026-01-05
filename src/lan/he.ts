@@ -121,5 +121,7 @@ export const he = {
     voiceRecordingSubtitle: 'רשום את הפריטים שלך, מופרדים ב ״ו״',
     stopRecording: 'הפסק הקלטה',
     confirmVoiceItemsTitle: '?להוסיף את הפריטים האלה',
-    confirm: 'אשר'
+    confirm: 'אשר',
+    title: 'Productive',
+    userMenu: 'תפריט משתמש'
 };
