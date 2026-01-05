@@ -18,9 +18,9 @@ export function DeleteConfirmationModal({
 }: DeleteConfirmationModalProps) {
     const t = getMessages()
     const lan = getItem<string>('lan', '');
-    
+
     useModalScrollLock(isOpen);
-    
+
     if (!isOpen) return null;
 
     const handleConfirm = () => {
@@ -60,9 +60,17 @@ export function DeleteConfirmationModal({
 
                 <h2 className={styles.title}>{t.deleteList}</h2>
 
-                <p className={styles.message}>
-                    {t.areYouSureYouWantToDelete} <strong>&quot;{listName}&quot;</strong>? {t.thisActionCannotBeUndone}
-                </p>
+
+
+
+                {lan === 'he-IL' ? <p className={styles.message}>
+                    ?<strong>&quot;{listName}&quot;</strong>  {t.areYouSureYouWantToDelete}
+                </p> :
+
+                    <p className={styles.message}>
+                        {t.areYouSureYouWantToDelete} <strong>&quot;{listName}&quot;</strong>? {t.thisActionCannotBeUndone}
+                    </p>
+                }
 
 
                 <div className={styles.actions}>
