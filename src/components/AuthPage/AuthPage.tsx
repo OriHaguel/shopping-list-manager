@@ -4,8 +4,11 @@ import { useState } from 'react';
 import styles from './AuthPage.module.scss';
 import { login, signup } from '@/services/user/user.service';
 import { useRouter } from 'next/navigation';
+import { getItem } from '@/utils/localStorage';
 export const AuthPage: React.FC = () => {
     const t = getMessages();
+    const lan = getItem<string>('lan', '');
+
     const router = useRouter();
     const [isSignUp, setIsSignUp] = useState(false);
     const [formData, setFormData] = useState({
@@ -112,7 +115,7 @@ export const AuthPage: React.FC = () => {
         window.location.href = googleUrl;
     };
     return (
-        <div className={styles.authContainer}>
+        <div className={styles.authContainer} dir={lan === 'he-IL' ? 'rtl' : 'ltr'}>
 
             <div className={styles.authFormSide}>
                 <div className={styles.formContainer}>

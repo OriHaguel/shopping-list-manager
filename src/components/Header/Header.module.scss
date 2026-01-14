@@ -62,7 +62,7 @@
     color: $primary-blue;
 
     &:hover {
-        background: darken($primary-light-blue, 5%);
+        background: $primary-light-blue;
         transform: translateY(-1px);
     }
 
