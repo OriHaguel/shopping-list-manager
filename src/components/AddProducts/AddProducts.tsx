@@ -115,6 +115,7 @@ export function AddProducts({
                 setRecentItems(prev => [itemName.trim(), ...prev].slice(0, 15));
             }
             handleAddItem(itemName);
+            setItemName('')
         }
     };
 
@@ -197,7 +198,6 @@ export function AddProducts({
                         <button
                             onClick={() => setItemName('')}
                             className={`${styles.clearInputButton} ${lan === 'he-IL' ? styles.rtl : ''}`}
-
                             type="button"
                             aria-label={t.clearInput}
                         >

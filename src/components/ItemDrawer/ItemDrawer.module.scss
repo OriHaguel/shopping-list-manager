@@ -87,7 +87,7 @@
 .formContent {
     flex: 1;
     padding: 10px 32px;
-    padding-bottom: 64px;
+    padding-bottom: 32px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -101,9 +101,6 @@
             text-align: right;
         }
 
-        // textarea {
-        //     text-align: right;
-        // }
     }
 
     /* Custom scrollbar */

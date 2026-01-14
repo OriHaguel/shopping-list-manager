@@ -71,7 +71,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         // Household / Cleaning
         if (categoryLower.includes('household') || categoryLower.includes('cleaning') || categoryLower.includes('detergent')) {
             return (
-                <Image src="/icons/clean.png" alt="" width={27.5} height={37.5} />
+                <Image src="/icons/soap.png" alt="" width={27.5} height={37.5} className={styles.iconImg} />
 
             );
         }

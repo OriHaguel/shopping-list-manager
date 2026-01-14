@@ -12,9 +12,9 @@ export const ProductivityLoader: React.FC = () => {
                     </div>
                 </div>
 
-                <div className={styles.loaderText}>loading</div>
+                <div className={styles.loaderText}>Loading</div>
 
-                <div className={styles.loaderSubtext}>preparingYourLists</div>
+                <div className={styles.loaderSubtext}>Preparing your lists</div>
 
                 <div className={styles.loaderDots}>
                     {[0, 1, 2].map((i) => (
