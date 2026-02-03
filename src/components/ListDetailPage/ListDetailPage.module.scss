@@ -200,6 +200,13 @@
 .itemsList {
     background: #FFFFFF;
     padding: 0.5rem;
+    border-left: $border;
+    border-right: $border;
+
+    @media (max-width: $screen-sm) {
+        border-left: unset;
+        border-right: unset;
+    }
 }
 
 .itemRow {
@@ -370,10 +377,15 @@
         padding: 1rem;
         padding-top: 1.5rem;
         background-color: #fff;
+        border: $border;
+        border-bottom: none;
+
 
         @media (max-width: $screen-sm) {
             border-top-left-radius: 0px;
             border-top-right-radius: 0px;
+            border: unset;
+            border-top: $border;
         }
 
 
@@ -536,10 +548,14 @@
     display: flex;
     justify-content: space-evenly;
     text-align: center;
+    border: $border;
+    border-top: none;
 
     @media(max-width:$screen-sm) {
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
+        border: unset;
+        border-bottom: $border;
     }
 }
 

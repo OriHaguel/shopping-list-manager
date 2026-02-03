@@ -27,10 +27,10 @@
         border-radius: 16px;
         padding: 24px;
         width: 320px;
-        box-shadow: $shadow-base;
         display: flex;
         flex-direction: column;
         gap: 20px;
+        border: $border;
 
         @media (max-width: $screen-md) {
             width: 100%;
@@ -39,6 +39,7 @@
             max-height: 100%;
             border-radius: 0;
             box-shadow: none;
+            border: unset;
         }
 
         .addItemHeader {
@@ -636,7 +637,6 @@
         transition: $transition;
         font-family: $font-family;
         margin-top: $spacing-md;
-        box-shadow: $shadow-base;
 
         &:hover {
             background: $accent-coral;
