@@ -9,7 +9,7 @@ import { CATEGORIES } from '@/lib/category-names';
 function getCategoryForItem(itemName: string): string {
     const lowerCaseItemName = itemName.toLowerCase();
     for (const category in CATEGORIES) {
-        if (CATEGORIES[category].includes(lowerCaseItemName)) {
+        if (CATEGORIES[category].some(item => item.includes(lowerCaseItemName))) {
             return category;
         }
     }
