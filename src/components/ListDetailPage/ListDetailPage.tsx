@@ -14,6 +14,7 @@ import { ProductivityLoader } from '../Loader/Loader';
 import { EmailShareModal } from '../EmailShareModal/EmailShareModal';
 import { shareList } from '@/services/list/list.service';
 import { Header } from '../Header/Header';
+import { EditOutline } from '../svg/EditOutline/EditOutline';
 
 interface ListDetailPageProps {
     listId: string;
@@ -290,10 +291,11 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                                 <span className={styles.itemPrice}>
                                                     {item.price + '$'}
                                                 </span>
-                                                <CategoryIcon
+                                                {/* <CategoryIcon
                                                     category={item.category || t.other}
                                                     size={20}
-                                                />
+                                                /> */}
+                                                <EditOutline />
                                             </div>
                                         ))}
                                     </div>
@@ -347,10 +349,10 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                                         {item.price + '$'}
                                                     </span>
 
-                                                    <CategoryIcon
+                                                    {/* <CategoryIcon
                                                         category={item.category || t.other}
                                                         size={20}
-                                                    />
+                                                    /> */}
                                                 </div>
                                             ))}
                                         </div>

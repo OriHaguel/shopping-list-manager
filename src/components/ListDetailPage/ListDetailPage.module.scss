@@ -214,10 +214,10 @@
     align-items: center;
     gap: 12px;
     padding: 0.5625rem 0.725rem;
-    border-radius: 12px;
     transition: all 0.2s ease;
     cursor: pointer;
     margin: .25rem 0;
+    border-radius: 12px;
 
     &:hover {
         background: $neutral-light-gray;
@@ -259,7 +259,7 @@
     flex-shrink: 0;
 
     padding: 0.5rem;
-
+    display: none;
 }
 
 .checkbox {
@@ -321,6 +321,7 @@
     overflow-wrap: break-word;
     overflow: auto;
     max-width: 20rem;
+    margin-left: 12px;
 
     &.completed {
         color: $neutral-dark-gray;

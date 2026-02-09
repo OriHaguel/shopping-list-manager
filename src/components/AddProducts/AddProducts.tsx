@@ -59,8 +59,6 @@ export function AddProducts({
 }: AddProductsProps) {
     const t = getMessages();
     const lan = getItem<string>('lan', '');
-    const [activeTab, setActiveTab] = useState<'popular' | 'recent'>('popular');
-    const [recentItems, setRecentItems] = useState<string[]>([]);
     const [isRecordingModalOpen, setIsRecordingModalOpen] = useState(false);
     const [isConfirmingModalOpen, setIsConfirmingModalOpen] = useState(false);
     const [itemsToConfirm, setItemsToConfirm] = useState<string[]>([]);
@@ -110,10 +108,6 @@ export function AddProducts({
 
     const handleAddItemWithRecent = () => {
         if (itemName.trim()) {
-            // Add to recent items if not already there
-            if (!recentItems.includes(itemName.trim())) {
-                setRecentItems(prev => [itemName.trim(), ...prev].slice(0, 15));
-            }
             handleAddItem(itemName);
             setItemName('')
         }
@@ -121,10 +115,6 @@ export function AddProducts({
 
     const handleQuickAdd = (item: string) => {
 
-        // Add to recent items
-        if (!recentItems.includes(item)) {
-            setRecentItems(prev => [item, ...prev].slice(0, 15));
-        }
         // Set the item name and trigger add
         handleAddItem(item);
     };
@@ -223,99 +213,42 @@ export function AddProducts({
                     </button>
                 </div>
 
-                <div className={styles.tabBar}>
-                    <button
-                        className={`${styles.tab} ${activeTab === 'popular' ? styles.activeTab : ''}`}
-                        onClick={() => setActiveTab('popular')}
-                        type="button"
-                    >
-                        {t.popular}
-                    </button>
-                    <button
-                        className={`${styles.tab} ${activeTab === 'recent' ? styles.activeTab : ''}`}
-                        onClick={() => setActiveTab('recent')}
-                        type="button"
-                    >
-                        {t.recent}
-                    </button>
-                </div>
-
                 <div className={styles.itemsList}>
-                    {activeTab === 'popular' ? (
-                        POPULAR_ITEMS.map((item, index) => {
-                            const quantity = getItemQuantity ? getItemQuantity(item) : 0;
-                            const showRemove = quantity >= 1;
-                            const showMinus = quantity > 1;
+                    {POPULAR_ITEMS.map((item, index) => {
+                        const quantity = getItemQuantity ? getItemQuantity(item) : 0;
+                        const showRemove = quantity >= 1;
+                        const showMinus = quantity > 1;
 
-                            return (
-                                <button
-                                    key={index}
-                                    className={`${styles.quickAddItem} ${lan === 'he-IL' ? styles.rtl : ''}`}
-                                    onClick={() => handleQuickAdd(item)}
-                                    disabled={isCreating || minTimeDisabledActive}
-                                    type="button"
-                                >
-                                    <AddCircle className='w-[24px] h-[24px]' />
-                                    <span className={styles.itemName}>{item}</span>
+                        return (
+                            <button
+                                key={index}
+                                className={`${styles.quickAddItem} ${lan === 'he-IL' ? styles.rtl : ''}`}
+                                onClick={() => handleQuickAdd(item)}
+                                disabled={isCreating || minTimeDisabledActive}
+                                type="button"
+                            >
+                                <AddCircle className="w-[24px] h-[24px]" />
+                                <span className={styles.itemName}>{item}</span>
+                                <span>{quantity === 0 ? '' : quantity}</span>
 
-                                    <span>{quantity === 0 ? '' : quantity}</span>
-
-                                    {showRemove && (
-                                        <span
-                                            className={styles.removeButton}
-                                            onClick={(e) => {
-                                                e.stopPropagation(); // prevent parent button click
-                                                handleRemove(item, e);
-                                            }}
-                                            role="button"
-                                            aria-label={showMinus ? t.decreaseQuantity : t.removeItem}
-                                        >
-                                            {showMinus ? <RemoveIcon /> : <CloseIcon />}
-                                        </span>
-                                    )}
-                                </button>
-                            );
-
-                        })
-                    ) : (
-                        recentItems.length > 0 ? (
-                            recentItems.map((item, index) => {
-                                const quantity = getItemQuantity ? getItemQuantity(item) : 0;
-                                const showRemove = quantity >= 1;
-                                const showMinus = quantity > 1;
-
-                                return (
-                                    <button
-                                        key={index}
-                                        className={`${styles.quickAddItem} ${lan === 'he-IL' ? styles.rtl : ''}`}
-                                        onClick={() => handleQuickAdd(item)}
-                                        disabled={isCreating || minTimeDisabledActive}
-                                        type="button"
+                                {showRemove && (
+                                    <span
+                                        className={styles.removeButton}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleRemove(item, e);
+                                        }}
+                                        role="button"
+                                        aria-label={showMinus ? t.decreaseQuantity : t.removeItem}
                                     >
-                                        <AddCircle className='w-[24px] h-[24px]' />
-                                        <span className={styles.itemName}>{item}</span>
-                                        <span >{quantity === 0 ? '' : quantity}</span>
-
-                                        {showRemove && (
-                                            <button
-                                                className={styles.removeButton}
-                                                onClick={(e) => handleRemove(item, e)}
-                                                type="button"
-                                                aria-label={showMinus ? t.decreaseQuantity : t.removeItem}
-                                            >
-                                                {showMinus ? <RemoveIcon /> : <CloseIcon />}
-                                            </button>
-                                        )}
-                                    </button>
-                                );
-                            })
-                        ) : (
-                            <div className={styles.emptyState}>
-                                {t.noRecentItemsYet}
-                            </div>
-                        )
-                    )}
+                                        {showMinus ? <RemoveIcon /> : <CloseIcon />}
+                                    </span>
+                                )}
+                            </button>
+                        );
+                    })}
                 </div>
+
             </div>
             {isRecordingModalOpen && (
                 <div className={styles.modalBackdrop} onClick={() => setIsRecordingModalOpen(false)}>

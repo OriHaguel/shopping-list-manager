@@ -29,7 +29,7 @@ export const he = {
     clothing: 'ביגוד',
     baby: 'תינוקות',
     other: 'אחר',
-    yourShoppingLists: 'רשימות הקניות שלך',
+    yourShoppingLists: 'הרשימות שלי',
     logOut: 'התנתק',
     failedToLoadLists: 'טעינת רשימות נכשלה',
     pleaseTryAgain: 'אנא נסה שוב',

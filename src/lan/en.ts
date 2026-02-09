@@ -29,7 +29,7 @@ export const en = {
     clothing: 'Clothing',
     baby: 'Baby',
     other: 'Other',
-    yourShoppingLists: 'Your shopping lists',
+    yourShoppingLists: 'My shopping lists',
     logOut: 'Log out',
     failedToLoadLists: 'Failed to load lists',
     pleaseTryAgain: 'Please try again',

@@ -1,0 +1,13 @@
+@use '../../../styles/setup/variables' as *;
+
+.icon {
+    height: 20px;
+    width: 20px;
+    fill: $primary-blue;
+    margin-left: 10px;
+
+
+    &:hover {
+        fill: $primary-dark-blue;
+    }
+}
