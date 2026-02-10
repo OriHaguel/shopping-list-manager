@@ -262,7 +262,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                             <div
                                                 key={item._id}
                                                 className={`${styles.itemRow} ${lan === 'he-IL' ? styles.rtl : ''}`}
-                                                onClick={() => handleItemClick(item)}
+                                                onClick={() => handleToggleItem(item._id, item.checked || false)}
                                             >
                                                 <label
                                                     className={styles.checkboxWrapper}
@@ -295,7 +295,10 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                                     category={item.category || t.other}
                                                     size={20}
                                                 /> */}
-                                                <EditOutline />
+                                                <div className={styles.editcon} onClick={(e) => { e.stopPropagation(), handleItemClick(item) }}>
+                                                    <EditOutline />
+                                                </div>
+
                                             </div>
                                         ))}
                                     </div>
@@ -322,7 +325,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                                 <div
                                                     key={item._id}
                                                     className={`${styles.checkedItemRow} ${lan === 'he-IL' ? styles.rtl : ''}`}
-                                                    onClick={() => handleItemClick(item)}
+                                                    onClick={() => handleToggleItem(item._id, item.checked || false)}
                                                 >
                                                     <label
                                                         className={styles.checkboxWrapper}
@@ -353,6 +356,9 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                                         category={item.category || t.other}
                                                         size={20}
                                                     /> */}
+                                                    <div className={styles.editcon} onClick={(e) => { e.stopPropagation(), handleItemClick(item) }}>
+                                                        <EditOutline />
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
