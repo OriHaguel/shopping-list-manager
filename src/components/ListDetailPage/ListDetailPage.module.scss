@@ -197,6 +197,7 @@
     color: $neutral-dark-gray;
 }
 
+
 .itemsList {
     background: #FFFFFF;
     padding: 0.5rem;
@@ -207,6 +208,26 @@
         border-left: unset;
         border-right: unset;
     }
+}
+
+.categoryContainer {
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    overflow: hidden; // Ensures children respect border-radius
+    background-color: #FFFFFF; // Match list background
+    border: 1px solid $neutral-light-gray; // subtle border to define container
+}
+
+.categoryTitle {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $neutral-text;
+    padding: 0.75rem 1rem;
+    background-color: $neutral-light-gray;
+    border-bottom: 1px solid $neutral-light-gray;
+    margin: 0;
+    display: flex;
+    align-items: center;
 }
 
 .itemRow {

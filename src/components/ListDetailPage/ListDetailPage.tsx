@@ -78,7 +78,26 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
         }
 
         return result;
-    }, [items, searchQuery, sortType]);
+    }, [items, searchQuery, sortType, t.other]);
+
+    const groupedItems = useMemo(() => {
+        return filteredAndSortedItems.reduce((acc, item) => {
+            const category = item.category || t.other;
+            if (!acc[category]) {
+                acc[category] = [];
+            }
+            acc[category].push(item);
+            return acc;
+        }, {} as Record<string, Item[]>);
+    }, [filteredAndSortedItems, t.other]);
+
+    const categoryOrder = useMemo(() => {
+        const categories = Object.keys(groupedItems);
+        if (sortType === 'category') {
+            return categories.sort((a, b) => a.localeCompare(b));
+        }
+        return categories;
+    }, [groupedItems, sortType]);
 
     const totalPrice = useMemo(() => {
         return items.reduce((sum, item) => {
@@ -163,6 +182,48 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
         shareList(listId, email);
         setIsShareModalOpen(false);
     };
+
+    const renderItem = (item: Item) => (
+        <div
+            key={item._id}
+            className={`${item.checked ? styles.checkedItemRow : styles.itemRow} ${lan === 'he-IL' ? styles.rtl : ''}`}
+            onClick={() => handleToggleItem(item._id, item.checked || false)}
+        >
+            <label
+                className={styles.checkboxWrapper}
+                onClick={(e) => e.stopPropagation()}
+            >
+                <input
+                    type="checkbox"
+                    checked={item.checked || false}
+                    onChange={() => handleToggleItem(item._id, item.checked || false)}
+                    className={styles.checkbox}
+                />
+                <span className={styles.checkmark} />
+            </label>
+            <div className='flex gap-6'>
+                <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
+                    {item.name}
+                </span>
+                <span className={styles.itemQuantity}>
+                    {item.quantity > 1 ? item.quantity : ''}
+                </span>
+                {!item.checked && (
+                    <span className={`${styles.itemQuantity} ${styles.itemUnit}`}>
+                        {item.unit}
+                    </span>
+                )}
+            </div>
+
+            <span className={styles.itemPrice}>
+                {item.price + '$'}
+            </span>
+            <div className={styles.editcon} onClick={(e) => { e.stopPropagation(); handleItemClick(item); }}>
+                <EditOutline />
+            </div>
+        </div>
+    );
+
     return (
         <div className={styles.listDetailPage}>
             <Header />
@@ -258,49 +319,22 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                     </div>
                                 ) : (
                                     <div className={styles.itemsList}>
-                                        {filteredAndSortedItems.filter((item) => item.checked === false).map((item) => (
-                                            <div
-                                                key={item._id}
-                                                className={`${styles.itemRow} ${lan === 'he-IL' ? styles.rtl : ''}`}
-                                                onClick={() => handleToggleItem(item._id, item.checked || false)}
-                                            >
-                                                <label
-                                                    className={styles.checkboxWrapper}
-                                                    onClick={(e) => e.stopPropagation()}
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={item.checked || false}
-                                                        onChange={() => handleToggleItem(item._id, item.checked || false)}
-                                                        className={styles.checkbox}
-                                                    />
-                                                    <span className={styles.checkmark} />
-                                                </label>
-                                                <div className='flex gap-6'>
-                                                    <span className={`${styles.itemName} ${item.checked ? styles.completed : ''}`}>
-                                                        {item.name}
-                                                    </span>
-                                                    <span className={styles.itemQuantity}>
-                                                        {item.quantity > 1 ? item.quantity : ''}
-                                                    </span>
-                                                    <span className={`${styles.itemQuantity} ${styles.itemUnit}`}>
-                                                        {item.unit}
-                                                    </span>
-                                                </div>
+                                        {categoryOrder.map((category) => {
+                                            const itemsInCategory = groupedItems[category];
+                                            // Only consider unchecked items for category display
+                                            const uncheckedItemsInCategory = itemsInCategory.filter(i => !i.checked);
 
-                                                <span className={styles.itemPrice}>
-                                                    {item.price + '$'}
-                                                </span>
-                                                {/* <CategoryIcon
-                                                    category={item.category || t.other}
-                                                    size={20}
-                                                /> */}
-                                                <div className={styles.editcon} onClick={(e) => { e.stopPropagation(), handleItemClick(item) }}>
-                                                    <EditOutline />
-                                                </div>
+                                            if (uncheckedItemsInCategory.length === 0) {
+                                                return null;
+                                            }
 
-                                            </div>
-                                        ))}
+                                            return (
+                                                <div key={category} className={styles.categoryContainer}>
+                                                    <h3 className={styles.categoryTitle}>{category}</h3>
+                                                    {uncheckedItemsInCategory.map(renderItem)}
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                 )}
                                 {/* item's price */}
@@ -322,44 +356,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                     <div className={styles.checkedSection}>
                                         <div className={styles.checkedItemsList}>
                                             {filteredAndSortedItems.filter((item) => item.checked === true).map((item) => (
-                                                <div
-                                                    key={item._id}
-                                                    className={`${styles.checkedItemRow} ${lan === 'he-IL' ? styles.rtl : ''}`}
-                                                    onClick={() => handleToggleItem(item._id, item.checked || false)}
-                                                >
-                                                    <label
-                                                        className={styles.checkboxWrapper}
-                                                        onClick={(e) => e.stopPropagation()}
-                                                    >
-                                                        <input
-                                                            type="checkbox"
-                                                            checked={item.checked || false}
-                                                            onChange={() => handleToggleItem(item._id, item.checked || false)}
-                                                            className={styles.checkbox}
-                                                        />
-                                                        <span className={styles.checkmark} />
-                                                    </label>
-                                                    <div className='flex gap-6'>
-                                                        <span className={`${styles.itemName} ${styles.completed}`}>
-                                                            {item.name}
-                                                        </span>
-                                                        <span className={styles.itemQuantity}>
-                                                            {item.quantity > 1 ? item.quantity : ''}
-                                                        </span>
-                                                    </div>
-
-                                                    <span className={styles.itemPrice}>
-                                                        {item.price + '$'}
-                                                    </span>
-
-                                                    {/* <CategoryIcon
-                                                        category={item.category || t.other}
-                                                        size={20}
-                                                    /> */}
-                                                    <div className={styles.editcon} onClick={(e) => { e.stopPropagation(), handleItemClick(item) }}>
-                                                        <EditOutline />
-                                                    </div>
-                                                </div>
+                                                renderItem(item)
                                             ))}
                                         </div>
                                     </div>
