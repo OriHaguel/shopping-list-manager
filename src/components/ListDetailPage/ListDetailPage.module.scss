@@ -200,7 +200,6 @@
 
 .itemsList {
     background: #FFFFFF;
-    padding: 0.5rem;
     border-left: $border;
     border-right: $border;
 
@@ -211,11 +210,8 @@
 }
 
 .categoryContainer {
-    margin-bottom: 1rem;
-    border-radius: 8px;
     overflow: hidden; // Ensures children respect border-radius
     background-color: #FFFFFF; // Match list background
-    border: 1px solid $neutral-light-gray; // subtle border to define container
 }
 
 .categoryTitle {
@@ -223,11 +219,23 @@
     font-weight: 700;
     color: $neutral-text;
     padding: 0.75rem 1rem;
-    background-color: $neutral-light-gray;
-    border-bottom: 1px solid $neutral-light-gray;
+    background-color: $neutral-medium-gray;
+    border-bottom: 1px solid $neutral-medium-gray;
     margin: 0;
     display: flex;
     align-items: center;
+    gap: 0.5rem; // Consistent spacing between icon and text
+
+    &.rtl {
+        flex-direction: row-reverse; // Reverse the order of icon and text for RTL
+    }
+
+    // Adjust CategoryIcon size within the title
+    :global(.iconImg) {
+        width: 24px;
+        height: 24px;
+        object-fit: contain; // Ensure image scales correctly
+    }
 }
 
 .itemRow {
@@ -483,10 +491,6 @@
     border-radius: 9999px;
     font-size: 0.75rem;
     font-weight: 700;
-}
-
-.checkedItemsList {
-    padding: 0.5rem;
 }
 
 .checkedItemRow {

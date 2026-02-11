@@ -330,7 +330,10 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
 
                                             return (
                                                 <div key={category} className={styles.categoryContainer}>
-                                                    <h3 className={styles.categoryTitle}>{category}</h3>
+                                                    <h3 className={`${styles.categoryTitle} ${lan === 'he-IL' ? styles.rtl : ''}`}>
+                                                        <CategoryIcon category={category} size={24} />
+                                                        <span>{category}</span>
+                                                    </h3>
                                                     {uncheckedItemsInCategory.map(renderItem)}
                                                 </div>
                                             );
