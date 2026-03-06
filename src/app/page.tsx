@@ -2,6 +2,8 @@
 'use client'
 import { useRouter } from 'next/navigation';
 import { getMessages } from '@/lib/getMessages';
+import { Navbar } from '@/components/Navbar/Navbar';
+import { HeroSection } from '@/components/HeroSection/HeroSection';
 
 export default function Home() {
   const t = getMessages();
@@ -11,5 +13,9 @@ export default function Home() {
     router.push(`/auth`);
   };
 
-  return <button onClick={() => handleListClick()}>{t.loginForNow}</button>;
+  // return <button onClick={() => handleListClick()}>{t.loginForNow}</button>;
+  return <main>
+    <Navbar />
+    <HeroSection />
+  </main>
 }

@@ -144,11 +144,9 @@
 .deleteButton {
     background: $accent-coral;
     color: $neutral-white;
-    box-shadow: $shadow-base;
 
     &:hover {
         background: $accent-coral;
-        box-shadow: $shadow-md;
     }
 }
 
