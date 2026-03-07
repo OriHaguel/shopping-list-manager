@@ -3,10 +3,18 @@
 import { useState, useEffect } from 'react'
 import { Menu, X, ShoppingCart } from 'lucide-react'
 import styles from './Navbar.module.scss'
+import { useRouter } from 'next/navigation'
 
 export function Navbar() {
     const [scrolled, setScrolled] = useState(false)
     const [mobileOpen, setMobileOpen] = useState(false)
+
+    const router = useRouter();
+
+    const handleListClick = () => {
+        router.push(`/auth`);
+    };
+
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 60)
@@ -19,6 +27,7 @@ export function Navbar() {
         { label: 'How It Works', href: '#how-it-works' },
         { label: 'Testimonials', href: '#testimonials' },
     ]
+
 
     return (
         <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
@@ -46,9 +55,9 @@ export function Navbar() {
 
                 {/* Desktop CTA */}
                 <div className={styles.desktopCTA}>
-                    <a href="#cta" className={styles.ctaButton}>
+                    <button onClick={handleListClick} className={styles.ctaButton}>
                         Get Started
-                    </a>
+                    </button>
                 </div>
 
                 {/* Mobile Hamburger */}
@@ -75,13 +84,12 @@ export function Navbar() {
                         </a>
                     ))}
                     <hr className={styles.mobileDivider} />
-                    <a
-                        href="#cta"
-                        onClick={() => setMobileOpen(false)}
+                    <button
+                        onClick={handleListClick}
                         className={styles.mobileCTAButton}
                     >
                         Get Started
-                    </a>
+                    </button>
                 </div>
             </div>
         </nav>
