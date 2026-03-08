@@ -1,4 +1,4 @@
-@import '../../styles/setup/variables';
+@use '../../styles/setup/variables' as *;
 
 .navbar {
     position: fixed;

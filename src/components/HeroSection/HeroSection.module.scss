@@ -1,4 +1,4 @@
-@import '../../styles/setup/variables';
+@use '../../styles/setup/variables' as *;
 
 .section {
   position: relative;
@@ -6,7 +6,6 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  padding-top: 72px;
 }
 
 .backgroundGradient {

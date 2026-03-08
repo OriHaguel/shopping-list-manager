@@ -1,4 +1,4 @@
-@import '../../styles/setup/variables';
+@use '../../styles/setup/variables' as *;
 
 .section {
     padding: $spacing-5xl 0;

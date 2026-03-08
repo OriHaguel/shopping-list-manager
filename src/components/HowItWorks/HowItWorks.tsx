@@ -28,7 +28,7 @@ const steps = [
     },
 ]
 
-export default function HowItWorks() {
+export function HowItWorks() {
     const [isVisible, setIsVisible] = useState(false)
     const sectionRef = useRef<HTMLDivElement>(null)
 
