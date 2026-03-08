@@ -3,34 +3,33 @@
 import { useEffect, useRef, useState } from 'react'
 import { ClipboardList, PlusCircle, Share2 } from 'lucide-react'
 import styles from './HowItWorks.module.scss'
-
-const steps = [
-    {
-        icon: ClipboardList,
-        number: '01',
-        title: 'Create a List',
-        description:
-            'Name your list and choose a category — groceries, household essentials, or a custom type.',
-    },
-    {
-        icon: PlusCircle,
-        number: '02',
-        title: 'Add Items',
-        description:
-            'Type or voice-add items. Our AI suggests items based on your shopping history and preferences.',
-    },
-    {
-        icon: Share2,
-        number: '03',
-        title: 'Share & Shop',
-        description:
-            'Share with family or friends, check off items in real-time, and never double-buy again.',
-    },
-]
+import { getMessages } from '@/lib/getMessages'
 
 export function HowItWorks() {
     const [isVisible, setIsVisible] = useState(false)
     const sectionRef = useRef<HTMLDivElement>(null)
+    const messages = getMessages()
+
+    const steps = [
+        {
+            icon: ClipboardList,
+            number: '01',
+            title: messages.createAList,
+            description: messages.nameYourListAndChooseCategory,
+        },
+        {
+            icon: PlusCircle,
+            number: '02',
+            title: messages.addItems,
+            description: messages.typeOrVoiceAddItems,
+        },
+        {
+            icon: Share2,
+            number: '03',
+            title: messages.shareAndShop,
+            description: messages.shareWithFamilyAndFriends,
+        },
+    ]
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -51,12 +50,12 @@ export function HowItWorks() {
             <div className={styles.container}>
                 {/* Section Header */}
                 <div className={styles.header}>
-                    <span className={styles.tag}>How It Works</span>
+                    <span className={styles.tag}>{messages.howItWorks}</span>
                     <h2 className={styles.title}>
-                        Three steps to organized shopping
+                        {messages.threeStepsToOrganizedShopping}
                     </h2>
                     <p className={styles.description}>
-                        Getting started takes less than 30 seconds. No credit card required.
+                        {messages.noCredCardRequired}
                     </p>
                 </div>
 

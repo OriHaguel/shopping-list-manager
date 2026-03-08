@@ -2,16 +2,20 @@
 
 import { ArrowRight } from 'lucide-react'
 import styles from './HeroSection.module.scss'
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'
+import { getMessages } from '@/lib/getMessages'
+import { getItem } from '@/utils/localStorage'
 
 export function HeroSection() {
-    const router = useRouter();
-
+    const router = useRouter()
+    const messages = getMessages()
+    const lan = getItem<string>('lan', '');
     const handleListClick = () => {
-        router.push(`/auth`);
-    };
+        router.push(`/auth`)
+    }
+
     return (
-        <section className={styles.section}>
+        <section className={styles.section} dir={lan === 'he-IL' ? 'rtl' : 'ltr'}>
             {/* Background gradient */}
             <div className={styles.backgroundGradient} />
 
@@ -24,19 +28,17 @@ export function HeroSection() {
                     {/* Left Column - Text */}
                     <div className={styles.leftColumn}>
                         <h1 className={styles.heading}>
-                            Shopping lists,{' '}
-                            <span className={styles.headingAccent}>simplified</span>
+                            {messages.shoppingListsSimplified.split(',')[0]},{'  '}
+                            <span className={styles.headingAccent}>{messages.simplified}</span>
                         </h1>
 
                         <p className={styles.description}>
-                            Create, organize, and share your shopping lists in seconds. Never
-                            forget an item again with smart reminders and effortless
-                            collaboration.
+                            {messages.heroDescription}
                         </p>
 
                         <div className={styles.ctaContainer}>
                             <button className={styles.ctaButton} onClick={handleListClick}>
-                                Start for Free
+                                {messages.startForFree}
                                 <ArrowRight />
                             </button>
                         </div>
@@ -49,10 +51,10 @@ export function HeroSection() {
                             <div className={styles.mockupHeader}>
                                 <div className={styles.mockupHeaderInfo}>
                                     <h3 className={styles.mockupTitle}>
-                                        Weekly Groceries
+                                        {messages.weeklyGroceries}
                                     </h3>
                                     <p className={styles.mockupSubtitle}>
-                                        12 items · Shared with Sarah
+                                        12 {messages.itemsShared} Sarah
                                     </p>
                                 </div>
                                 <div className={styles.progressBadge}>
@@ -63,12 +65,12 @@ export function HeroSection() {
                             {/* List Items */}
                             <div className={styles.itemsList}>
                                 {[
-                                    { name: 'Organic Avocados', cat: 'Produce', checked: true },
-                                    { name: 'Sourdough Bread', cat: 'Bakery', checked: true },
-                                    { name: 'Greek Yogurt', cat: 'Dairy', checked: true },
-                                    { name: 'Free-Range Eggs', cat: 'Dairy', checked: false },
-                                    { name: 'Cherry Tomatoes', cat: 'Produce', checked: false },
-                                    { name: 'Olive Oil', cat: 'Pantry', checked: false },
+                                    { name: 'Organic Avocados', cat: messages.produce, checked: true },
+                                    { name: 'Sourdough Bread', cat: messages.bakery, checked: true },
+                                    { name: 'Greek Yogurt', cat: messages.dairy, checked: true },
+                                    { name: 'Free-Range Eggs', cat: messages.dairy, checked: false },
+                                    { name: 'Cherry Tomatoes', cat: messages.produce, checked: false },
+                                    { name: 'Olive Oil', cat: messages.pantry, checked: false },
                                 ].map((item, i) => (
                                     <div
                                         key={i}
