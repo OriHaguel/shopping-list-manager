@@ -142,8 +142,9 @@ export const en = {
     itemsAutomaticallySorted: 'Items are automatically sorted into categories like produce, dairy, and pantry — no manual organization needed.',
     sharedLists: 'Shared Lists',
     collaborateInRealTime: 'Invite family members or roommates to collaborate on lists in real-time. See updates instantly.',
-    smartReminders: 'Smart Reminders',
-    gentleNudgesWhenNear: 'Get gentle nudges when you\'re near a store or when it\'s time to restock your essentials.',
+    smartReminders: '100% Free',
+    gentleNudgesWhenNear: 'Completely free. No hidden fees, no premium tiers, no catches. Everything included.',
+
     worksEverywhere: 'Works Everywhere',
     accessYourLists: 'Access your lists on any device — phone, tablet, or desktop. Everything syncs seamlessly.',
     priceTracking: 'Price Tracking',

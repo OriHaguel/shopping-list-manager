@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import {
     LayoutGrid,
     Users,
-    Bell,
+    Gift,
     Smartphone,
     Tags,
     ShieldCheck,
@@ -30,7 +30,7 @@ export function FeaturesGrid() {
             description: messages.collaborateInRealTime,
         },
         {
-            icon: Bell,
+            icon: Gift,
             title: messages.smartReminders,
             description: messages.gentleNudgesWhenNear,
         },
