@@ -3,6 +3,7 @@ import { Navbar } from '@/components/Navbar/Navbar';
 import { HeroSection } from '@/components/HeroSection/HeroSection';
 import { FeaturesGrid } from '@/components/FeaturesGrid/FeaturesGrid';
 import { HowItWorks } from '@/components/HowItWorks/HowItWorks';
+import { Footer } from '@/components/Footer/Footer';
 
 export default function Home() {
 
@@ -11,5 +12,6 @@ export default function Home() {
     <HeroSection />
     <FeaturesGrid />
     <HowItWorks />
+    <Footer />
   </main>
 }

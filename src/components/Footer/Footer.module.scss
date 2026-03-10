@@ -1,0 +1,15 @@
+@use '../../styles/setup/variables' as *;
+
+.footer {
+    width: 100%;
+    height: 120px;
+    background-color: $neutral-light-gray;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+
+    p {
+        font-size: 0.75rem;
+        color: $neutral-dark-gray;
+    }
+}
