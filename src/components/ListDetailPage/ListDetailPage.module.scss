@@ -635,6 +635,10 @@
 
 .totalRow:not(:last-child) {
     padding-right: 1rem;
+
+    @media (max-width: $screen-sm) {
+        padding-right: 0;
+    }
 }
 
 .addProductButtonContainer {
