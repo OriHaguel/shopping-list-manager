@@ -64,6 +64,19 @@
   gap: $spacing-3xl;
   align-items: center;
 
+  .iphoneMockup {
+    width: 100%;
+    height: 550px;
+
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+    }
+  }
+
   @media (min-width: $screen-md) {
     grid-template-columns: 1fr 1fr;
   }
@@ -81,18 +94,14 @@
 }
 
 .heading {
-  font-size: 44px;
+  font-size: 64px;
   font-weight: 700;
   color: $neutral-text;
   line-height: 1.08;
   letter-spacing: -0.02em;
 
-  @media (min-width: $screen-sm) {
-    font-size: 56px;
-  }
-
-  @media (min-width: $screen-md) {
-    font-size: 64px;
+  @media (max-width: $screen-sm) {
+    font-size: 3.25rem;
   }
 }
 
