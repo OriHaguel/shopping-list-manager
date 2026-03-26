@@ -16,12 +16,6 @@ export function HeroSection() {
 
     return (
         <section className={styles.section} dir={lan === 'he-IL' ? 'rtl' : 'ltr'}>
-            {/* Background gradient */}
-            <div className={styles.backgroundGradient} />
-
-            {/* Subtle decorative circles */}
-            <div className={styles.decorativeCircleLeft} />
-            <div className={styles.decorativeCircleRight} />
 
             <div className={styles.contentWrapper}>
                 <div className={styles.gridContainer}>
@@ -46,7 +40,6 @@ export function HeroSection() {
 
                     {/* Right Column - App Mockup */}
                     <div className={styles.iphoneMockup}>
-                        <img src="iphone-mockup.png" alt="App Mockup" />
                     </div>
                 </div>
             </div>

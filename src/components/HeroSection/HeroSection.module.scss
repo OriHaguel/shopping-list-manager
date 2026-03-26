@@ -6,42 +6,24 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-}
+  background-image: url('../../../public/herobg.webp');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 
-.backgroundGradient {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(135deg,
-      $primary-light-blue 0%,
-      $neutral-white 50%,
-      #FFF5F2 100%);
-}
+  @media (max-width: 1200px) {
+    min-height: 75vh;
+  }
 
-.decorativeCircleLeft {
-  position: absolute;
-  top: 80px;
-  left: 40px;
-  width: 288px;
-  height: 288px;
-  background-color: $primary-light-blue;
-  border-radius: 50%;
-  opacity: 0.4;
-  filter: blur(96px);
-  z-index: 1;
-}
+  @media (max-width: $screen-md) {
+    background-image: url('../../../public/ratiotest.png');
 
-.decorativeCircleRight {
-  position: absolute;
-  bottom: 80px;
-  right: 40px;
-  width: 384px;
-  height: 384px;
-  background-color: rgba($accent-coral, 0.1);
-  border-radius: 50%;
-  opacity: 0.5;
-  filter: blur(96px);
-  z-index: 1;
+  }
+
+  @media (max-width: $screen-sm) {
+    background-image: url('../../../public/ratiotest2.png');
+
+  }
 }
 
 .contentWrapper {

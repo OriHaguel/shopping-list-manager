@@ -127,7 +127,7 @@ export const en = {
     // Landing page - Hero Section
     shoppingListsSimplified: 'Shopping lists, simplified',
     simplified: 'simplified',
-    heroDescription: 'Create, organize, and share your shopping lists in seconds. Never forget an item again with smart reminders and effortless collaboration.',
+    heroDescription: 'Create, organize, and share your shopping lists in seconds.',
     startForFree: 'Start for Free',
     weeklyGroceries: 'Weekly Groceries',
     itemsShared: 'items · Shared with',
