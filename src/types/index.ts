@@ -26,6 +26,7 @@ export interface ListBase {
 }
 export interface List extends ListBase {
     _id: string;
+    userId: string[];
 
 }
 

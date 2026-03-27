@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './ListsPage.module.scss';
 import { List } from '@/types';
-import { logout } from '@/services/user/user.service';
 import { createList, getLists, deleteList, updateList } from '@/services/list/list.service';
 import { CreateListModal } from '../CreateListModal/CreateListModal';
 import { FAB } from '../FAB/FAB';

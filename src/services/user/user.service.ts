@@ -36,6 +36,16 @@ export async function login(userCred: UserSignupLogin): Promise<SavedUser> {
         );
     }
 }
+export async function getUsersEmail(usersId: string[]): Promise<SavedUser> {
+    try {
+        const user = await httpService.post('users/email', { usersId });
+        return user
+    } catch (err) {
+        console.log("error getting user", err)
+        throw err
+    }
+}
+
 
 export async function logout() {
     try {

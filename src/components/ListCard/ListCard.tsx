@@ -8,6 +8,7 @@ import { List } from '@/types';
 import { DeleteConfirmationModal } from '../DeleteConfirmationModal/DeleteConfirmationModal';
 import { EmailShareModal } from '../EmailShareModal/EmailShareModal';
 import { shareList } from '@/services/list/list.service';
+import { getUsersEmail } from '@/services/user/user.service';
 
 interface ListCardProps {
     list: List;
@@ -23,6 +24,7 @@ export function ListCard({ list, onClick, onDelete, onRename, onCopy }: ListCard
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+    const [sharedEmails, setSharedEmails] = useState<string[]>([]);
     const menuRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -39,6 +41,16 @@ export function ListCard({ list, onClick, onDelete, onRename, onCopy }: ListCard
             };
         }
     }, [isMenuOpen]);
+
+    useEffect(() => {
+        if (list.userId.length > 1) {
+            getUsersEmail(list.userId).then(res => {
+                if (res && Array.isArray(res)) {
+                    setSharedEmails(res.map((email: string) => email));
+                }
+            }).catch(err => console.error('Error fetching shared user emails:', err));
+        }
+    }, [list.userId]);
 
     const toggleMenu = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -74,6 +86,13 @@ export function ListCard({ list, onClick, onDelete, onRename, onCopy }: ListCard
             <div className={`${styles.card} ${lan === 'he-IL' ? styles.rtl : ''}`} onClick={onClick}>
                 <div className={styles.content}>
                     <h3 className={styles.name}>{list.name}</h3>
+                    {sharedEmails.length > 0 && (
+                        <div className={styles.sharedEmails}>
+                            {sharedEmails.map((email, index) => (
+                                <span key={index} className={styles.email}>{email}</span>
+                            ))}
+                        </div>
+                    )}
                 </div>
                 <div className={styles.menuContainer} ref={menuRef}>
                     <button
