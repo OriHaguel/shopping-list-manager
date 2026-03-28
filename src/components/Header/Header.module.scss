@@ -90,6 +90,19 @@
     animation: fadeInDown 0.2s ease;
 }
 
+.emailDisplay {
+    padding: $spacing-md $spacing-lg;
+    border-bottom: 1px solid $neutral-light-gray;
+    margin-bottom: $spacing-sm;
+}
+
+.emailText {
+    font-size: $font-size-sm;
+    color: $neutral-dark-gray;
+    font-weight: 500;
+    word-break: break-all;
+}
+
 .item {
     display: flex;
     align-items: center;

@@ -64,6 +64,18 @@ export async function logout() {
         );
     }
 }
+export async function getUserEmail(): Promise<string> {
+    try {
+        const response = await httpService.get('users');
+        return response.email || response;
+    } catch (err) {
+        console.log("error getting user email", err)
+        throw new AuthenticationError(
+            err instanceof Error ? err.message : 'An error occurred during the logout process'
+        );
+    }
+}
+
 
 
 export function getLoggedinUser(): SavedUser | null {

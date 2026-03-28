@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import styles from './Header.module.scss';
 import { getItem, setItem } from '@/utils/localStorage';
 import { useRouter } from 'next/navigation';
-import { logout } from '@/services/user/user.service';
+import { getUserEmail, logout } from '@/services/user/user.service';
 import { getMessages } from '@/lib/getMessages';
 
 type Language = {
@@ -24,6 +24,7 @@ export const Header: React.FC = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isLanguageSubmenuOpen, setIsLanguageSubmenuOpen] = useState(false);
     const [currentLanguage, setCurrentLanguage] = useState<string>(languages[0].code);
+    const [userEmail, setUserEmail] = useState<string>('');
     const dropdownRef = useRef<HTMLDivElement>(null);
     const avatarRef = useRef<HTMLButtonElement>(null);
     const router = useRouter();
@@ -63,6 +64,18 @@ export const Header: React.FC = () => {
     useEffect(() => {
 
         setCurrentLanguage(lan || languages[0].code);
+    }, []);
+
+    useEffect(() => {
+        const fetchUserEmail = async () => {
+            try {
+                const email = await getUserEmail();
+                setUserEmail(email);
+            } catch (error) {
+                console.error('Failed to fetch user email:', error);
+            }
+        };
+        fetchUserEmail();
     }, []);
     const handleAvatarClick = () => {
         setIsDropdownOpen(!isDropdownOpen);
@@ -118,6 +131,11 @@ export const Header: React.FC = () => {
 
                     {isDropdownOpen && (
                         <div ref={dropdownRef} className={styles.dropdown} dir={lan === 'he-IL' ? 'rtl' : 'ltr'}>
+                            {userEmail && (
+                                <div className={styles.emailDisplay}>
+                                    <span className={styles.emailText}>{userEmail}</span>
+                                </div>
+                            )}
                             <div className={styles.item} onClick={handleLanguageClick}>
                                 <span className={styles.text}>
                                     {t.language || 'Language'}
