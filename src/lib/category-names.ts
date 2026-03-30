@@ -9,7 +9,7 @@ export const CATEGORIES: Record<string, string[]> = {
     ],
 
     Fruits: [
-        'apples', 'bananas', 'oranges', 'grapes', 'berries', 'mango', 'pineapple', 'kiwi', 'peaches', 'plums',
+        'apple', 'bananas', 'oranges', 'grapes', 'berries', 'mango', 'pineapple', 'kiwi', 'peaches', 'plums',
         'watermelon', 'melon', 'strawberries', 'blueberries', 'raspberries', 'blackberries', 'lemons', 'limes', 'papaya', 'grapefruit',
         'coconut', 'pomegranate', 'apricots', 'nectarines', 'dates', 'figs', 'cherries', 'tangerines', 'clementines', 'passion fruit',
         'banana bunch', 'fruit mix', 'dried mango', 'raisins', 'cranberries', 'prunes', 'fruit cups', 'frozen fruit', 'red grapes', 'green grapes', 'concord grapes', 'gala apples', 'fuji apples', 'honeycrisp apples', 'granny smith apples', 'navel oranges', 'mandarin oranges', 'sweet cherries', 'sour cherries', 'plantains', 'guava', 'lychee', 'dragon fruit', 'star fruit', 'persimmons', 'rhubarb', 'dried fruit', 'dried apricots', 'apple juice', 'orange juice', 'grape juice', 'cranberry juice', 'pineapple juice', 'tomato juice', 'fruit preserves', 'jams', 'jellies', 'marmalades', 'fruit snacks', 'fruit leather', 'applesauce', 'canned fruit'

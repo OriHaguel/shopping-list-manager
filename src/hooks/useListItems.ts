@@ -4,15 +4,27 @@ import { Item, ItemBase } from '@/types';
 import { getItems, updateItem, createItem, createEmptyItem, deleteItem } from '@/services/item/item.service';
 import { getList } from '@/services/list/list.service';
 import { CATEGORIES } from '@/lib/category-names';
+import pluralize from 'pluralize';
 
+// normalize input for comparison
+function normalize(word: string): string {
+    return pluralize.singular(word.toLowerCase().trim());
+}
 
 function getCategoryForItem(itemName: string): string {
-    const lowerCaseItemName = itemName.toLowerCase();
+    const target = normalize(itemName);
+
+    // loop through categories
     for (const category in CATEGORIES) {
-        if (CATEGORIES[category].some(item => item.includes(lowerCaseItemName))) {
+        if (
+            CATEGORIES[category].some(
+                item => normalize(item) === target
+            )
+        ) {
             return category;
         }
     }
+
     return 'Other';
 }
 
