@@ -4,15 +4,15 @@ import axios, {
     AxiosRequestConfig,
 } from 'axios';
 
-const BASE_URL =
-    process.env.NODE_ENV === 'production'
-        ? 'https://shopping-list-manager-backend-production.up.railway.app/api/'
-        : 'http://localhost:3030/api/';
-
 // const BASE_URL =
 //     process.env.NODE_ENV === 'production'
 //         ? 'https://shopping-list-manager-backend-lpaq.onrender.com/api/'
 //         : 'http://localhost:3030/api/';
+
+const BASE_URL =
+    process.env.NODE_ENV === 'production'
+        ? 'https://shopping-list-manager-backend-lpaq.onrender.com/api/'
+        : 'http://localhost:3030/api/';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
