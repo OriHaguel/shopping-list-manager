@@ -112,7 +112,7 @@ export const AuthPage: React.FC = () => {
 
     };
     const handleGoogleLogin = () => {
-        const googleUrl = process.env.NODE_ENV === 'production' ? 'https://shopping-list-manager-backend-production.up.railway.app/api/users/google/callback' : 'http://localhost:3030/api/users/google/callback';
+        const googleUrl = process.env.NODE_ENV === 'production' ? 'https://shopping-list-manager-backend-production.up.railway.app/api/users/google/login' : 'http://localhost:3030/api/users/google/callback';
         window.location.href = googleUrl;
     };
     return (
