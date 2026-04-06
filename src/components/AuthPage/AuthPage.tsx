@@ -5,6 +5,7 @@ import styles from './AuthPage.module.scss';
 import { login, signup } from '@/services/user/user.service';
 import { useRouter } from 'next/navigation';
 import { getItem } from '@/utils/localStorage';
+import { ListeckName } from '../ListeckName/ListeckName';
 export const AuthPage: React.FC = () => {
     const t = getMessages();
     const lan = getItem<string>('lan', '');
@@ -202,15 +203,7 @@ export const AuthPage: React.FC = () => {
             <div className={styles.authVisual}>
                 <div className={styles.visualContent}>
                     <div className={styles.logo}>
-                        <div className={styles.logoIcon}>
-                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                                <rect x="8" y="8" width="32" height="32" rx="8" fill="white" opacity="0.2" />
-                                <rect x="12" y="16" width="24" height="3" rx="1.5" fill="white" />
-                                <rect x="12" y="22" width="18" height="3" rx="1.5" fill="white" />
-                                <rect x="12" y="28" width="20" height="3" rx="1.5" fill="white" />
-                            </svg>
-                        </div>
-                        <h1 className={styles.logoText}>Listeck</h1>
+                        <ListeckName color='#7ed0ff' />
                     </div>
 
                     <div className={styles.visualMessage}>

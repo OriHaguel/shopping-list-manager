@@ -5,6 +5,7 @@ import { getItem, setItem } from '@/utils/localStorage';
 import { useRouter } from 'next/navigation';
 import { getUserEmail, logout } from '@/services/user/user.service';
 import { getMessages } from '@/lib/getMessages';
+import { ListeckName } from '../ListeckName/ListeckName';
 
 type Language = {
     code: string;
@@ -100,7 +101,7 @@ export const Header: React.FC = () => {
         <header className={styles.header}>
             <div className={styles.container}>
                 <div className={styles.logo}>
-                    <h1 className={styles.title}>{t.title || 'ProductivePro'}</h1>
+                    <ListeckName />
                 </div>
 
                 <div className={styles.user}>

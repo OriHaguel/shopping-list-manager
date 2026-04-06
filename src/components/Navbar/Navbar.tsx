@@ -5,6 +5,7 @@ import { Menu, X, ShoppingCart } from 'lucide-react'
 import styles from './Navbar.module.scss'
 import { useRouter } from 'next/navigation'
 import { getMessages } from '@/lib/getMessages'
+import { ListeckName } from '../ListeckName/ListeckName'
 
 export function Navbar() {
     const [scrolled, setScrolled] = useState(false)
@@ -31,13 +32,7 @@ export function Navbar() {
         <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
             <div className={styles.container}>
                 {/* Logo */}
-                <a href="#" className={styles.logoWrapper}>
-                    <div className={styles.logoIcon}>
-                        <ShoppingCart />
-                    </div>
-                    <span className={styles.logoText}>ListFlow</span>
-                </a>
-
+                <ListeckName />
                 {/* Desktop Nav Links */}
                 <div className={styles.desktopNav}>
                     {navLinks.map((link) => (

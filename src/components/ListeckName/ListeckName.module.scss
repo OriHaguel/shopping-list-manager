@@ -1,0 +1,13 @@
+@use '../../styles/setup/variables' as *;
+
+.logoWrapper {
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+    transition: $transition;
+}
+
+.logoIcon {
+    width: 2.25rem;
+    height: auto;
+}
