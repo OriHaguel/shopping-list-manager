@@ -107,7 +107,7 @@ export function ListCard({ list, onClick, onDelete, onRename, onCopy }: ListCard
                         </svg>
                     </button>
                     {isMenuOpen && (
-                        <div className={styles.menu}>
+                        <div className={`${styles.menu} ${lan === 'he-IL' ? styles.rtl : ''}`} dir={lan === 'he-IL' ? 'rtl' : 'ltr'}>
                             <button
                                 className={styles.menuList}
                                 onClick={(e) => handleMenuAction(e, onRename)}
