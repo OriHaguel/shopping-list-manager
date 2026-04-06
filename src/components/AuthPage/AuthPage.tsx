@@ -111,7 +111,7 @@ export const AuthPage: React.FC = () => {
 
     };
     const handleGoogleLogin = () => {
-        const googleUrl = process.env.NODE_ENV === 'production' ? 'https://shopping-list-manager-backend-lpaq.onrender.com/api/users/google/callback' : 'http://localhost:3030/api/users/google/callback';
+        const googleUrl = process.env.NODE_ENV === 'production' ? 'https://shopping-list-manager-backend-production.up.railway.app/api/users/google/callback' : 'http://localhost:3030/api/users/google/callback';
         window.location.href = googleUrl;
     };
     return (
@@ -210,7 +210,7 @@ export const AuthPage: React.FC = () => {
                                 <rect x="12" y="28" width="20" height="3" rx="1.5" fill="white" />
                             </svg>
                         </div>
-                        <h1 className={styles.logoText}>Ballistic</h1>
+                        <h1 className={styles.logoText}>Listeck</h1>
                     </div>
 
                     <div className={styles.visualMessage}>
