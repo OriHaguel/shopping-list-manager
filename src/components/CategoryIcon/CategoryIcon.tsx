@@ -139,6 +139,12 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
 
             );
         }
+        if (categoryLower.includes('dry goods')) {
+            return (
+                <Image src="/icons/wheat.png" alt="" className={styles.iconImg} width={37.5} height={37.5} />
+
+            );
+        }
 
         // Default/Other
         return (

@@ -1,7 +1,6 @@
 import styles from './ListeckName.module.scss'
 
 export function ListeckName({ color = '#5B8CA8' }) {
-    console.log("🚀 ~ ListeckName ~ color:", color)
     return (
         <div className={styles.logoWrapper}>
             <div className={styles.logoIcon}>
