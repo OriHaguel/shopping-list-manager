@@ -1,5 +1,5 @@
 import { httpService } from "../http.service";
-import { Item, ItemBase, UpdateItemDto } from "@/types";
+import { bulkCheckItemsDto, Item, ItemBase, UpdateItemDto } from "@/types";
 
 export async function createItem(item: ItemBase): Promise<Item | void> {
     try {
@@ -13,6 +13,14 @@ export async function getItems(listId: string): Promise<Item[] | void> {
     try {
         const items = await httpService.get('items/all' + `/${listId}`);
         return items
+    } catch (err) {
+        console.error('Error fetching lists:', err);
+    }
+}
+export async function bulkCheckItems(items: bulkCheckItemsDto[]): Promise<any> {
+    try {
+        const res = await httpService.put('items/bulk', { items: items });
+        return res
     } catch (err) {
         console.error('Error fetching lists:', err);
     }

@@ -1,10 +1,11 @@
 // hooks/useListItems.ts
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Item, ItemBase } from '@/types';
-import { getItems, updateItem, createItem, createEmptyItem, deleteItem } from '@/services/item/item.service';
+import { Item, ItemBase, bulkCheckItemsDto } from '@/types';
+import { getItems, updateItem, createItem, createEmptyItem, deleteItem, bulkCheckItems } from '@/services/item/item.service';
 import { getList } from '@/services/list/list.service';
 import { CATEGORIES } from '@/lib/category-names';
 import pluralize from 'pluralize';
+import { useRef } from 'react';
 
 // normalize input for comparison
 function normalize(word: string): string {
@@ -100,13 +101,68 @@ export function useListItems(listId: string) {
         },
     });
 
+    const bulkCheckItemsMutation = useMutation({
+        mutationFn: (itemsToToggle: bulkCheckItemsDto[]) => bulkCheckItems(itemsToToggle),
+        onError: (err) => {
+            console.error('Failed to bulk check items:', err);
+        },
+    });
+
+    // Debounce refs for batched toggle requests
+    const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+    const batchedItemsRef = useRef<Map<string, boolean>>(new Map());
+
     // --- 3. Action Handlers (calling mutations) ---
 
     const handleToggleItem = (_id: string, currentChecked: boolean) => {
-        updateItemMutation.mutate({
-            _id,
-            updates: { checked: !currentChecked },
-        });
+        const newCheckedState = !currentChecked;
+
+        // Cancel any pending queries for optimistic update
+        queryClient.cancelQueries({ queryKey: ['items', listId] });
+        const previousItems = queryClient.getQueryData<Item[]>(['items', listId]);
+
+        // Optimistic update immediately
+        queryClient.setQueryData<Item[]>(['items', listId], (old = []) =>
+            old.map(item => item._id === _id ? { ...item, checked: newCheckedState } : item)
+        );
+
+        // Add to batched items for debounced bulk API call
+        batchedItemsRef.current.set(_id, newCheckedState);
+
+        // Clear existing debounce timer
+        if (debounceTimerRef.current) {
+            clearTimeout(debounceTimerRef.current);
+        }
+
+        // Set new debounce timer (500ms)
+        debounceTimerRef.current = setTimeout(() => {
+            // Convert batched items to API format
+            const itemsToSend: bulkCheckItemsDto[] = Array.from(batchedItemsRef.current.entries()).map(
+                ([itemId, checked]) => ({ itemId, checked })
+            );
+            console.log("🚀 ~ handleToggleItem ~ itemsToSend:", itemsToSend)
+
+            // Call bulkCheckItems mutation
+            bulkCheckItemsMutation.mutate(itemsToSend, {
+                onSuccess: () => {
+                    // Invalidate items query to refetch fresh data from server
+                    queryClient.invalidateQueries({
+                        queryKey: ['items', listId],
+                        refetchType: 'none'
+                    });
+                },
+                onError: () => {
+                    // Revert optimistic update on error
+                    if (previousItems) {
+                        queryClient.setQueryData(['items', listId], previousItems);
+                    }
+                },
+            });
+
+            // Clear the batched items for next batch
+            batchedItemsRef.current.clear();
+            debounceTimerRef.current = null;
+        }, 2000);
     };
 
     const handleAddItem = (name: string) => {

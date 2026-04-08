@@ -54,6 +54,10 @@ export interface UpdateItemDto {
     quantity?: number;
     description?: string;
 }
+export interface bulkCheckItemsDto {
+    itemId: string;
+    checked: boolean;
+}
 
 
 export class AuthenticationError extends Error {
