@@ -134,13 +134,12 @@ export function useListItems(listId: string) {
             clearTimeout(debounceTimerRef.current);
         }
 
-        // Set new debounce timer (500ms)
+        // Set new debounce timer (3500ms)
         debounceTimerRef.current = setTimeout(() => {
             // Convert batched items to API format
             const itemsToSend: bulkCheckItemsDto[] = Array.from(batchedItemsRef.current.entries()).map(
                 ([itemId, checked]) => ({ itemId, checked })
             );
-            console.log("🚀 ~ handleToggleItem ~ itemsToSend:", itemsToSend)
 
             // Call bulkCheckItems mutation
             bulkCheckItemsMutation.mutate(itemsToSend, {
@@ -148,7 +147,6 @@ export function useListItems(listId: string) {
                     // Invalidate items query to refetch fresh data from server
                     queryClient.invalidateQueries({
                         queryKey: ['items', listId],
-                        refetchType: 'none'
                     });
                 },
                 onError: () => {
@@ -162,7 +160,7 @@ export function useListItems(listId: string) {
             // Clear the batched items for next batch
             batchedItemsRef.current.clear();
             debounceTimerRef.current = null;
-        }, 2000);
+        }, 3500);
     };
 
     const handleAddItem = (name: string) => {
