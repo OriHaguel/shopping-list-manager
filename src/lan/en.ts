@@ -28,6 +28,7 @@ export const en = {
     health: 'Health',
     clothing: 'Clothing',
     baby: 'Baby',
+    dry: 'Dry Goods',
     other: 'Other',
     yourShoppingLists: 'My shopping lists',
     logOut: 'Log out',

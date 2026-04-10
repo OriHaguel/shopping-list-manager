@@ -6,23 +6,32 @@ import { getList } from '@/services/list/list.service';
 import { CATEGORIES } from '@/lib/category-names';
 import pluralize from 'pluralize';
 import { useRef } from 'react';
+import { getItem } from '@/utils/localStorage';
+import { CATEGORIES_HE } from '@/lib/category-names-he';
+import { getMessages } from '@/lib/getMessages';
+
+
 
 // normalize input for comparison
 function normalize(word: string): string {
     return pluralize.singular(word.toLowerCase().trim());
 }
 
+
 function getCategoryForItem(itemName: string): string {
+    const t = getMessages();
+    const lan = getItem<string>('lan', '');
+    const currCategory = (lan || 'en').split('-')[0] === 'he' ? CATEGORIES_HE : CATEGORIES;
     const target = normalize(itemName);
 
     // loop through categories
-    for (const category in CATEGORIES) {
+    for (const category in currCategory) {
         if (
-            CATEGORIES[category].some(
+            currCategory[category].some(
                 item => normalize(item) === target
             )
         ) {
-            return category;
+            return t[category.toLowerCase()];
         }
     }
 

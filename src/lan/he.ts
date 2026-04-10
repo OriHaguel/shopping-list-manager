@@ -28,6 +28,7 @@ export const he = {
     health: 'בריאות',
     clothing: 'ביגוד',
     baby: 'תינוקות',
+    dry: 'מוצרים יבשים',
     other: 'אחר',
     yourShoppingLists: 'הרשימות שלי',
     logOut: 'התנתק',

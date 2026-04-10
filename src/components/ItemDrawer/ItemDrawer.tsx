@@ -32,7 +32,7 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
     const t = getMessages();
     const lan = getItem<string>('lan', '');
 
-    const categories = [t.vegetables, t.fruits, t.dairy, t.meat, t.frozen, t.fish, t.bakery, t.beverages, t.alcohol, t.snacks, t.cleaning, t.pets, t.electronics, t.health, t.clothing, t.baby, t.other];
+    const categories = [t.vegetables, t.fruits, t.dairy, t.meat, t.frozen, t.fish, t.bakery, t.beverages, t.alcohol, t.snacks, t.cleaning, t.pets, t.electronics, t.health, t.clothing, t.baby, t.dry, t.other];
     const [formData, setFormData] = useState<ItemData>({
         _id: '',
         name: '',

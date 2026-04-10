@@ -45,7 +45,7 @@ export const CATEGORIES: Record<string, string[]> = {
         'brioche', 'challah', 'english muffins', 'garlic bread', 'wraps', 'sandwich bread', 'whole wheat bread', 'baguettes', 'ciabatta', 'corn tortillas', 'flour tortillas', 'dinner rolls', 'hamburger buns', 'hot dog buns', 'plain bagels', 'everything bagels', 'blueberry muffins', 'chocolate chip muffins', 'plain croissants', 'chocolate croissants', 'danishes', 'bear claws', 'turnovers', 'glazed donuts', 'chocolate donuts', 'chocolate chip cookies', 'oatmeal cookies', 'sugar cookies', 'cakes', 'apple pie', 'cherry pie', 'pumpkin pie', 'tarts', 'scones', 'biscuits', 'crepes', 'pizza dough', 'pie crusts', 'puff pastry', 'phyllo dough', 'crackers', 'pretzels', 'croutons', 'stuffing mix', 'bread crumbs', 'cake mix', 'brownie mix', 'cookie mix', 'frosting', 'icing', 'sprinkles', 'decorations'
     ],
 
-    'Dry Goods': [
+    dry: [
         'rice', 'white rice', 'brown rice', 'basmati rice', 'jasmine rice', 'arborio rice', 'wild rice', 'instant rice', 'pasta', 'spaghetti', 'penne', 'rigatoni', 'fettuccine', 'lasagna noodles', 'whole wheat pasta', 'egg noodles',
         'beans', 'black beans', 'kidney beans', 'pinto beans', 'chickpeas', 'lentils', 'red lentils', 'green lentils', 'split peas', 'black-eyed peas', 'cannellini beans', 'navy beans', 'garbanzo beans',
         'grains', 'oats', 'barley', 'quinoa', 'couscous', 'bulgur', 'millet', 'farro', 'buckwheat', 'polenta',
