@@ -42,6 +42,21 @@
             border: unset;
         }
 
+        .popularItemsLabel {
+            color: $neutral-dark-gray;
+            text-align: center;
+            padding-bottom: 12px;
+            padding-top: 4px;
+            border-bottom: 1px solid #d1d5db;
+            margin: 0;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+
+
         .addItemHeader {
             display: flex;
             align-items: center;

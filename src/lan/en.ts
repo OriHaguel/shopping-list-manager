@@ -48,6 +48,7 @@ export const en = {
     createAccount: 'Create Account',
     welcomeBack: 'Welcome Back',
     signUpToGetStartedWithProductivityHub: 'Sign up to get started with Listeck',
+    popularItems: 'Popular Items',
     signInToContinueToYourDashboard: 'Sign in to continue to your lists',
     emailAddress: 'Email Address',
     enterYourEmail: 'Enter your email',

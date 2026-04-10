@@ -48,6 +48,7 @@ export const he = {
     createAccount: 'צור חשבון',
     welcomeBack: 'ברוך הבא',
     signUpToGetStartedWithProductivityHub: 'הירשם כדי להתחיל עם Listeck',
+    popularItems: 'מוצרים פופולריים',
     signInToContinueToYourDashboard: 'היכנס כדי להמשיך לרשימות שלך',
     emailAddress: 'כתובת אימייל',
     enterYourEmail: 'הכנס את האימייל שלך',

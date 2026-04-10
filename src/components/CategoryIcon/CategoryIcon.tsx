@@ -12,6 +12,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
     size = 20,
     className = ''
 }) => {
+    // just impliment t.whatever next time insted of adding texct mannually
     const getCategoryIcon = (cat: string) => {
         const categoryLower = cat.toLowerCase();
 

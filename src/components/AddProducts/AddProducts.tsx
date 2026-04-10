@@ -213,6 +213,7 @@ export function AddProducts({
                     </button>
                 </div>
 
+                <p className={styles.popularItemsLabel}>{t.popularItems}</p>
                 <div className={styles.itemsList}>
                     {POPULAR_ITEMS.map((item, index) => {
                         const quantity = getItemQuantity ? getItemQuantity(item) : 0;
