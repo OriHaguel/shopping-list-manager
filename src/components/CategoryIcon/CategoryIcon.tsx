@@ -16,7 +16,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         const categoryLower = cat.toLowerCase();
 
         // Fruits & Vegetables
-        if (categoryLower.includes('fruit') || categoryLower.includes('vegetable') || categoryLower.includes('produce')) {
+        if (categoryLower.includes('fruit') || categoryLower.includes('vegetable') || categoryLower.includes('ירקות') || categoryLower.includes('פירות')) {
             return (
                 <Image src="/icons/apple.png" alt="" className={styles.iconImg} width={37.5} height={37.5} />
 
@@ -24,13 +24,13 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         }
 
         // Meat & Seafood
-        if (categoryLower.includes('meat') || categoryLower.includes('chicken') || categoryLower.includes('beef')) {
+        if (categoryLower.includes('meat') || categoryLower.includes('chicken') || categoryLower.includes('בשר')) {
             return (
                 <Image src="/icons/meat.png" alt="" className={styles.iconImg} width={37.5} height={37.5} />
 
             );
         }
-        if (categoryLower.includes('seafood') || categoryLower.includes('fish')) {
+        if (categoryLower.includes('seafood') || categoryLower.includes('fish') || categoryLower.includes('דגים')) {
             return (
                 <Image src="/icons/fish.png" alt="" className={styles.iconImg} width={37.5} height={37.5} />
 
@@ -38,21 +38,21 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         }
 
         // Dairy
-        if (categoryLower.includes('dairy') || categoryLower.includes('milk') || categoryLower.includes('cheese') || categoryLower.includes('yogurt')) {
+        if (categoryLower.includes('dairy') || categoryLower.includes('milk') || categoryLower.includes('cheese') || categoryLower.includes('מוצרי חלב')) {
             return (
                 <Image src="/icons/dairy.png" alt="" className={styles.iconImg} width={37.5} height={37.5} />
             );
         }
 
         // Bakery & Bread
-        if (categoryLower.includes('bakery') || categoryLower.includes('bread') || categoryLower.includes('pastry')) {
+        if (categoryLower.includes('bakery') || categoryLower.includes('bread') || categoryLower.includes('מאפים')) {
             return (
                 <Image src="/icons/bread.png" alt="" width={45} height={45} className={styles.iconImg} />
             );
         }
 
         // Beverages
-        if (categoryLower.includes('beverage') || categoryLower.includes('drink') || categoryLower.includes('juice') || categoryLower.includes('soda')) {
+        if (categoryLower.includes('beverage') || categoryLower.includes('drink') || categoryLower.includes('juice') || categoryLower.includes('משקאות')) {
             return (
                 <Image src="/icons/water.png" alt="" width={37.5} height={37.5} className={styles.iconImg} />
 
@@ -60,7 +60,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         }
 
         // Snacks
-        if (categoryLower.includes('snack') || categoryLower.includes('chip') || categoryLower.includes('candy')) {
+        if (categoryLower.includes('snack') || categoryLower.includes('chip') || categoryLower.includes('חטיפים')) {
             return (
                 <Image src="/icons/candy.png" alt="" width={37.5} height={37.5} />
 
@@ -69,7 +69,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
 
 
         // Household / Cleaning
-        if (categoryLower.includes('household') || categoryLower.includes('cleaning') || categoryLower.includes('detergent')) {
+        if (categoryLower.includes('household') || categoryLower.includes('cleaning') || categoryLower.includes('ניקיון')) {
             return (
                 <Image src="/icons/soap.png" alt="" width={27.5} height={37.5} className={styles.iconImg} />
 
@@ -85,7 +85,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         }
 
         // Alcohol
-        if (categoryLower.includes('alcohol') || categoryLower.includes('wine') || categoryLower.includes('beer') || categoryLower.includes('liquor')) {
+        if (categoryLower.includes('alcohol') || categoryLower.includes('wine') || categoryLower.includes('beer') || categoryLower.includes('אלכוהול')) {
             return (
                 <Image src="/icons/wineglass.png" alt="" width={37.5} height={37.5} className={styles.iconImg} />
 
@@ -93,7 +93,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         }
 
         // Frozen
-        if (categoryLower.includes('frozen')) {
+        if (categoryLower.includes('frozen') || categoryLower.includes('קפואים')) {
             return (
                 <Image src="/icons/frozen.png" alt="" className={styles.iconImg} width={37.5} height={37.5} />
 
@@ -101,7 +101,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         }
 
         // Pets
-        if (categoryLower.includes('pet') || categoryLower.includes('dog') || categoryLower.includes('cat') || categoryLower.includes('animal')) {
+        if (categoryLower.includes('pet') || categoryLower.includes('dog') || categoryLower.includes('cat') || categoryLower.includes('חיות מחמד')) {
             return (
                 <Image src="/icons/dogpaw.png" alt="" width={27.5} height={37.5} />
 
@@ -109,7 +109,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         }
 
         // Electronics
-        if (categoryLower.includes('electronic') || categoryLower.includes('tech') || categoryLower.includes('gadget')) {
+        if (categoryLower.includes('electronic') || categoryLower.includes('tech') || categoryLower.includes('אלקטרוניקה')) {
             return (
                 <Image src="/icons/monitor.png" alt="" className={styles.iconImg} width={37.5} height={37.5} />
 
@@ -117,7 +117,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         }
 
         // Health
-        if (categoryLower.includes('health') || categoryLower.includes('medical') || categoryLower.includes('pharmacy') || categoryLower.includes('medicine')) {
+        if (categoryLower.includes('health') || categoryLower.includes('medical') || categoryLower.includes('pharmacy') || categoryLower.includes('בריאות')) {
             return (
                 <Image src="/icons/health.png" alt="" className={styles.iconImg} width={37.5} height={37.5} />
 
@@ -125,7 +125,7 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         }
 
         // Clothing
-        if (categoryLower.includes('clothing') || categoryLower.includes('apparel') || categoryLower.includes('fashion') || categoryLower.includes('clothes')) {
+        if (categoryLower.includes('clothing') || categoryLower.includes('apparel') || categoryLower.includes('ביגוד') || categoryLower.includes('clothes')) {
             return (
                 <Image src="/icons/shirt.png" alt="" width={37.5} height={37.5} className={styles.iconImg} />
 
@@ -133,13 +133,13 @@ export const CategoryIcon: React.FC<CategoryIconProps> = ({
         }
 
         // Baby
-        if (categoryLower.includes('baby') || categoryLower.includes('infant') || categoryLower.includes('toddler')) {
+        if (categoryLower.includes('baby') || categoryLower.includes('infant') || categoryLower.includes('תינוקות')) {
             return (
                 <Image src="/icons/baby.png" alt="" className={styles.iconImg} width={37.5} height={37.5} />
 
             );
         }
-        if (categoryLower.includes('dry goods')) {
+        if (categoryLower.includes('dry goods') || categoryLower.includes('מוצרים יבשים')) {
             return (
                 <Image src="/icons/wheat.png" alt="" className={styles.iconImg} width={37.5} height={37.5} />
 
