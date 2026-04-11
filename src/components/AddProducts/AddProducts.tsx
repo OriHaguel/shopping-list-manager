@@ -182,7 +182,8 @@ export function AddProducts({
                         value={itemName}
                         onChange={(e) => setItemName(e.target.value)}
                         onKeyDown={handleKeyPress}
-                        className={`${styles.input} ${lan === 'he-IL' ? styles.rtl : ''}`}
+                        className={styles.input}
+                        dir={lan === 'he-IL' ? 'rtl' : 'ltr'}
                     />
                     {itemName.trim() ? (
                         <button

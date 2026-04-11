@@ -114,7 +114,7 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
                             </svg>
                         </button>
                         {/* Name */}
-                        <div className={styles.formGroup}>
+                        <div className={styles.formGroup} dir={lan === 'he-IL' ? 'rtl' : 'ltr'}>
                             <label htmlFor="itemName" className={styles.label}>{t.name}</label>
                             <input
                                 id="itemName"
@@ -204,6 +204,7 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
                                 placeholder={t.addNotesOrDetails}
                                 className={styles.textarea}
                                 rows={4}
+                                dir={lan === 'he-IL' ? 'rtl' : 'ltr'}
                             />
                         </div>
                         <button
