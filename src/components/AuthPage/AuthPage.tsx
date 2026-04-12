@@ -208,7 +208,7 @@ export const AuthPage: React.FC = () => {
 
                     <div className={styles.visualMessage}>
                         <h2>{t.signInToSmarterShopping}</h2>
-                        <p>{t.trackTasksManageTimeAndAchieveYourGoalsWithOurIntuitiveDashboardDesignedForModernProfessionals}</p>
+                        <p>{t.heroDescription}</p>
                     </div>
 
                     <div className={styles.featureBadges}>

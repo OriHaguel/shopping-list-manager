@@ -22,12 +22,12 @@ export function HeroSection() {
                     {/* Left Column - Text */}
                     <div className={styles.leftColumn}>
                         <h1 className={styles.heading}>
-                            {messages.shoppingListsSimplified.split(',')[0]},{'  '}
-                            <span className={styles.headingAccent}>{messages.simplified}</span>
+                            {messages.shoppingListsSimplified.split(',')[0]}{'  '}
+                            <span className={styles.headingAccent}>{messages.fast}</span>
                         </h1>
 
                         <p className={styles.description}>
-                            {messages.heroDescription}
+                            {messages.authSecondaryText}
                         </p>
 
                         <div className={styles.ctaContainer}>
