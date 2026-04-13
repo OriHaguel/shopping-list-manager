@@ -124,7 +124,7 @@ export function ListsPage() {
     };
 
     return (
-        <div className={styles.listsPage}>
+        <main className={styles.listsPage}>
             <Header />
             <div className={styles.container}>
                 <div className={`${styles.header} ${lan === 'he-IL' ? styles.rtl : ''}`}>
@@ -168,7 +168,7 @@ export function ListsPage() {
                     listToRename={listToRename}
                 />
             </div>
-        </div>
+        </main>
 
     );
 }

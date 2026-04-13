@@ -143,7 +143,7 @@ export function useListItems(listId: string) {
             clearTimeout(debounceTimerRef.current);
         }
 
-        // Set new debounce timer (3500ms)
+        // Set new debounce timer (1500ms)
         debounceTimerRef.current = setTimeout(() => {
             // Convert batched items to API format
             const itemsToSend: bulkCheckItemsDto[] = Array.from(batchedItemsRef.current.entries()).map(
@@ -170,7 +170,7 @@ export function useListItems(listId: string) {
             // Clear the batched items for next batch
             batchedItemsRef.current.clear();
             debounceTimerRef.current = null;
-        }, 1000);
+        }, 1500);
     };
 
     const handleAddItem = (name: string) => {
