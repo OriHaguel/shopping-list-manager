@@ -149,6 +149,7 @@ export function useListItems(listId: string) {
             const itemsToSend: bulkCheckItemsDto[] = Array.from(batchedItemsRef.current.entries()).map(
                 ([itemId, checked]) => ({ itemId, checked })
             );
+            console.log("🚀 ~ handleToggleItem ~ itemsToSend:", itemsToSend)
 
             // Call bulkCheckItems mutation
             bulkCheckItemsMutation.mutate(itemsToSend, {
@@ -169,7 +170,7 @@ export function useListItems(listId: string) {
             // Clear the batched items for next batch
             batchedItemsRef.current.clear();
             debounceTimerRef.current = null;
-        }, 3500);
+        }, 1000);
     };
 
     const handleAddItem = (name: string) => {
