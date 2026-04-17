@@ -82,7 +82,7 @@ export const CATEGORIES: Record<string, string[]> = {
     ],
 
     Electronics: [
-        'batteries', 'light bulbs', 'headphones', 'charger', 'usb cable', 'power bank', 'smartwatch', 'speaker', 'webcam', 'router',
+        'batteries', 'phone', 'light bulbs', 'headphones', 'charger', 'usb cable', 'power bank', 'smartwatch', 'speaker', 'webcam', 'router',
         'hdmi cable', 'keyboard', 'mouse', 'flash drive', 'extension cord', 'surge protector', 'phone case', 'screen protector', 'ethernet cable', 'earbuds',
         'power strip', 'bluetooth speaker', 'laptop charger', 'phone charger', 'ssd', 'AA batteries', 'AAA batteries', 'C batteries', 'D batteries', '9V batteries', 'rechargeable batteries', 'LED bulbs', 'CFL bulbs', 'incandescent bulbs', 'smart bulbs', 'over-ear headphones', 'wireless headphones', 'bluetooth headphones', 'laptop chargers', 'USB cables', 'HDMI cables', 'Ethernet cables', 'USB drives', 'external hard drives', 'SD cards', 'micro SD cards', 'modems', 'Wi-Fi extenders', 'smart home devices', 'smart speakers', 'smart displays', 'smart plugs', 'security cameras', 'doorbell cameras', 'streaming devices', 'Roku', 'Fire Stick', 'Chromecast', 'Apple TV', 'webcams', 'microphones', 'printers', 'printer ink', 'printer paper', 'monitors', 'TVs', 'soundbars', 'gaming consoles', 'video games', 'DVD players', 'Blu-ray players', 'remote controls', 'calculators', 'clocks', 'alarm clocks', 'radios', 'walkie-talkies', 'GPS devices', 'fitness trackers', 'smartwatches', 'drones', 'cameras', 'digital cameras', 'instant cameras', 'camera accessories', 'tripods', 'camera bags', 'lenses', 'memory cards', 'cleaning supplies', 'screen cleaner', 'keyboard cleaner', 'compressed air'
     ],

@@ -17,8 +17,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
             try {
                 const lan = getItem<string>('lan', '');
                 if (!lan) {
-                    const userLang = navigator.language || 'en'
-                    setItem('lan', userLang);
+                    // const userLang = navigator.language || 'en-US'
+                    setItem('lan', 'en-US');
                 }
                 setupAxiosInterceptors();
                 await initializeCsrf();
