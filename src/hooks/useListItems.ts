@@ -143,34 +143,47 @@ export function useListItems(listId: string) {
             clearTimeout(debounceTimerRef.current);
         }
 
-        // Set new debounce timer (1500ms)
-        debounceTimerRef.current = setTimeout(() => {
-            // Convert batched items to API format
-            const itemsToSend: bulkCheckItemsDto[] = Array.from(batchedItemsRef.current.entries()).map(
-                ([itemId, checked]) => ({ itemId, checked })
-            );
-            console.log("🚀 ~ handleToggleItem ~ itemsToSend:", itemsToSend)
+        // Only set a new debounce timer if no mutation is pending
+        if (!bulkCheckItemsMutation.isPending) {
+            // Set new debounce timer (1500ms)
+            debounceTimerRef.current = setTimeout(() => {
+                // Convert batched items to API format
+                const itemsToSend: bulkCheckItemsDto[] = Array.from(batchedItemsRef.current.entries()).map(
+                    ([itemId, checked]) => ({ itemId, checked })
+                );
+                console.log("🚀 ~ handleToggleItem ~ itemsToSend:", itemsToSend)
 
-            // Call bulkCheckItems mutation
-            bulkCheckItemsMutation.mutate(itemsToSend, {
-                onSuccess: () => {
-                    // Invalidate items query to refetch fresh data from server
-                    queryClient.invalidateQueries({
-                        queryKey: ['items', listId],
-                    });
-                },
-                onError: () => {
-                    // Revert optimistic update on error
-                    if (previousItems) {
-                        queryClient.setQueryData(['items', listId], previousItems);
-                    }
-                },
-            });
+                // Call bulkCheckItems mutation
+                bulkCheckItemsMutation.mutate(itemsToSend, {
+                    onSuccess: () => {
+                        // Invalidate items query to refetch fresh data from server
+                        queryClient.invalidateQueries({
+                            queryKey: ['items', listId],
+                        });
 
-            // Clear the batched items for next batch
-            batchedItemsRef.current.clear();
-            debounceTimerRef.current = null;
-        }, 1500);
+                        // Check if there are batched items waiting (accumulated during flight)
+                        if (batchedItemsRef.current.size > 0) {
+                            // Fire them immediately after this mutation completes
+                            const waitingItems: bulkCheckItemsDto[] = Array.from(batchedItemsRef.current.entries()).map(
+                                ([itemId, checked]) => ({ itemId, checked })
+                            );
+                            batchedItemsRef.current.clear();
+                            bulkCheckItemsMutation.mutate(waitingItems);
+                        }
+                    },
+                    onError: () => {
+                        // Revert optimistic update on error
+                        if (previousItems) {
+                            queryClient.setQueryData(['items', listId], previousItems);
+                        }
+                    },
+                });
+
+                // Clear the batched items for next batch
+                batchedItemsRef.current.clear();
+                debounceTimerRef.current = null;
+            }, 1500);
+        }
     };
 
     const handleAddItem = (name: string) => {
