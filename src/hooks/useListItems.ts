@@ -112,24 +112,8 @@ export function useListItems(listId: string) {
 
     const bulkCheckItemsMutation = useMutation({
         mutationFn: (itemsToToggle: bulkCheckItemsDto[]) => bulkCheckItems(itemsToToggle),
-        onMutate: async (itemsToToggle) => {
-            // Capture state before mutation to avoid stale refetch issues
-            await queryClient.cancelQueries({ queryKey: ['items', listId] });
-            const previousItems = queryClient.getQueryData<Item[]>(['items', listId]);
-            return { previousItems };
-        },
-        onError: (err, _variables, context) => {
-            if (context?.previousItems) {
-                queryClient.setQueryData(['items', listId], context.previousItems);
-            }
+        onError: (err) => {
             console.error('Failed to bulk check items:', err);
-        },
-        onSuccess: () => {
-            // Invalidate with refetchType 'none' to prevent stale data refetch
-            queryClient.invalidateQueries({
-                queryKey: ['items', listId],
-                refetchType: 'none'
-            });
         },
     });
 
@@ -144,6 +128,7 @@ export function useListItems(listId: string) {
 
         // Cancel any pending queries for optimistic update
         queryClient.cancelQueries({ queryKey: ['items', listId] });
+        const previousItems = queryClient.getQueryData<Item[]>(['items', listId]);
 
         // Optimistic update immediately
         queryClient.setQueryData<Item[]>(['items', listId], (old = []) =>
@@ -160,9 +145,6 @@ export function useListItems(listId: string) {
 
         // Set new debounce timer (1500ms)
         debounceTimerRef.current = setTimeout(() => {
-            // Capture previous state RIGHT BEFORE API call to avoid stale closures
-            const itemsStateBeforeCall = queryClient.getQueryData<Item[]>(['items', listId]);
-
             // Convert batched items to API format
             const itemsToSend: bulkCheckItemsDto[] = Array.from(batchedItemsRef.current.entries()).map(
                 ([itemId, checked]) => ({ itemId, checked })
@@ -178,9 +160,9 @@ export function useListItems(listId: string) {
                     });
                 },
                 onError: () => {
-                    // Revert to state captured RIGHT BEFORE this API call
-                    if (itemsStateBeforeCall) {
-                        queryClient.setQueryData(['items', listId], itemsStateBeforeCall);
+                    // Revert optimistic update on error
+                    if (previousItems) {
+                        queryClient.setQueryData(['items', listId], previousItems);
                     }
                 },
             });
