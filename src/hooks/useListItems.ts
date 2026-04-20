@@ -112,8 +112,24 @@ export function useListItems(listId: string) {
 
     const bulkCheckItemsMutation = useMutation({
         mutationFn: (itemsToToggle: bulkCheckItemsDto[]) => bulkCheckItems(itemsToToggle),
-        onError: (err) => {
+        onMutate: async (itemsToToggle) => {
+            // Capture state before mutation to avoid stale refetch issues
+            await queryClient.cancelQueries({ queryKey: ['items', listId] });
+            const previousItems = queryClient.getQueryData<Item[]>(['items', listId]);
+            return { previousItems };
+        },
+        onError: (err, _variables, context) => {
+            if (context?.previousItems) {
+                queryClient.setQueryData(['items', listId], context.previousItems);
+            }
             console.error('Failed to bulk check items:', err);
+        },
+        onSuccess: () => {
+            // Invalidate with refetchType 'none' to prevent stale data refetch
+            queryClient.invalidateQueries({
+                queryKey: ['items', listId],
+                refetchType: 'none'
+            });
         },
     });
 
