@@ -128,7 +128,6 @@ export function useListItems(listId: string) {
 
         // Cancel any pending queries for optimistic update
         queryClient.cancelQueries({ queryKey: ['items', listId] });
-        const previousItems = queryClient.getQueryData<Item[]>(['items', listId]);
 
         // Optimistic update immediately
         queryClient.setQueryData<Item[]>(['items', listId], (old = []) =>
@@ -145,6 +144,9 @@ export function useListItems(listId: string) {
 
         // Set new debounce timer (1500ms)
         debounceTimerRef.current = setTimeout(() => {
+            // Capture previous state RIGHT BEFORE API call to avoid stale closures
+            const itemsStateBeforeCall = queryClient.getQueryData<Item[]>(['items', listId]);
+
             // Convert batched items to API format
             const itemsToSend: bulkCheckItemsDto[] = Array.from(batchedItemsRef.current.entries()).map(
                 ([itemId, checked]) => ({ itemId, checked })
@@ -160,9 +162,9 @@ export function useListItems(listId: string) {
                     });
                 },
                 onError: () => {
-                    // Revert optimistic update on error
-                    if (previousItems) {
-                        queryClient.setQueryData(['items', listId], previousItems);
+                    // Revert to state captured RIGHT BEFORE this API call
+                    if (itemsStateBeforeCall) {
+                        queryClient.setQueryData(['items', listId], itemsStateBeforeCall);
                     }
                 },
             });
