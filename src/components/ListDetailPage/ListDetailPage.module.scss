@@ -364,9 +364,9 @@
     overflow: auto;
     max-width: 20rem;
     margin-left: 12px;
-    user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
+    // user-select: none;
+    // -webkit-user-select: none;
+    // -ms-user-select: none;
 
     &.completed {
         color: $neutral-dark-gray;
