@@ -34,8 +34,7 @@ function getCategoryForItem(itemName: string): string {
             return t[category.toLowerCase()];
         }
     }
-
-    return 'Other';
+    return (lan || 'en').split('-')[0] === 'he' ? 'אחר' : 'Other';
 }
 
 /**
