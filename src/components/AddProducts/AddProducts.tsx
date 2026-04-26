@@ -87,6 +87,7 @@ export function AddProducts({
             clearTimeout(minTimeDisableTimeoutRef.current); // Clear previous timer
             minTimeDisableTimeoutRef.current = setTimeout(() => {
                 setMinTimeDisabledActive(false);
+                //might not be needed but just in case to prevent memory leaks for now
             }, 500);
         }
     }, [isCreating]);
