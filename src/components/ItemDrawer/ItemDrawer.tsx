@@ -144,7 +144,7 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
 
                         {/* Quantity and Unit */}
                         <div className={styles.formRow}>
-                            <div className={styles.formGroup}>
+                            <div className={styles.formGroup} >
                                 <label htmlFor="itemQuantity" className={styles.label}>{t.quantity}</label>
                                 <input
                                     id="itemQuantity"
@@ -155,6 +155,7 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
                                     className={styles.input}
                                     min="0"
                                     step="any"
+                                    dir={lan === 'he-IL' ? 'rtl' : 'ltr'}
                                 />
                             </div>
                             <div className={styles.formGroup}>
@@ -190,6 +191,8 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
                                     className={styles.input}
                                     min="0"
                                     step="0.01"
+                                    dir={lan === 'he-IL' ? 'rtl' : 'ltr'}
+
                                 />
                             </div>
                         </div>
