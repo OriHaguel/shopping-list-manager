@@ -6,7 +6,7 @@ import axios, {
 
 const BASE_URL =
     process.env.NODE_ENV === 'production'
-        ? 'https://shopping-list-manager-backend-production.up.railway.app/api/'
+        ? 'https://app.listeck.com/api/'
         : 'http://localhost:3030/api/';
 
 // const BASE_URL =
