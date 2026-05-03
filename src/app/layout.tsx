@@ -1,24 +1,21 @@
 import '../styles/globals.css'
 import '../styles/globals.scss'
 import type { Metadata } from 'next'
-import { Inter, Plus_Jakarta_Sans } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { ReactQueryClientProvider } from './react-query-provider'
-import { Providers } from './providers';
+import { Providers } from './providers'
+import { GoogleAnalytics } from '@next/third-parties/google'
+
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
 })
 
-// const plusJakarta = Plus_Jakarta_Sans({
-//   subsets: ["latin"],
-//   weight: ["300", "400", "500", "600", "700", "800"],
-//   variable: "--font-jakarta",
-// });
-
 export const metadata: Metadata = {
   title: 'Listeck: The Quickest Shopping List Manager',
-  description: 'Listeck is the ultimate free shopping list manager. Organize groceries, add items via voice, and sync lists with family in real-time.'
+  description:
+    'Listeck is the ultimate free shopping list manager. Organize groceries, add items via voice, and sync lists with family in real-time.',
 }
 
 export default function RootLayout({
@@ -34,6 +31,9 @@ export default function RootLayout({
             {children}
           </Providers>
         </ReactQueryClientProvider>
+
+        {/* ✅ Google Analytics */}
+        <GoogleAnalytics gaId="G-LLC3HT5V9C" />
       </body>
     </html>
   )
