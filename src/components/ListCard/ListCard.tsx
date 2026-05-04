@@ -85,7 +85,7 @@ export function ListCard({ list, onClick, onDelete, onRename, onCopy }: ListCard
         <>
             <div className={`${styles.card} ${lan === 'he-IL' ? styles.rtl : ''}`} onClick={onClick}>
                 <div className={styles.content}>
-                    <h2 className={styles.name}>{list.name}</h2>
+                    <h2 className={styles.name} dir={lan === 'he-IL' ? 'rtl' : 'ltr'}>{list.name}</h2>
                     {sharedEmails.length > 0 && (
                         <div className={styles.sharedEmails}>
                             {sharedEmails.map((email, index) => (
