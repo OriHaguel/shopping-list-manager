@@ -7,6 +7,7 @@ import styles from './ItemDrawer.module.scss';
 import { UseMutationResult } from '@tanstack/react-query';
 import { getItem } from '@/utils/localStorage';
 import { useModalScrollLock } from '@/hooks/useModalScrollLock';
+import { CategoryDropdown } from '@/components/CategoryDropdown/CategoryDropdown';
 
 
 interface ItemDrawerProps {
@@ -129,17 +130,12 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
 
                         {/* Category */}
                         <div className={styles.formGroup}>
-                            <label htmlFor="itemCategory" className={styles.label}>{t.category}</label>
-                            <select
-                                id="itemCategory"
+                            <CategoryDropdown
                                 value={formData.category}
-                                onChange={(e) => handleChange('category', e.target.value)}
-                                className={styles.select}
-                            >
-                                {categories.map(cat => (
-                                    <option key={cat} value={cat}>{cat}</option>
-                                ))}
-                            </select>
+                                onChange={(value) => handleChange('category', value)}
+                                options={categories}
+                                label={t.category}
+                            />
                         </div>
 
                         {/* Quantity and Unit */}
