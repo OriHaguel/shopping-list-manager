@@ -5,7 +5,7 @@ import { getMessages } from '@/lib/getMessages';
 import { useState, useEffect } from 'react';
 import styles from './ItemDrawer.module.scss';
 import { UseMutationResult } from '@tanstack/react-query';
-import { getItem } from '@/utils/localStorage';
+import { getItem, setItem } from '@/utils/localStorage';
 import { useModalScrollLock } from '@/hooks/useModalScrollLock';
 import { CategoryDropdown } from '@/components/CategoryDropdown/CategoryDropdown';
 
@@ -33,7 +33,9 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
     const t = getMessages();
     const lan = getItem<string>('lan', '');
 
-    const categories = [t.vegetables, t.fruits, t.dairy, t.meat, t.frozen, t.fish, t.bakery, t.beverages, t.alcohol, t.snacks, t.cleaning, t.pets, t.electronics, t.health, t.clothing, t.baby, t.dry, t.other];
+    const defCategories = [t.vegetables, t.fruits, t.dairy, t.meat, t.frozen, t.fish, t.bakery, t.beverages, t.alcohol, t.snacks, t.cleaning, t.pets, t.electronics, t.health, t.clothing, t.baby, t.dry, t.other];
+
+    const categories = getItem<string[]>('categories', defCategories);
     const [formData, setFormData] = useState<ItemData>({
         _id: '',
         name: '',
@@ -43,6 +45,11 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
         price: 0,
         description: '',
     });
+
+    useEffect(() => {
+        localStorage.getItem('categories') ?? setItem('categories', defCategories);
+
+    }, []);
 
     useEffect(() => {
         if (initialData) {

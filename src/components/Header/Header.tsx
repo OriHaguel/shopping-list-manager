@@ -1,7 +1,7 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import styles from './Header.module.scss';
-import { getItem, setItem } from '@/utils/localStorage';
+import { getItem, removeItem, setItem } from '@/utils/localStorage';
 import { useRouter } from 'next/navigation';
 import { getUserEmail, logout } from '@/services/user/user.service';
 import { getMessages } from '@/lib/getMessages';
@@ -89,6 +89,7 @@ export const Header: React.FC = () => {
 
     const handleLanguageSelect = (language: string) => {
         setItem('lan', language);
+        removeItem('categories');
         window.location.reload()
     };
 
