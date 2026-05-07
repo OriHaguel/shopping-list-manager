@@ -4,17 +4,20 @@ import { useState, useRef, useEffect } from 'react';
 import styles from './CategoryDropdown.module.scss';
 import { CategoryIcon } from '@/components/CategoryIcon/CategoryIcon';
 import { getItem } from '@/utils/localStorage';
+import { AddCategoryModal } from '@/components/AddCategoryModal/AddCategoryModal';
 
 interface CategoryDropdownProps {
     value: string;
     onChange: (value: string) => void;
     options: string[];
     label: string;
+    onAddCategory?: (categoryName: string) => void;
 }
 
-export function CategoryDropdown({ value, onChange, options, label }: CategoryDropdownProps) {
+export function CategoryDropdown({ value, onChange, options, label, onAddCategory }: CategoryDropdownProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [highlightedIndex, setHighlightedIndex] = useState(0);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const listRef = useRef<HTMLUListElement>(null);
     const lan = getItem<string>('lan', '');
@@ -24,37 +27,37 @@ export function CategoryDropdown({ value, onChange, options, label }: CategoryDr
     const selectedIndex = options.indexOf(value);
 
     // Handle keyboard navigation
-    useEffect(() => {
-        if (!isOpen) return;
+    // useEffect(() => {
+    //     if (!isOpen) return;
 
-        const handleKeyDown = (e: KeyboardEvent) => {
-            switch (e.key) {
-                case 'ArrowDown':
-                    e.preventDefault();
-                    setHighlightedIndex(prev =>
-                        prev < options.length - 1 ? prev + 1 : prev
-                    );
-                    break;
-                case 'ArrowUp':
-                    e.preventDefault();
-                    setHighlightedIndex(prev =>
-                        prev > 0 ? prev - 1 : prev
-                    );
-                    break;
-                case 'Enter':
-                    e.preventDefault();
-                    handleSelect(options[highlightedIndex]);
-                    break;
-                case 'Escape':
-                    e.preventDefault();
-                    setIsOpen(false);
-                    break;
-            }
-        };
+    //     const handleKeyDown = (e: KeyboardEvent) => {
+    //         switch (e.key) {
+    //             case 'ArrowDown':
+    //                 e.preventDefault();
+    //                 setHighlightedIndex(prev =>
+    //                     prev < options.length - 1 ? prev + 1 : prev
+    //                 );
+    //                 break;
+    //             case 'ArrowUp':
+    //                 e.preventDefault();
+    //                 setHighlightedIndex(prev =>
+    //                     prev > 0 ? prev - 1 : prev
+    //                 );
+    //                 break;
+    //             case 'Enter':
+    //                 e.preventDefault();
+    //                 handleSelect(options[highlightedIndex]);
+    //                 break;
+    //             case 'Escape':
+    //                 e.preventDefault();
+    //                 setIsOpen(false);
+    //                 break;
+    //         }
+    //     };
 
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isOpen, highlightedIndex, options]);
+    //     window.addEventListener('keydown', handleKeyDown);
+    //     return () => window.removeEventListener('keydown', handleKeyDown);
+    // }, [isOpen, highlightedIndex, options]);
 
     // Scroll highlighted item into view
     useEffect(() => {
@@ -84,9 +87,17 @@ export function CategoryDropdown({ value, onChange, options, label }: CategoryDr
         setHighlightedIndex(0);
     };
 
+    const handleAddCustomCategory = (categoryName: string) => {
+        if (onAddCategory) {
+            onAddCategory(categoryName);
+            setIsModalOpen(false);
+            setIsOpen(false);
+        }
+    };
+
     const handleOpen = () => {
         setIsOpen(!isOpen);
-        setHighlightedIndex(selectedIndex >= 0 ? selectedIndex : 0);
+        setHighlightedIndex(selectedIndex >= 0 ? selectedIndex + 1 : 0);
     };
 
     return (
@@ -131,12 +142,32 @@ export function CategoryDropdown({ value, onChange, options, label }: CategoryDr
                     className={styles.menu}
                     role="listbox"
                 >
+                    {/* Add Custom Category Option */}
+                    <li
+                        onClick={() => setIsModalOpen(true)}
+                        className={styles.addCategoryOption}
+                        role="option"
+                    >
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path
+                                d="M10 4v12M4 10h12"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                            />
+                        </svg>
+                        <span className={styles.text}>Add Custom Category</span>
+                    </li>
+
+                    {/* Divider */}
+                    <div className={styles.divider} />
+
+                    {/* Category Options */}
                     {options.map((option, index) => (
                         <li
                             key={option}
                             onClick={() => handleSelect(option)}
-                            className={`${styles.option} ${highlightedIndex === index ? styles.highlighted : ''
-                                } ${selectedIndex === index ? styles.selected : ''}`}
+                            className={`${styles.option} ${selectedIndex === index ? styles.selected : ''}`}
                             role="option"
                             aria-selected={selectedIndex === index}
                         >
@@ -146,6 +177,14 @@ export function CategoryDropdown({ value, onChange, options, label }: CategoryDr
                     ))}
                 </ul>
             )}
+
+            {/* Add Category Modal */}
+            <AddCategoryModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onAdd={handleAddCustomCategory}
+                existingCategories={options}
+            />
         </div>
     );
 }

@@ -1,0 +1,212 @@
+@use '../../styles/setup/variables' as *;
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1100;
+    animation: fadeIn 0.2s ease;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    z-index: 1101;
+    animation: slideIn 0.3s ease;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-lg $spacing-2xl;
+    border-bottom: 1px solid $neutral-light-gray;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 600;
+    color: $neutral-text;
+    margin: 0;
+}
+
+.closeButton {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: none;
+    color: $neutral-dark-gray;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: $neutral-light-gray;
+        color: $neutral-text;
+    }
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.content {
+    flex: 1;
+    padding: 24px;
+}
+
+.label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: $neutral-text;
+    margin-bottom: 8px;
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid $neutral-medium-gray;
+    font-size: 14px;
+    color: $neutral-text;
+    font-family: $font-family;
+    transition: all 0.2s ease;
+
+    &::placeholder {
+        color: $neutral-dark-gray;
+    }
+
+    &:focus {
+        outline: none;
+        border-color: $primary-blue;
+        box-shadow: 0 0 0 3px rgba(91, 140, 168, 0.1);
+    }
+
+    &.inputError {
+        border-color: #ef4444;
+
+        &:focus {
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+    }
+}
+
+.errorMessage {
+    color: #ef4444;
+    font-size: 13px;
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+
+.helperText {
+    font-size: 12px;
+    color: $neutral-dark-gray;
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+
+.footer {
+    display: flex;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: 1px solid $neutral-light-gray;
+}
+
+.cancelButton {
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    flex: 1;
+    padding: 12px 24px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all .2s;
+    color: $neutral-dark-gray;
+    background: $neutral-light-gray;
+
+    &:hover {
+        background: #e0e5eb;
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}
+
+.addButton {
+    cursor: pointer;
+    border: none;
+    border-radius: 20px;
+    flex: 1;
+    padding: 12px 24px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all .2s;
+    color: #fff;
+    background: #ff8b6b;
+
+    &:hover:not(:disabled) {
+        background: $accent-peach
+    }
+
+
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+.rtl {
+    .closeButton {
+        order: -1;
+    }
+
+    .header {
+        flex-direction: row-reverse;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -48%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}

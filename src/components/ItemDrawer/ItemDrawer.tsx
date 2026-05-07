@@ -80,6 +80,13 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
     const handleChange = (field: keyof ItemData, value: string) => {
         setFormData(prev => ({ ...prev, [field]: value }));
     };
+
+    const handleAddCategory = (categoryName: string) => {
+        const updatedCategories = [...categories, categoryName];
+        setItem('categories', updatedCategories);
+        handleChange('category', categoryName);
+    };
+
     const handleDelete = async () => {
         try {
             await deleteItemMutation.mutateAsync(formData._id);
@@ -142,6 +149,7 @@ export function ItemDrawer({ isOpen, onClose, onSave, initialData, deleteItemMut
                                 onChange={(value) => handleChange('category', value)}
                                 options={categories}
                                 label={t.category}
+                                onAddCategory={handleAddCategory}
                             />
                         </div>
 
