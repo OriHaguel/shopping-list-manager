@@ -173,5 +173,7 @@ export const he = {
     categoryNameCannotBeEmpty: 'שם הקטגוריה לא יכול להיות ריק',
     thisCategoryAlreadyExists: 'קטגוריה זו כבר קיימת',
     categoryNameIsTooLong: 'שם הקטגוריה ארוך מדי (מקסימום 30 תווים)',
+    categoryNamePlaceholder: 'למשל, מוקד, חטיפים, אורגני...',
+    characterCount: 'תווים',
     addCategory: 'הוסף קטגוריה'
 };

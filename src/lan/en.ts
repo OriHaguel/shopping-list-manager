@@ -173,5 +173,7 @@ export const en = {
     categoryNameCannotBeEmpty: 'Category name cannot be empty',
     thisCategoryAlreadyExists: 'This category already exists',
     categoryNameIsTooLong: 'Category name is too long (max 30 characters)',
+    categoryNamePlaceholder: 'e.g., Pantry, Snacks, Organic...',
+    characterCount: 'characters',
     addCategory: 'Add Category'
 };

@@ -102,14 +102,14 @@ export function AddCategoryModal({ isOpen, onClose, onAdd, existingCategories }:
                                     handleSubmit();
                                 }
                             }}
-                            placeholder="e.g., Pantry, Snacks, Organic..."
+                            placeholder={t.categoryNamePlaceholder}
                             className={`${styles.input} ${error ? styles.inputError : ''}`}
                             autoFocus
                             maxLength={30}
                         />
                         {error && <p className={styles.errorMessage}>{error}</p>}
                         <p className={styles.helperText}>
-                            {categoryName.length}/30 characters
+                            {categoryName.length}/30 {t.characterCount}
                         </p>
                     </div>
 
