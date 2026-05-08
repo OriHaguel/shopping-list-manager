@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import styles from './AddCategoryModal.module.scss';
 import { getItem } from '@/utils/localStorage';
+import { getMessages } from '@/lib/getMessages';
 
 interface AddCategoryModalProps {
     isOpen: boolean;
@@ -16,6 +17,7 @@ export function AddCategoryModal({ isOpen, onClose, onAdd, existingCategories }:
     const [error, setError] = useState('');
     const lan = getItem<string>('lan', '');
     const isRTL = lan === 'he-IL';
+    const t = getMessages();
 
     const handleSubmit = (e?: React.FormEvent) => {
         if (e) {
@@ -25,17 +27,17 @@ export function AddCategoryModal({ isOpen, onClose, onAdd, existingCategories }:
 
         // Validation
         if (!trimmedName) {
-            setError('Category name cannot be empty');
+            setError(t.categoryNameCannotBeEmpty);
             return;
         }
 
         if (existingCategories.some(cat => cat.toLowerCase() === trimmedName.toLowerCase())) {
-            setError('This category already exists');
+            setError(t.thisCategoryAlreadyExists);
             return;
         }
 
         if (trimmedName.length > 30) {
-            setError('Category name is too long (max 30 characters)');
+            setError(t.categoryNameIsTooLong);
             return;
         }
 
@@ -64,7 +66,7 @@ export function AddCategoryModal({ isOpen, onClose, onAdd, existingCategories }:
             {/* Modal */}
             <div className={`${styles.modal} ${isRTL ? styles.rtl : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>
                 <div className={styles.header}>
-                    <h2 className={styles.title}>Create Custom Category</h2>
+                    <h2 className={styles.title}>{t.createCustomCategory}</h2>
                     <button
                         type="button"
                         onClick={handleClose}
@@ -85,7 +87,7 @@ export function AddCategoryModal({ isOpen, onClose, onAdd, existingCategories }:
                 <div className={styles.form}>
                     <div className={styles.content}>
                         <label htmlFor="categoryNameInput" className={styles.label}>
-                            Category Name
+                            {t.categoryName}
                         </label>
                         <input
                             id="categoryNameInput"
@@ -117,7 +119,7 @@ export function AddCategoryModal({ isOpen, onClose, onAdd, existingCategories }:
                             onClick={handleClose}
                             className={styles.cancelButton}
                         >
-                            Cancel
+                            {t.cancel}
                         </button>
                         <button
                             type="button"
@@ -125,7 +127,7 @@ export function AddCategoryModal({ isOpen, onClose, onAdd, existingCategories }:
                             className={styles.addButton}
                             disabled={!categoryName.trim()}
                         >
-                            Add Category
+                            {t.addCategory}
                         </button>
                     </div>
                 </div>

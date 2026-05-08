@@ -166,5 +166,12 @@ export const he = {
     // Navigation
     home: 'בית',
     getStarted: 'התחל',
-    hebrew: 'עברית'
+    hebrew: 'עברית',
+    // Custom Category Modal
+    createCustomCategory: 'צור קטגוריה מותאמת אישית',
+    categoryName: 'שם קטגוריה',
+    categoryNameCannotBeEmpty: 'שם הקטגוריה לא יכול להיות ריק',
+    thisCategoryAlreadyExists: 'קטגוריה זו כבר קיימת',
+    categoryNameIsTooLong: 'שם הקטגוריה ארוך מדי (מקסימום 30 תווים)',
+    addCategory: 'הוסף קטגוריה'
 };

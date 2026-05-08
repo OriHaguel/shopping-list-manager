@@ -166,5 +166,12 @@ export const en = {
     // Navigation
     home: 'Home',
     getStarted: 'Get Started',
-    hebrew: 'עברית'
+    hebrew: 'עברית',
+    // Custom Category Modal
+    createCustomCategory: 'Create Custom Category',
+    categoryName: 'Category Name',
+    categoryNameCannotBeEmpty: 'Category name cannot be empty',
+    thisCategoryAlreadyExists: 'This category already exists',
+    categoryNameIsTooLong: 'Category name is too long (max 30 characters)',
+    addCategory: 'Add Category'
 };
