@@ -1,0 +1,21 @@
+@use '../../styles/setup/variables' as *;
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: $spacing-5xl $spacing-lg;
+
+    h1 {
+        font-size: $font-size-2xl;
+        color: $neutral-text;
+        margin-bottom: $spacing-2xl;
+        font-weight: 600;
+    }
+
+    p {
+        font-size: $font-size-base;
+        color: $neutral-dark-gray;
+        line-height: 1.6;
+        margin-bottom: $spacing-lg;
+    }
+}

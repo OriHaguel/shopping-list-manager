@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ReactQueryClientProvider } from './react-query-provider'
 import { Providers } from './providers'
-import { GoogleAnalytics } from '@next/third-parties/google'
+import Script from 'next/script'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -32,8 +32,12 @@ export default function RootLayout({
           </Providers>
         </ReactQueryClientProvider>
 
-        {/* ✅ Google Analytics */}
-        <GoogleAnalytics gaId="G-LLC3HT5V9C" />
+        {/* Cloudflare Web Analytics */}
+        <Script
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "f8e3fc71776b48958c09529262e49239"}'
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   )
