@@ -6,7 +6,7 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  background-image: url('../../../public/herobg.webp');
+  background-image: url('/herobg.webp');
 
   background-repeat: no-repeat;
   background-position: center;
@@ -17,12 +17,12 @@
   }
 
   @media (max-width: $screen-md) {
-    background-image: url('../../../public/mobileherobg.webp');
+    background-image: url('/mobileherobg.webp');
 
   }
 
   @media (max-width: $screen-sm) {
-    background-image: url('../../../public/smallmobileherobg.webp');
+    background-image: url('/smallmobileherobg.webp');
 
   }
 }
