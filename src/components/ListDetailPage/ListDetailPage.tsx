@@ -354,7 +354,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                                         <CategoryIcon category={category} size={24} />
                                                         <span>{category}</span>
                                                         <button
-                                                            className={`${chevronStyles.chevronButton} ${expandedCategories.has(category) ? chevronStyles.chevronOpen : chevronStyles.chevronClosed}`}
+                                                            className={`${chevronStyles.chevronButton} ${expandedCategories.has(category) ? chevronStyles.chevronOpen : chevronStyles.chevronClosed} ${lan === 'he-IL' ? chevronStyles.rtl : ''}`}
                                                             onClick={(e) => {
                                                                 e.preventDefault();
                                                                 toggleCategoryExpansion(category);
