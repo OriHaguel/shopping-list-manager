@@ -234,6 +234,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem; // Consistent spacing between icon and text
+    cursor: pointer;
 
     &.rtl {
         flex-direction: row-reverse; // Reverse the order of icon and text for RTL

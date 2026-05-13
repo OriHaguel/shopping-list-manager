@@ -1,0 +1,34 @@
+@use '../../../styles/setup/variables' as *;
+
+.chevronButton {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: $neutral-text;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    margin-left: auto;
+
+    &:hover {
+        color: $primary-dark-blue;
+    }
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.chevronOpen {
+    transform: rotate(0deg);
+}
+
+.chevronClosed {
+    transform: rotate(90deg);
+}

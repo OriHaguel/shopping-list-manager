@@ -15,6 +15,8 @@ import { EmailShareModal } from '../EmailShareModal/EmailShareModal';
 import { shareList } from '@/services/list/list.service';
 import { Header } from '../Header/Header';
 import { EditOutline } from '../svg/EditOutline/EditOutline';
+import { ChevronDown } from '../svg/ChevronDown/ChevronDown';
+import chevronStyles from '../svg/ChevronDown/ChevronDown.module.scss';
 
 interface ListDetailPageProps {
     listId: string;
@@ -31,6 +33,7 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const [sortType, setSortType] = useState<'a-z' | 'category' | null>(null);
     const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+    const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
 
     const menuRef = useRef<HTMLDivElement>(null);
     const {
@@ -117,6 +120,11 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
         }, 0);
     }, [items]);
 
+    // Initialize expanded categories on mount and when categories change
+    useEffect(() => {
+        setExpandedCategories(new Set(categoryOrder));
+    }, [categoryOrder]);
+
     const handleItemClick = (item: Item) => {
         setSelectedItem(item);
         setIsDrawerOpen(true);
@@ -150,6 +158,18 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
 
     const handleSort = (type: 'a-z' | 'category') => {
         setSortType(type);
+    };
+
+    const toggleCategoryExpansion = (category: string) => {
+        setExpandedCategories(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(category)) {
+                newSet.delete(category);
+            } else {
+                newSet.add(category);
+            }
+            return newSet;
+        });
     };
 
     useEffect(() => {
@@ -333,8 +353,18 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
                                                     <h3 className={`${styles.categoryTitle} ${lan === 'he-IL' ? styles.rtl : ''}`}>
                                                         <CategoryIcon category={category} size={24} />
                                                         <span>{category}</span>
+                                                        <button
+                                                            className={`${chevronStyles.chevronButton} ${expandedCategories.has(category) ? chevronStyles.chevronOpen : chevronStyles.chevronClosed}`}
+                                                            onClick={(e) => {
+                                                                e.preventDefault();
+                                                                toggleCategoryExpansion(category);
+                                                            }}
+                                                            aria-label={`Toggle ${category}`}
+                                                        >
+                                                            <ChevronDown />
+                                                        </button>
                                                     </h3>
-                                                    {uncheckedItemsInCategory.map(renderItem)}
+                                                    {expandedCategories.has(category) && uncheckedItemsInCategory.map(renderItem)}
                                                 </div>
                                             );
                                         })}
