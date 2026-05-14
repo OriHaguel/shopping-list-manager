@@ -6,24 +6,25 @@
   display: flex;
   align-items: center;
   overflow: hidden;
-  background-image: url('/herobg.webp');
-
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
 
   @media (max-width: 1200px) {
     min-height: 75vh;
   }
+}
 
-  @media (max-width: $screen-md) {
-    background-image: url('/mobileherobg.webp');
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
 
-  }
-
-  @media (max-width: $screen-sm) {
-    background-image: url('/smallmobileherobg.webp');
-
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 }
 
