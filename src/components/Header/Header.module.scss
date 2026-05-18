@@ -36,6 +36,44 @@
     align-items: center;
 }
 
+.feedback {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 $spacing-lg;
+
+    @media (max-width: $screen-md) {
+        padding: $spacing-sm;
+    }
+}
+
+.feedbackLink {
+    font-size: $font-size-base;
+    color: $primary-blue;
+    text-decoration: none;
+    transition: $transition;
+    white-space: nowrap;
+    font-weight: 500;
+    text-align: center;
+
+    @media (max-width: $screen-md) {
+        white-space: normal;
+        line-height: 1.4;
+        font-size: $font-size-sm;
+
+    }
+
+    &:hover {
+        color: $primary-dark-blue;
+        text-decoration: underline;
+    }
+
+    &:active {
+        color: $primary-dark-blue;
+    }
+}
+
 .title {
     font-size: $font-size-xl;
     font-weight: 600;

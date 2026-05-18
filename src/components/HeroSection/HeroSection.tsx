@@ -4,12 +4,9 @@ import { ArrowRight } from 'lucide-react'
 import styles from './HeroSection.module.scss'
 import { useRouter } from 'next/navigation'
 import { getMessages } from '@/lib/getMessages'
-import { getItem } from '@/utils/localStorage'
 
 export function HeroSection() {
     const router = useRouter()
-    const messages = getMessages()
-    const lan = getItem<string>('lan', '');
     const handleListClick = () => {
         router.push(`/auth`)
     }
@@ -26,19 +23,19 @@ export function HeroSection() {
             <div className={styles.contentWrapper}>
                 <div className={styles.gridContainer}>
                     {/* Left Column - Text */}
-                    <div className={styles.leftColumn} dir={lan === 'he-IL' ? 'rtl' : 'ltr'}>
+                    <div className={styles.leftColumn}>
                         <h1 className={styles.heading}>
-                            {messages.shoppingListsSimplified.split(',')[0]}{'  '}
-                            <span className={styles.headingAccent}>{messages.fast}</span>
+                            Shopping lists made
+                            <span className={styles.headingAccent}> fast</span>
                         </h1>
 
                         <p className={styles.description}>
-                            {messages.authSecondaryText}
+                            Organize your shopping lists in seconds, collaborate with family and friends, and add items by voice — completely free.
                         </p>
 
                         <div className={styles.ctaContainer}>
                             <button className={styles.ctaButton} onClick={handleListClick}>
-                                {messages.startForFree}
+                                Start for Free
                                 <ArrowRight />
                             </button>
                         </div>

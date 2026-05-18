@@ -105,6 +105,12 @@ export const Header: React.FC = () => {
                     <ListeckName />
                 </div>
 
+                <div className={styles.feedback}>
+                    <a href="mailto:listeckk@gmail.com" className={styles.feedbackLink}>
+                        Contact me at listeckk@gmail.com
+                    </a>
+                </div>
+
                 <div className={styles.user}>
                     <button
                         ref={avatarRef}
