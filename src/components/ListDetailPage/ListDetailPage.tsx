@@ -207,7 +207,6 @@ export function ListDetailPage({ listId }: ListDetailPageProps) {
         <div
             key={item._id}
             className={`${item.checked ? styles.checkedItemRow : styles.itemRow} ${lan === 'he-IL' ? styles.rtl : ''}`}
-            onClick={() => handleToggleItem(item._id, item.checked || false)}
         >
             <label
                 className={styles.checkboxWrapper}

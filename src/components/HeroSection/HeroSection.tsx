@@ -3,7 +3,6 @@
 import { ArrowRight } from 'lucide-react'
 import styles from './HeroSection.module.scss'
 import { useRouter } from 'next/navigation'
-import { getMessages } from '@/lib/getMessages'
 
 export function HeroSection() {
     const router = useRouter()
