@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shopping List Manager
 
-## Getting Started
+A modern, responsive web application for managing shopping lists with smart categorization, voice input, expense tracking, and list sharing capabilities. Works seamlessly on desktop, laptop, tablets, and mobile devices.
 
-First, run the development server:
+## 🎯 Features
+
+### List Management
+- **Create Lists** - Create multiple shopping lists for different purposes
+- **Share Lists** - Share your lists with others via email
+- **Rename Lists** - Update list names anytime
+- **Delete Lists** - Remove lists you no longer need
+
+### Smart Item Management
+- **Auto-Categorization** - Items are automatically placed in their correct category (e.g., Milk → Dairy)
+- **Edit Items** - Modify item properties including:
+  - Item name
+  - Quantity/Amount
+  - Price per unit
+  - Category
+  - Custom category assignment
+- **Custom Categories** - Create your own custom categories for items
+
+### Voice Input
+- **Speech-to-Text** - Add items using your voice
+- **Batch Input** - Say multiple items (e.g., "banana and apples") to create multiple list items at once
+
+### Expense Tracking
+- **Purchase Tracking** - Track how much money you spent on items you've already bought
+- **Budget Estimation** - See the estimated total cost of items you plan to buy
+- **Expense Overview** - Monitor your spending and budget planning
+
+## 🚀 Getting Started
+
+First, install dependencies and run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [Next.js](https://nextjs.org) - React framework with App Router
+- [React Query](https://tanstack.com/query/latest) - Server state management
+- [TypeScript](https://www.typescriptlang.org) - Type safety
+- [SCSS Modules](https://sass-lang.com) - Scoped styling
 
-## Learn More
+## 📱 Responsive Design
 
-To learn more about Next.js, take a look at the following resources:
+The application is fully responsive and optimized for:
+- 💻 Desktop computers
+- 💻 Laptops
+- 📱 Tablets
+- 📱 Mobile phones
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/              # Next.js App Router pages
+├── components/       # Reusable React components
+├── hooks/            # Custom React hooks
+├── services/         # API service layer
+├── lib/              # Utilities and helpers
+├── styles/           # Global styles and SCSS setup
+├── types/            # TypeScript type definitions
+├── lan/              # Internationalization (i18n)
+└── utils/            # Utility functions
+```
 
-## Deploy on Vercel
+## 🌐 Internationalization
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The application supports multiple languages including English and Hebrew with full RTL support.
