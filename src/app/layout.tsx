@@ -13,7 +13,7 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'Listeck: The Quickest Shopping List Manager',
+  title: "Listeck: Create Shopping Lists in Seconds",
   description:
     'Listeck is the ultimate free shopping list manager. Organize groceries, add items via voice, and sync lists with family in real-time.',
 }
