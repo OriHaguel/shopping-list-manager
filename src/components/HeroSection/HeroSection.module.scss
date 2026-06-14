@@ -138,7 +138,6 @@
     width: 100%;
   }
 
-
   &:hover {
     background-color: $accent-peach;
     box-shadow: 0 8px 20px rgba($accent-coral, 0.3);
@@ -156,6 +155,31 @@
     width: 16px;
     height: 16px;
     transition: $transition;
+  }
+}
+
+.secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba($neutral-white, 0.95);
+  color: $primary-dark-blue;
+  border: 2px solid $neutral-white;
+  padding: $spacing-lg $spacing-2xl;
+  border-radius: $radius-full;
+  font-size: $font-size-lg;
+  font-weight: 700;
+  cursor: pointer;
+  transition: $transition;
+  border: 1px solid $primary-dark-blue;
+
+
+  @media (max-width: $screen-sm) {
+    width: 100%;
+  }
+
+  &:active {
+    transform: scale(0.98);
   }
 }
 

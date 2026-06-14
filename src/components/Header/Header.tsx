@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { getUserEmail, logout } from '@/services/user/user.service';
 import { getMessages } from '@/lib/getMessages';
 import { ListeckName } from '../ListeckName/ListeckName';
+import { isGuest } from '@/lib/utils';
 
 type Language = {
     code: string;
@@ -71,13 +72,20 @@ export const Header: React.FC = () => {
         const fetchUserEmail = async () => {
             try {
                 const email = await getUserEmail();
-                setUserEmail(email);
+                if (email) {
+                    setUserEmail(email);
+                } else {
+                    setUserEmail('guest user');
+                }
             } catch (error) {
                 console.error('Failed to fetch user email:', error);
             }
         };
         fetchUserEmail();
     }, []);
+
+
+
     const handleAvatarClick = () => {
         setIsDropdownOpen(!isDropdownOpen);
         setIsLanguageSubmenuOpen(false);
@@ -98,18 +106,30 @@ export const Header: React.FC = () => {
         await logout()
         router.push('/auth');
     }
+    async function test() {
+        router.push('/auth');
+    }
     return (
         <header className={styles.header}>
             <div className={styles.container}>
                 <div className={styles.logo}>
                     <ListeckName />
                 </div>
+                {isGuest() ?
 
-                <div className={styles.feedback}>
-                    <a href="mailto:listeckk@gmail.com" className={styles.feedbackLink}>
-                        Contact me at listeckk@gmail.com
-                    </a>
-                </div>
+                    <button className={styles.signupButton} onClick={test}>
+                        Sign Up
+                    </button> :
+
+                    <div className={styles.feedback}>
+                        <a href="mailto:listeckk@gmail.com" className={styles.feedbackLink}>
+                            Contact me at listeckk@gmail.com
+                        </a>
+                    </div>
+                }
+
+
+
 
                 <div className={styles.user}>
                     <button

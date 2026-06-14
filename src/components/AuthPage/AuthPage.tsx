@@ -1,6 +1,6 @@
 'use client'
 import { getMessages } from '@/lib/getMessages';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './AuthPage.module.scss';
 import { login, signup } from '@/services/user/user.service';
 import { useRouter } from 'next/navigation';
@@ -15,6 +15,7 @@ export const AuthPage: React.FC = () => {
     const [formData, setFormData] = useState({
         email: '',
         password: '',
+        userId: '', // For guest login
     });
     const [errors, setErrors] = useState({
         email: '',
@@ -24,6 +25,14 @@ export const AuthPage: React.FC = () => {
         email: false,
         password: false,
     });
+
+    useEffect(() => {
+
+        if (getItem('userId', null)) (
+            setFormData(prev => ({ ...prev, userId: getItem('userId', '') }))
+        )
+
+    }, []);
 
     const validateEmail = (email: string): boolean => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -112,7 +121,7 @@ export const AuthPage: React.FC = () => {
 
     };
     const handleGoogleLogin = () => {
-        const googleUrl = process.env.NODE_ENV === 'production' ? 'https://app.listeck.com/api/users/google/login' : 'http://localhost:3030/api/users/google/login';
+        const googleUrl = process.env.NODE_ENV === 'production' ? `https://app.listeck.com/api/users/google/start?userId=${formData.userId ?? ''}` : `http://localhost:3030/api/users/google/start?userId=${formData.userId ?? ''}`;
         window.location.href = googleUrl;
     };
     return (

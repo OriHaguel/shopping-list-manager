@@ -1,10 +1,11 @@
-import { AuthenticationError, SavedUser, UserSignupLogin } from "@/types";
+import { AuthenticationError, SavedUser, UserLogin, UserSignup } from "@/types";
 import { httpService } from "../http.service";
 import { tokenService } from "./token.service";
+import { removeItem, setItem } from "@/utils/localStorage";
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser';
 // saveLoggedinUser AND getLoggedinUser MIGHT NOT BE NEEDED 
-export async function signup(userCred: UserSignupLogin): Promise<SavedUser> {
+export async function signup(userCred: UserSignup): Promise<SavedUser> {
     try {
         const response = await httpService.post('users/signup', userCred);
 
@@ -13,6 +14,7 @@ export async function signup(userCred: UserSignupLogin): Promise<SavedUser> {
             tokenService.setAccessToken(response.accessToken);
         }
         // MIGHT NOT BE NEEDED 
+        removeItem('userId'); // Clear any existing guest user ID
         return saveLoggedinUser(response.user);
     } catch (err) {
         throw new AuthenticationError(
@@ -21,7 +23,39 @@ export async function signup(userCred: UserSignupLogin): Promise<SavedUser> {
     }
 }
 
-export async function login(userCred: UserSignupLogin): Promise<SavedUser> {
+
+export async function createGuest(): Promise<void> {
+    try {
+        const response = await httpService.post('users/create-guest');
+
+        // Store access token if provided
+        if (response.accessToken) {
+            tokenService.setAccessToken(response.accessToken);
+        }
+        // MIGHT NOT BE NEEDED 
+        setItem('userId', response.user._id);
+    } catch (err) {
+        throw new AuthenticationError(
+            err instanceof Error ? err.message : 'An error occurred during the signup process'
+        );
+    }
+}
+
+export async function loginGuest(userId: string): Promise<void> {
+    try {
+        const response = await httpService.post('users/login-guest', { userId });
+        // Store access token if provided
+        if (response.accessToken) {
+            tokenService.setAccessToken(response.accessToken);
+        }
+
+    } catch (err) {
+        throw new AuthenticationError(
+            err instanceof Error ? err.message : 'An error occurred during the login process'
+        );
+    }
+}
+export async function login(userCred: UserLogin): Promise<SavedUser> {
     try {
         const response = await httpService.post('users/login', userCred);
         // Store access token if provided
@@ -36,6 +70,7 @@ export async function login(userCred: UserSignupLogin): Promise<SavedUser> {
         );
     }
 }
+
 export async function getUsersEmail(usersId: string[]): Promise<SavedUser> {
     try {
         const user = await httpService.post('users/email', { usersId });
@@ -64,10 +99,10 @@ export async function logout() {
         );
     }
 }
-export async function getUserEmail(): Promise<string> {
+export async function getUserEmail(): Promise<string | undefined> {
     try {
         const response = await httpService.get('users');
-        return response.email || response;
+        return response.email;
     } catch (err) {
         console.log("error getting user email", err)
         throw new AuthenticationError(

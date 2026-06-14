@@ -1,7 +1,7 @@
 // components/ListsPage/ListsPage.tsx
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styles from './ListsPage.module.scss';
@@ -12,8 +12,9 @@ import { FAB } from '../FAB/FAB';
 import { ListCard } from '../ListCard/ListCard';
 import { ProductivityLoader } from '../Loader/Loader';
 import { getMessages } from '@/lib/getMessages';
-import { getItem } from '@/utils/localStorage';
+import { getItem, removeItem } from '@/utils/localStorage';
 import { Header } from '../Header/Header';
+import { getUserEmail } from '@/services/user/user.service';
 export function ListsPage() {
     const t = getMessages();
     const lan = getItem<string>('lan', '');
@@ -35,8 +36,22 @@ export function ListsPage() {
     });
 
 
+    useEffect(() => {
+        // 1. Define the async function inside the effect
+        const items = getItem('userId', null);
+        if (items) {
+            const checkUserAndClear = async () => {
+                const email = await getUserEmail();
+                if (email) {
+                    removeItem('userId');
+                }
+            };
+            checkUserAndClear();
+        }
 
+        // 2. Call it immediately
 
+    }, []);
     // Create list mutation
     const createListMutation = useMutation({
         mutationFn: (name: string) => createList({ name }),
@@ -51,6 +66,7 @@ export function ListsPage() {
             // You could show a toast notification here
         },
     });
+
     const updateListMutation = useMutation({
         mutationFn: (list: List) => updateList(list),
         onSuccess: (newList) => {

@@ -16,8 +16,12 @@ export interface User extends UserBase {
 export type SavedUser = Omit<User, 'password'>;
 
 // Signup/Login payload (no _id yet)
-export interface UserSignupLogin extends UserBase {
+export interface UserLogin extends UserBase {
     password: string;
+}
+export interface UserSignup extends UserBase {
+    password: string;
+    userId?: string; // Optional for guest users
 }
 
 

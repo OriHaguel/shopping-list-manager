@@ -89,7 +89,7 @@ export function ListCard({ list, onClick, onDelete, onRename, onCopy }: ListCard
                     {sharedEmails.length > 0 && (
                         <div className={styles.sharedEmails}>
                             {sharedEmails.map((email, index) => (
-                                <span key={index} className={styles.email}>{email}</span>
+                                <span key={index} className={styles.email}>{email || 'Guest User'}</span>
                             ))}
                         </div>
                     )}

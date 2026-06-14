@@ -3,11 +3,25 @@
 import { ArrowRight } from 'lucide-react'
 import styles from './HeroSection.module.scss'
 import { useRouter } from 'next/navigation'
+import { createGuest, loginGuest } from '@/services/user/user.service'
+import { getItem } from '@/utils/localStorage'
 
 export function HeroSection() {
     const router = useRouter()
     const handleListClick = () => {
         router.push(`/auth`)
+    }
+
+    async function handleDemoClick() {
+        const userId = getItem('userId', null);
+        if (!userId) {
+            await createGuest();
+            console.log('Guest user created and logged in');
+        } else {
+            await loginGuest(userId);
+
+        }
+        router.push(`/list`);
     }
 
     return (
@@ -36,6 +50,9 @@ export function HeroSection() {
                             <button className={styles.ctaButton} onClick={handleListClick}>
                                 Start for Free
                                 <ArrowRight />
+                            </button>
+                            <button className={styles.secondaryButton} onClick={handleDemoClick}>
+                                Try Demo
                             </button>
                         </div>
                     </div>
