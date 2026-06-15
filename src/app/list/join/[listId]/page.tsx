@@ -19,10 +19,10 @@ export default function ListJoin() {
 
         const run = async () => {
             try {
-                const userId = getItem('userId', null);
-                if (!userId) {
-                    await createGuest()
-                }
+                // const userId = getItem('userId', null);
+                // if (!userId) {
+                //     await createGuest()
+                // }
                 await linkList(listId);
                 router.push(`/list`);
             } catch (err) {
