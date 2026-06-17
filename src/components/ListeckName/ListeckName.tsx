@@ -1,8 +1,14 @@
 import styles from './ListeckName.module.scss'
+import { useRouter } from 'next/navigation';
 
 export function ListeckName({ color = '#5B8CA8' }) {
+    const router = useRouter();
+
+    function handleClick() {
+        router.push('/list');
+    }
     return (
-        <div className={styles.logoWrapper}>
+        <div className={styles.logoWrapper} onClick={handleClick}>
             <div className={styles.logoIcon}>
                 {/* <ShoppingCart /> */}
                 <img src="/listecklogo.webp" alt="Listeck logo" />

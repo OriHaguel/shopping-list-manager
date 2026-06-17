@@ -31,6 +31,24 @@
     }
 }
 
+.signupButton {
+    margin-left: auto;
+    margin-right: 1.25rem;
+    color: #fff;
+    background: #ff8b6b;
+    cursor: pointer;
+    border: none;
+    padding: 12px 24px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all .2s;
+
+    &:hover {
+        background: $accent-peach;
+    }
+}
+
 .logo {
     display: flex;
     align-items: center;
