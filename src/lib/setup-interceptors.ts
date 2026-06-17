@@ -40,9 +40,13 @@ export async function refreshAccessToken(): Promise<string> {
         if (axiosError.response?.status === 401 || axiosError.response?.status === 403) {
             console.warn('Refresh token authentication failed, redirecting to login');
             tokenService.clearTokens();
-            // if (currentPath != '/' && currentPath != '/auth') {
-            //     window.location.assign('/');
-            // }
+            if (
+                currentPath !== '/' &&
+                currentPath !== '/auth' &&
+                !currentPath.startsWith('/list/join/')
+            ) {
+                window.location.assign('/');
+            }
             throw error;
         }
 
