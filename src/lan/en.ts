@@ -37,6 +37,7 @@ export const en = {
     noListsYet: 'No lists yet',
     createYourFirstListToGetStarted: 'Create your first list to get started',
     shareList: 'Share List',
+    inOrderToShareListSignUp: 'In order to share list, sign up',
     closeModal: 'Close modal',
     enterEmailAddress: 'Enter email address',
     invite: 'Invite',

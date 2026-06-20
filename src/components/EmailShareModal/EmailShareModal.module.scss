@@ -252,3 +252,43 @@
         transform: translateY(0) scale(0.98);
     }
 }
+
+.signupView {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    text-align: center;
+}
+
+.signupMessage {
+    font-size: $font-size-lg;
+    color: $neutral-dark-gray;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.signupButton {
+    width: 100%;
+    padding: $spacing-lg $spacing-2xl;
+    border-radius: $radius-full;
+    border: none;
+    background: $accent-coral;
+    color: $neutral-white;
+    font-size: $font-size-lg;
+    font-weight: 600;
+    cursor: pointer;
+    transition: $transition;
+    font-family: $font-family;
+    margin-top: $spacing-md;
+
+    &:hover {
+        background: $accent-coral;
+        transform: translateY(-2px);
+        box-shadow: $shadow-md;
+    }
+
+    &:active {
+        transform: translateY(0) scale(0.98);
+    }
+}

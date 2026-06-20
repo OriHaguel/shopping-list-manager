@@ -37,6 +37,7 @@ export const he = {
     noListsYet: 'אין רשימות עדיין',
     createYourFirstListToGetStarted: 'צור את הרשימה הראשונה שלך כדי להתחיל',
     shareList: 'שתף רשימה',
+    inOrderToShareListSignUp: 'כדי לשתף רשימה, הירשם',
     closeModal: 'סגור חלון',
     enterEmailAddress: 'הכנס כתובת אימייל',
     invite: 'הזמן',
