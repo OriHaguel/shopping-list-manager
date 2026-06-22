@@ -8,9 +8,9 @@ import { getItem } from '@/utils/localStorage'
 
 export function HeroSection() {
     const router = useRouter()
-    const handleListClick = () => {
-        router.push(`/auth`)
-    }
+    // const handleListClick = () => {
+    //     router.push(`/auth`)
+    // }
 
     async function handleDemoClick() {
         const userId = getItem('userId', null);
@@ -47,13 +47,13 @@ export function HeroSection() {
                         </p>
 
                         <div className={styles.ctaContainer}>
-                            <button className={styles.ctaButton} onClick={handleListClick}>
+                            <button className={styles.ctaButton} onClick={handleDemoClick}>
                                 Start for Free
                                 <ArrowRight />
                             </button>
-                            <button className={styles.secondaryButton} onClick={handleDemoClick}>
+                            {/* <button className={styles.secondaryButton} onClick={handleDemoClick}>
                                 Try Demo
-                            </button>
+                            </button> */}
                         </div>
                     </div>
 
