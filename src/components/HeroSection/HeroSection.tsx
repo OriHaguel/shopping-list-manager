@@ -30,14 +30,7 @@ export function HeroSection() {
             <picture className={styles.backgroundImage}>
                 <source media="(max-width: 600px)" srcSet="/smallmobileherobg.webp" />
                 <source media="(max-width: 950px)" srcSet="/mobileherobg.webp" />
-                <img
-                    src="/herobg.webp"
-                    alt=""
-                    aria-hidden="true"
-                    loading="eager"
-                    decoding="async"
-                    fetchPriority="high"
-                />
+                <img src="/herobg.webp" alt="" fetchPriority="high" />
             </picture>
 
             <div className={styles.contentWrapper}>
