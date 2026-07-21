@@ -65,6 +65,7 @@ export function AddProducts({
     const [removedItems, setRemovedItems] = useState<Set<string>>(new Set());
     const [minTimeDisabledActive, setMinTimeDisabledActive] = useState(false);
     const minTimeDisableTimeoutRef = useRef<any>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     const {
         transcript,
         isListening,
@@ -107,10 +108,19 @@ export function AddProducts({
         if (e.key === 'Enter') handleAddItemWithRecent();
     };
 
+    const keepInputFocused = (e: React.MouseEvent | React.TouchEvent | React.PointerEvent) => {
+        e.preventDefault();
+        inputRef.current?.focus({ preventScroll: true });
+    };
+
     const handleAddItemWithRecent = () => {
         if (itemName.trim()) {
             handleAddItem(itemName);
-            setItemName('')
+            setItemName('');
+            window.setTimeout(() => {
+                inputRef.current?.focus({ preventScroll: true });
+                inputRef.current?.setSelectionRange?.(0, 0);
+            }, 0);
         }
     };
 
@@ -178,6 +188,7 @@ export function AddProducts({
 
                 <div className={`${styles.inputWithButton} ${lan === 'he-IL' ? styles.rtl : ''}`}>
                     <input
+                        ref={inputRef}
                         type="text"
                         placeholder={t.egMilk}
                         value={itemName}
@@ -206,6 +217,9 @@ export function AddProducts({
                         </button>
                     )}
                     <button
+                        onMouseDown={keepInputFocused}
+                        onTouchStart={keepInputFocused}
+                        onPointerDown={keepInputFocused}
                         onClick={handleAddItemWithRecent}
                         disabled={!itemName.trim() || isCreating}
                         className={styles.addButton}
