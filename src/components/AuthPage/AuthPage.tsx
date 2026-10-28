@@ -121,7 +121,7 @@ export const AuthPage: React.FC = () => {
 
     };
     const handleGoogleLogin = () => {
-        const googleUrl = process.env.NODE_ENV === 'production' ? `https://app.listeck.com/api/users/google/start?userId=${formData.userId ?? ''}` : `http://localhost:3030/api/users/google/start?userId=${formData.userId ?? ''}`;
+        const googleUrl = process.env.NODE_ENV === 'production' ? `https://api.listeck.com/api/users/google/start?userId=${formData.userId ?? ''}` : `http://localhost:3030/api/users/google/start?userId=${formData.userId ?? ''}`;
         window.location.href = googleUrl;
     };
     return (
